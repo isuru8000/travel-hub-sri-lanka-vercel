@@ -92,7 +92,7 @@ const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const navLinks: NavItem[] = [
-    { id: 'destinations', label: { EN: 'Reality Portals', SI: 'යථාර්ථ පිවිසුම්' }, icon: <Map size={14} /> },
+    { id: 'destinations', label: { EN: 'destinations ', SI: 'ගමනාන්ත' }, icon: <Map size={14} /> },
     { 
       id: 'heritage-nav', 
       label: { EN: 'Heritage', SI: 'උරුමය' }, 
@@ -143,11 +143,10 @@ const Navbar: React.FC<NavbarProps> = ({
       <div className="flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-4 cursor-pointer group shrink-0" onClick={() => handleNav('home')}>
-          {/* Fix: removed unintended assignment in prop expression which caused 'Cannot find name size' error */}
           <TravelHubLogo size={isScrolled ? 34 : 42} />
           <div className="flex flex-col items-start leading-none transition-all duration-700">
             <h1 className="text-xl md:text-2xl font-heritage font-black tracking-tight uppercase text-[#0a0a0a]">Travel Hub</h1>
-            <span className="text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] mt-0.5 text-gray-400">Heritage_Sync</span>
+            <span className="text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] mt-0.5 text-gray-400">sri lanka</span>
           </div>
         </div>
 
@@ -221,7 +220,7 @@ const Navbar: React.FC<NavbarProps> = ({
         </button>
       </div>
 
-      {/* Mobile Drawer - UPDATED TO BLACK THEME */}
+      {/* Mobile Drawer */}
       {isMenuOpen && (
         <div className="fixed inset-x-0 top-full mt-4 bg-[#0a0a0a]/95 backdrop-blur-3xl rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.6)] border border-white/10 p-8 flex flex-col gap-8 animate-in slide-in-from-top-4 duration-500 max-h-[85vh] overflow-y-auto w-full">
           {/* Header Identity in Mobile Menu */}
@@ -229,7 +228,7 @@ const Navbar: React.FC<NavbarProps> = ({
              <TravelHubLogo size={32} />
              <div className="flex flex-col items-start leading-none">
                 <span className="text-sm font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">TRAVEL HUB</span>
-                <span className="text-[7px] font-black text-gray-400 uppercase tracking-[0.3em]">HERITAGE_SYNC</span>
+                <span className="text-[7px] font-black text-gray-400 uppercase tracking-[0.3em]">sri lanka</span>
              </div>
           </div>
 
