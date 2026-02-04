@@ -118,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = ({
         { id: 'booking-destinations', label: { EN: 'Routes', SI: 'මංපෙත්' }, icon: <Route size={14} /> },
       ]
     },
-    { id: 'community', label: { EN: 'Nexus', SI: 'සමූහය' }, icon: <Heart size={14} /> },
+    { id: 'community', label: { EN: 'Memories', SI: 'මතකයන්' }, icon: <Heart size={14} /> },
     { id: 'shop', label: { EN: 'Gear', SI: 'භාණ්ඩ' }, icon: <ShoppingCart size={14} /> },
     { 
       id: 'future-nav', 

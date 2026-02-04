@@ -4,7 +4,6 @@ import {
   ArrowLeft, 
   MapPin, 
   Compass, 
-  History, 
   Clock, 
   Lightbulb, 
   Sparkles, 
@@ -18,10 +17,19 @@ import {
   Gem,
   ArrowRight,
   Image as ImageIcon,
-  PlayCircle,
   Target,
-  Wind
+  Database,
+  Scan,
+  Zap,
+  Loader2,
+  ExternalLink,
+  Map as MapIcon,
+  Navigation,
+  BookOpen,
+  Quote,
+  Layers
 } from 'lucide-react';
+import { getLankaGuideResponse, GroundingLink } from '../services/gemini.ts';
 
 const ArchiveAccordion: React.FC<{ 
   title: string; 
@@ -55,37 +63,6 @@ const ArchiveAccordion: React.FC<{
   </div>
 );
 
-const getEmbedUrl = (url: string) => {
-  if (!url) return '';
-  let videoId = '';
-  if (url.includes('shorts/')) videoId = url.split('shorts/')[1].split('?')[0];
-  else if (url.includes('watch?v=')) videoId = url.split('v=')[1].split('&')[0];
-  else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1].split('?')[0];
-  else if (url.includes('embed/')) return url;
-  return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
-};
-
-const MiniMap: React.FC<{ destination: Destination }> = ({ destination }) => {
-  if (!destination.coordinates) return null;
-  return (
-    <div className="relative aspect-[3/4] bg-[#0a0a0a] rounded-[2.5rem] overflow-hidden border border-white/10 group/map">
-       <img 
-         src="https://images.unsplash.com/photo-1514483127413-f72f273478c3?auto=format&fit=crop&w=400&q=80" 
-         className="absolute inset-0 w-full h-full object-contain opacity-20 grayscale transition-opacity group-hover/map:opacity-40" 
-         alt="Sri Lanka Map"
-       />
-       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.1)_0%,transparent_70%)]" />
-       <div 
-         className="absolute w-4 h-4 bg-[#E1306C] rounded-full shadow-[0_0_15px_#E1306C] animate-pulse z-10"
-         style={{ left: `${destination.coordinates.x}%`, top: `${destination.coordinates.y}%`, transform: 'translate(-50%, -50%)' }}
-       />
-       <div className="absolute bottom-4 left-0 right-0 text-center">
-          <span className="text-[8px] font-black text-white/40 uppercase tracking-[0.4em]">Geospatial_Signature</span>
-       </div>
-    </div>
-  );
-};
-
 interface DestinationDetailProps {
   destination: Destination | null;
   language: Language;
@@ -95,7 +72,9 @@ interface DestinationDetailProps {
 
 const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, language, onBack, onSelect }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeAccordion, setActiveAccordion] = useState<string | null>('history');
+  const [activeAccordion, setActiveAccordion] = useState<string | null>('tips');
+  const [nearbyResults, setNearbyResults] = useState<GroundingLink[]>([]);
+  const [isSyncingNearby, setIsSyncingNearby] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -107,6 +86,26 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (destination) {
+      const fetchNearby = async () => {
+        setIsSyncingNearby(true);
+        try {
+          const prompt = `What are the top 5 historic sites, cafes, or landmarks nearby ${destination.name.EN} in ${destination.location}, Sri Lanka? Provide verified Google Maps references.`;
+          const response = await getLankaGuideResponse(prompt, language, undefined, false);
+          if (typeof response !== 'string' && response.links) {
+            setNearbyResults(response.links);
+          }
+        } catch (e) {
+          console.error("Nearby sync failed", e);
+        } finally {
+          setIsSyncingNearby(false);
+        }
+      };
+      fetchNearby();
+    }
+  }, [destination, language]);
+
   if (!destination) return null;
 
   const categoryConfigs = {
@@ -117,6 +116,8 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
   };
   const config = categoryConfigs[destination.category] || { icon: Compass, color: '#0EA5E9' };
   const CatIcon = config.icon;
+
+  const googleMapsIframeUrl = `https://www.google.com/maps?q=${encodeURIComponent(destination.name.EN + ' ' + destination.location + ' Sri Lanka')}&output=embed&z=15`;
 
   return (
     <div className="min-h-screen bg-white animate-in fade-in duration-1000 relative overflow-x-hidden">
@@ -163,9 +164,98 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-32">
+        {/* PRIMARY SECTION: ABOUT DESTINATION (EXPANDED ARCHIVAL NARRATIVE + GOOGLE MAPS) */}
+        {destination.detailedAbout?.[language] && (
+          <section className="mb-32 animate-in slide-in-from-bottom-12 duration-[1500ms] relative">
+             {/* Header HUD Decor */}
+             <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-[2rem] bg-[#0EA5E9]/10 border border-[#0EA5E9]/20 flex items-center justify-center text-[#0EA5E9] shadow-inner animate-float">
+                    <BookOpen size={28} />
+                  </div>
+                  <div className="space-y-1">
+                    <span className="text-[11px] font-black uppercase tracking-[0.6em] text-[#0EA5E9]/60 block">Registry_ID: {destination.id}_Expansion</span>
+                    <h3 className="text-2xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">Archival Narrative & Spatial Context</h3>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 text-gray-300">
+                   <div className="h-[1px] w-20 bg-gray-100 hidden md:block" />
+                   <Layers size={18} />
+                   <span className="text-[9px] font-black uppercase tracking-[0.3em]">Temporal_Depth: High</span>
+                </div>
+             </div>
+             
+             {/* Split Layout Container */}
+             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+                {/* Left Side: The Narrative */}
+                <div className="lg:col-span-7 relative group perspective-[2000px]">
+                   <div className="absolute -inset-4 bg-gradient-to-br from-[#0EA5E9]/5 to-transparent rounded-[6rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                   <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#0EA5E9]/30 to-transparent animate-scan z-20" />
+                   <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-1.5 h-32 bg-[#0EA5E9]/20 rounded-full" />
+
+                   <div className="relative bg-white border border-gray-100 p-10 md:p-16 rounded-[4rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.08)] overflow-hidden h-full">
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none opacity-[0.015] mix-blend-overlay rotate-12 transition-transform duration-[10s] group-hover:rotate-0">
+                         <Compass size={600} />
+                      </div>
+                      <div className="absolute top-10 right-10 opacity-[0.03] text-black"><Quote size={80} /></div>
+
+                      <div className="relative z-10">
+                         <div className="font-narrative text-xl md:text-2xl text-[#1a1a1a] leading-[1.6] space-y-8 antialiased font-medium">
+                            <div className="prose-container first-letter:text-7xl md:first-letter:text-8xl first-letter:font-heritage first-letter:font-bold first-letter:mr-4 first-letter:float-left first-letter:text-[#0EA5E9] first-letter:leading-[0.85] first-letter:mt-1">
+                               {destination.detailedAbout[language].split('\n\n').map((para, pIdx) => (
+                                 <p key={pIdx} className={`${pIdx === 0 ? 'mt-0' : 'mt-8'} text-justify`}>
+                                   {para}
+                                 </p>
+                               ))}
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+
+                {/* Right Side: Google Map View */}
+                <div className="lg:col-span-5 relative group">
+                   <div className="absolute -inset-4 bg-gradient-to-tr from-[#0EA5E9]/5 to-transparent rounded-[5rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                   
+                   <div className="relative h-full bg-[#fafafa] border border-gray-100 rounded-[4rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.05)] overflow-hidden flex flex-col">
+                      {/* Map HUD Overlay */}
+                      <div className="absolute top-8 left-8 right-8 z-10 flex justify-between items-start pointer-events-none">
+                         <div className="px-5 py-2 bg-[#0a0a0a]/80 backdrop-blur-md rounded-2xl border border-white/10 flex items-center gap-3">
+                            <Navigation size={14} className="text-[#0EA5E9] animate-pulse" />
+                            <span className="text-[9px] font-black text-white uppercase tracking-widest">Spatial_Feed_Live</span>
+                         </div>
+                         <div className="w-10 h-10 bg-white/80 backdrop-blur-md rounded-xl flex items-center justify-center text-[#0EA5E9] shadow-xl border border-white/20">
+                            <MapPin size={20} />
+                         </div>
+                      </div>
+
+                      <div className="flex-grow relative min-h-[400px]">
+                         <iframe 
+                           src={googleMapsIframeUrl}
+                           className="absolute inset-0 w-full h-full grayscale-[0.1] contrast-[1.05] transition-all duration-1000 group-hover:grayscale-0"
+                           loading="lazy"
+                           allowFullScreen
+                         />
+                      </div>
+
+                      {/* Map Controls / Context Footer */}
+                      <div className="p-8 bg-white border-t border-gray-50 flex items-center justify-between relative z-10">
+                         <div className="space-y-1">
+                            <p className="text-[9px] font-black text-gray-300 uppercase tracking-widest leading-none">Coordinates</p>
+                            <p className="text-xs font-bold text-[#0a0a0a] tracking-widest">{destination.location} Node</p>
+                         </div>
+                         <button className="flex items-center gap-3 px-6 py-3 bg-[#0a0a0a] text-white rounded-2xl text-[9px] font-black uppercase tracking-widest hover:bg-[#0EA5E9] transition-all">
+                            Expand Map <ExternalLink size={12} />
+                         </button>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </section>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
-          
-          {/* LEFT: ARCHIVE DETAILS */}
+          {/* LEFT: ARCHIVE DETAILS (TIPS, ECHOES) */}
           <div className="lg:col-span-7 space-y-12">
             <div className="flex items-center gap-4 mb-8">
                <div className="w-1.5 h-1.5 rounded-full bg-[#0EA5E9] animate-ping" />
@@ -173,17 +263,6 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
             </div>
 
             <div className="rounded-[4rem] overflow-hidden border border-gray-100 shadow-2xl shadow-blue-500/5">
-              <ArchiveAccordion 
-                title={language === 'EN' ? "The Legend & History" : "පුරාවෘත්තය සහ ඉතිහාසය"} 
-                icon={<History size={24} />} 
-                isOpen={activeAccordion === 'history'}
-                onClick={() => setActiveAccordion(activeAccordion === 'history' ? null : 'history')}
-              >
-                <p className="whitespace-pre-line text-lg md:text-xl font-medium not-italic leading-relaxed">
-                  {destination.history[language]}
-                </p>
-              </ArchiveAccordion>
-
               <ArchiveAccordion 
                 title={language === 'EN' ? "Voyager Wisdom (Tips)" : "සංචාරක උපදෙස්"} 
                 icon={<Lightbulb size={24} />} 
@@ -215,10 +294,8 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
             </div>
           </div>
 
-          {/* RIGHT SIDEBAR: MEDIA & MAP */}
+          {/* RIGHT SIDEBAR: MEDIA & TRAVEL SYNC */}
           <div className="lg:col-span-5 space-y-12 lg:sticky lg:top-32">
-            
-            {/* Quick Action Card */}
             <div className="p-12 rounded-[4rem] bg-[#0a0a0a] text-white space-y-10 shadow-2xl relative overflow-hidden group">
                <div className="absolute inset-0 pattern-overlay opacity-10 group-hover:opacity-20 transition-opacity" />
                <div className="relative z-10 space-y-8">
@@ -229,7 +306,6 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
                     </div>
                     <h4 className="text-3xl font-heritage font-bold tracking-tighter leading-none">Initialize <span className="italic insta-text-gradient">Trajectory.</span></h4>
                   </div>
-                  
                   <div className="flex items-center gap-6 p-6 bg-white/5 border border-white/10 rounded-3xl group-hover:bg-white/10 transition-colors">
                      <div className="w-12 h-12 bg-[#0EA5E9]/20 rounded-2xl flex items-center justify-center text-[#0EA5E9]">
                         <MapPin size={24} />
@@ -239,7 +315,6 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
                         <p className="text-xl font-bold uppercase tracking-widest">{destination.location}</p>
                      </div>
                   </div>
-
                   <button className="w-full py-8 bg-white text-black rounded-[2.5rem] font-black text-[12px] uppercase tracking-[0.5em] transition-all hover:bg-[#0EA5E9] hover:text-white flex items-center justify-center gap-4 group/btn">
                     Authorize Trip Sync
                     <ArrowRight size={18} className="group-hover/btn:translate-x-2 transition-transform" />
@@ -247,41 +322,46 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
                </div>
             </div>
 
-            {/* Video Fragment (Right Column) */}
-            {destination.videoUrl && (
-              <div className="space-y-6">
-                <div className="flex items-center justify-between px-4">
-                  <div className="flex items-center gap-3 text-gray-400">
-                    <PlayCircle size={18} className="text-[#E1306C]" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em]">Atmospheric_Fragment</span>
+            {/* Nearby Intelligence */}
+            <div className="space-y-8 bg-[#fafafa] p-10 rounded-[3.5rem] border border-gray-100">
+               <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 text-[#E1306C]">
+                    <Target size={18} className="animate-pulse" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em]">Nearby_Registry_Nodes</span>
                   </div>
-                  <Activity size={14} className="text-green-500 animate-pulse" />
-                </div>
-                <div className="group relative aspect-video rounded-[3rem] overflow-hidden shadow-2xl bg-black border border-gray-100">
-                  <iframe
-                    src={`${getEmbedUrl(destination.videoUrl)}?modestbranding=1&rel=0&controls=0`}
-                    title={destination.name[language]}
-                    className="absolute inset-0 w-full h-full"
-                    allow="autoplay; encrypted-media"
-                  ></iframe>
-                </div>
-              </div>
-            )}
-
-            {/* Geospatial Signature (Map View) */}
-            <div className="space-y-6">
-                <div className="flex items-center gap-3 px-4 text-gray-400">
-                  <Target size={18} className="text-[#0EA5E9]" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em]">Geospatial_Node</span>
-                </div>
-                <MiniMap destination={destination} />
+                  {isSyncingNearby && <Loader2 size={14} className="animate-spin text-gray-300" />}
+               </div>
+               <div className="space-y-4">
+                  {nearbyResults.length > 0 ? (
+                    nearbyResults.map((link, idx) => (
+                      <a 
+                        key={idx}
+                        href={link.uri}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-5 bg-white rounded-2xl border border-gray-50 shadow-sm transition-all hover:border-[#0EA5E9]/40 hover:shadow-xl hover:-translate-x-1 group/link"
+                      >
+                         <div className="flex items-center gap-4 overflow-hidden">
+                            <div className="w-8 h-8 rounded-lg bg-[#0EA5E9]/5 flex items-center justify-center text-[#0EA5E9] group-hover/link:bg-[#0EA5E9] group-hover/link:text-white transition-colors">
+                               <Navigation size={14} />
+                            </div>
+                            <span className="text-xs font-bold text-gray-500 group-hover/link:text-[#0a0a0a] truncate">{link.title}</span>
+                         </div>
+                         <ExternalLink size={12} className="text-gray-200 group-hover/link:text-[#0EA5E9] shrink-0" />
+                      </a>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 opacity-40">
+                       <p className="text-[9px] font-black uppercase tracking-widest italic">Awaiting Registry Sweep...</p>
+                    </div>
+                  )}
+               </div>
             </div>
-
           </div>
         </div>
 
         {/* EXPANDED GALLERY SECTION */}
-        <section className="space-y-20 py-40 border-t border-gray-100 mt-20">
+        <section className="space-y-20 py-40 border-t border-gray-100">
            <div className="text-center space-y-8">
               <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-black/5 text-gray-400 text-[9px] font-black uppercase tracking-[0.6em]">
                  <ImageIcon size={14} /> High_Res_Fragment_Archive
@@ -316,6 +396,18 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
             {[1,2,3,4,5].map(i => <div key={i} className="w-2 h-2 rounded-full bg-black" />)}
          </div>
       </div>
+      
+      <style dangerouslySetInnerHTML={{ __html: `
+        .animate-spin-slow { animation: spin 30s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .shadow-3xl { box-shadow: 0 40px 100px rgba(0,0,0,0.1); }
+        @keyframes scan {
+          0% { top: 0%; opacity: 0; }
+          50% { opacity: 0.5; }
+          100% { top: 100%; opacity: 0; }
+        }
+        .animate-scan { animation: scan 8s linear infinite; }
+      `}} />
     </div>
   );
 };

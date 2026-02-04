@@ -17,7 +17,6 @@ import AIModal from './components/AIModal.tsx';
 import Quiz from './components/Quiz.tsx';
 import VRExperience from './components/VRExperience.tsx';
 import VRShowcase from './components/VRShowcase.tsx';
-import HeritageCollection from './components/HeritageCollection.tsx';
 import SearchPortal from './components/SearchPortal.tsx';
 import LoginModal from './components/LoginModal.tsx';
 import Contact from './components/Contact.tsx';
@@ -182,56 +181,11 @@ export default function App() {
                 </button>
               </div>
 
-              <section className="py-40 bg-[#020205] relative overflow-hidden">
-                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(225,48,108,0.1)_0%,transparent_50%)] animate-pulse" />
-                 <div className="max-w-7xl mx-auto px-6 space-y-32 relative z-10">
-                    <div className="text-center space-y-8">
-                       <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-pink-500/10 border border-pink-500/20 text-[#E1306C] text-[10px] font-black uppercase tracking-[0.6em] mx-auto animate-pulse">
-                          <Scan size={14} /> Phase_02_Discovery_Module
-                       </div>
-                       <h2 className="text-5xl md:text-[9rem] font-heritage font-bold text-white tracking-tighter uppercase leading-none">
-                          ANCIENT <span className="italic insta-text-gradient">HIGHLIGHTS.</span>
-                       </h2>
-                       <p className="text-gray-400 font-light italic text-xl max-w-2xl mx-auto opacity-70">
-                          "Locked archival nodes currently undergoing high-fidelity calibration for the next cycle."
-                       </p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
-                       {[
-                         { id: 'f1', title: 'Deep Sea Archeology', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80' },
-                         { id: 'f2', title: 'Aerial Tea Trails', image: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=800&q=80' },
-                         { id: 'f3', title: 'Jaffna VR Reconstruction', image: 'https://images.unsplash.com/photo-1578503117502-3162799f9392?auto=format&fit=crop&w=800&q=80' },
-                         { id: 'f4', title: 'Delft Island Digital Twin', image: 'https://images.unsplash.com/photo-1544921603-91185f0962b1?auto=format&fit=crop&w=800&q=80' },
-                         { id: 'f5', title: 'Secret Jungle Monoliths', image: 'https://images.unsplash.com/photo-1590766940554-634a7ed41450?auto=format&fit=crop&w=800&q=80' }
-                       ].map((item, idx) => (
-                         <div key={item.id} className="group relative h-[500px] rounded-[3rem] overflow-hidden border border-white/5 bg-black shadow-2xl">
-                            <img src={item.image} className="absolute inset-0 w-full h-full object-cover grayscale opacity-30 group-hover:scale-110 transition-transform duration-[6000ms]" />
-                            <div className="absolute inset-0 backdrop-blur-3xl bg-black/40 group-hover:backdrop-blur-xl transition-all duration-1000" />
-                            <div className="absolute inset-0 flex flex-col items-center justify-center p-10 text-center space-y-8">
-                               <div className="w-20 h-20 rounded-[2rem] bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-[#E1306C] relative">
-                                  <div className="absolute inset-0 border border-pink-500/20 rounded-[2rem] animate-ping" />
-                                  <Lock size={32} className="animate-pulse" />
-                               </div>
-                               <div className="space-y-4">
-                                  <h4 className="text-2xl font-heritage font-bold text-white uppercase tracking-tight opacity-40 group-hover:opacity-100 transition-opacity">{item.title}</h4>
-                                  <div className="px-5 py-2 bg-[#E1306C] text-white rounded-full text-[9px] font-black uppercase tracking-[0.4em] shadow-[0_0_30px_rgba(225,48,108,0.5)] animate-pulse">
-                                     COMMING SOON
-                                  </div>
-                               </div>
-                            </div>
-                            <div className="absolute top-0 left-0 w-full h-[2px] bg-[#E1306C] shadow-[0_0_20px_#E1306C] animate-scan-slow" style={{ animationDelay: `${idx * 1.2}s` }} />
-                         </div>
-                       ))}
-                    </div>
-                 </div>
-              </section>
-
-              <HeritageCollection language={language} />
               <div className="py-32 px-4 relative overflow-hidden group border-y border-gray-50 bg-white">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-24">
                    <div className="w-full md:w-1/2 space-y-12">
                      <div className="inline-flex items-center gap-5 px-8 py-3 rounded-full bg-pink-500/5 border border-pink-500/10 text-[#E1306C] text-[11px] font-black uppercase tracking-[0.6em]">
-                       <Sparkles size={18} className="animate-pulse" />
+                       <span className="animate-pulse"><Sparkles size={18} /></span>
                        Archetype Synthesis
                      </div>
                      <h2 className="text-6xl md:text-[8rem] font-heritage font-bold text-[#0a0a0a] leading-[0.8] tracking-tighter uppercase">
@@ -248,7 +202,6 @@ export default function App() {
                    </div>
                 </div>
               </div>
-              <CategoriesSection language={language} setView={setView} />
               <StorySection language={language} setView={setView} />
             </div>
           </div>

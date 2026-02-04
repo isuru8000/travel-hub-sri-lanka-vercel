@@ -1,7 +1,8 @@
 
 import { Destination } from './types.ts';
+import { ABOUT_DATA } from './about_destinations.tsx';
 
-export const DESTINATIONS_DATA: Destination[] = [
+const BASE_DESTINATIONS: Destination[] = [
   { 
     id: "sigiriya", 
     name: { EN: "Sigiriya Lion Rock", SI: "සීගිරිය සිංහගිරිය" }, 
@@ -20,7 +21,7 @@ export const DESTINATIONS_DATA: Destination[] = [
       EN: "Sigiriya, or 'Lion Rock,' is a staggering 200-meter-high ancient fortress and palace complex. Built in the 5th century by King Kasyapa, it is a masterclass in ancient urban planning, hydraulics, and art. The King chose this location as a strategic defense point against his brother Moggallana. The rock itself is a volcanic plug of an extinct volcano.\n\nTop 5 Things to See:\n1. The Water Gardens: Among the world's oldest landscaped gardens with gravity-fed fountains that still work during monsoons.\n2. The Mirror Wall: Ancient graffiti poems etched by visitors over 1,000 years ago.\n3. The Frescoes: Vibrant paintings of 'celestial maidens' surviving 1,500 years.\n4. The Lion’s Paws: Massive stone paws guarding the halfway point of the climb.\n5. The Sky Palace: Ruins of the upper palace with 360-degree jungle views.", 
       SI: "සීගිරිය, හෙවත් 'සිංහගිරිය', මීටර් 200ක් උසැති අතිවිශාල පැරණි බලකොටුවක් සහ මාලිගා සංකීර්ණයකි. 5 වන සියවසේදී කාශ්‍යප රජු විසින් ඉදිකරන ලද මෙය පැරණි නාගරික සැලසුම්කරණය, ජල විද්‍යාව සහ කලාව පිළිබඳ විශිෂ්ටතම නිදසුනකි. කාශ්‍යප රජු සිය සොහොයුරු මුගලන්ගෙන් ආරක්ෂා වීම සඳහා මෙම ස්ථානය තෝරා ගත්තේය." 
     }, 
-    shortStory: { EN: "The 8th Wonder of the World.", SI: "ලොව අටවන පුදුමය." }, 
+    shortStory: { EN: "The 8th Wonder of the World.", SI: "ලොව අටවන පුදුමය." },
     bestTime: { EN: "December to April (Recommended climb at 6:30 AM)", SI: "දෙසැම්බර් සිට අප්‍රේල් දක්වා (උදෑසන 6:30 ට නැගීම වඩාත් සුදුසුයි)" }, 
     tips: [
       { EN: "Visit the Museum first for historical context before the climb.", SI: "නැගීමට පෙර ඓතිහාසික පසුබිම දැනගැනීම සඳහා කෞතුකාගාරය මුලින්ම නරඹන්න." },
@@ -197,7 +198,7 @@ export const DESTINATIONS_DATA: Destination[] = [
     category: "mountains", 
     image: "https://images.unsplash.com/photo-1653151106766-52f14da3bb68?w=1600&auto=format&fit=crop&q=80", 
     gallery: [
-      "https://images.unsplash.com/photo-1653151106766-52f14da3bb68?w=1200&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1653151106766-52f14da3bb68?w=1200&auto=format&fit=crop&w=1200&q=80",
       "https://cdn.pixabay.com/photo/2023/07/04/10/30/mountains-8105952_1280.jpg",
       "https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=1200&q=80"
     ], 
@@ -525,3 +526,9 @@ export const DESTINATIONS_DATA: Destination[] = [
     coordinates: { x: 42, y: 65 }
   }
 ];
+
+// Combine the base destinations with the detailedAbout data from the separate file
+export const DESTINATIONS_DATA: Destination[] = BASE_DESTINATIONS.map(dest => ({
+  ...dest,
+  detailedAbout: ABOUT_DATA[dest.id] || { EN: "", SI: "" }
+}));

@@ -64,13 +64,6 @@ const Hero: React.FC<HeroProps> = ({ language, setView, user }) => {
       {/* Hero Content */}
       <div className="relative z-30 max-w-7xl w-full px-8 flex flex-col items-center text-center">
         
-        <div className="flex flex-col items-center gap-6 mb-12 animate-in fade-in slide-in-from-top-12 duration-1000">
-           <div className="px-8 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-2xl text-white text-[10px] font-black uppercase tracking-[0.5em] shadow-3xl flex items-center gap-4 border border-white/20">
-             <div className="w-2 h-2 rounded-full bg-[#F59E0B] animate-ping shadow-[0_0_10px_#F59E0B]" />
-             Registry_Sync_v6.4
-           </div>
-        </div>
-        
         <div className="space-y-6 mb-16 animate-in fade-in zoom-in-95 duration-1000 delay-200">
           <h1 className="text-5xl sm:text-7xl md:text-[11rem] font-heritage font-bold leading-[0.8] tracking-tighter uppercase select-none">
             {language === 'EN' ? (

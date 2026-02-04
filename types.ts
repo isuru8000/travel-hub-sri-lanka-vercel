@@ -1,3 +1,4 @@
+
 export type Language = 'EN' | 'SI';
 
 export interface User {
@@ -15,6 +16,8 @@ export interface Destination {
   videoUrl?: string;
   history: { EN: string; SI: string };
   shortStory: { EN: string; SI: string };
+  detailedAbout?: { EN: string; SI: string }; // New field for user copy-paste details
+  masterRecord?: { EN: string; SI: string };
   bestTime: { EN: string; SI: string };
   tips: { EN: string; SI: string }[];
   hiddenEchoes: { EN: string; SI: string };
