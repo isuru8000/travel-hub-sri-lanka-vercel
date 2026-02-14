@@ -12,51 +12,51 @@ const BASE_DESTINATIONS: Destination[] = [
     shortStory: { EN: "The Lion Rock.", SI: "සීගිරිය." }, bestTime: { EN: "Dec - Apr", SI: "දෙසැ - අප්‍රේ" }, tips: [{ EN: "Go early.", SI: "වේලාසනින් යන්න." }], hiddenEchoes: { EN: "Mirror wall.", SI: "කැටපත් පවුර." }, location: "Matale", coordinates: { x: 52, y: 38 }
   },
   { 
-    id: "kandy-temple", name: { EN: "Temple of the Tooth", SI: "ශ්‍රී දළදා මාළිගාව" }, category: "ancient", 
-    image: "https://i.pinimg.com/1200x/e4/2b/4c/e42b4c70cc6836ca40248599bc6ebe08.jpg", 
+    id: "kandy-temp", name: { EN: "Temple of the Tooth", SI: "ශ්‍රී දළදා මාළිගාව" }, category: "ancient", 
+    image: "https://i.pinimg.com/1200x/b6/4b/ca/b64bcaaf16fc3356cee1b56c84ebfd8f.jpg", 
     gallery: ["https://i.pinimg.com/1200x/9d/21/2e/9d212e3794b123394712f2065098d5c.jpg", "https://i.pinimg.com/1200x/2a/63/1d/2a631d3d6664c0c84bf78db4a758a2a9.jpg"], 
     history: { EN: "The last royal capital's sacred relic house.", SI: "දන්ත ධාතූන් වහන්සේ වැඩසිටින පූජනීය ස්ථානය." }, 
     shortStory: { EN: "Sacred Relic.", SI: "පූජනීය ධාතු." }, bestTime: { EN: "Year round", SI: "වසර පුරා" }, tips: [{ EN: "Dress in white.", SI: "සුදු ඇඳුම් අඳින්න." }], hiddenEchoes: { EN: "Royal palace ruins.", SI: "මාලිගා නටබුන්." }, location: "Kandy", coordinates: { x: 58.5, y: 50.2 }
   },
   { 
     id: "polonnaruwa", name: { EN: "Polonnaruwa Vatadage", SI: "පොළොන්නරුව වටදාගෙය" }, category: "ancient", 
-    image: "https://i.pinimg.com/1200x/0f/bc/82/0fbc825e30bb0f28b925badd1090b87e.jpg", 
+    image: "https://i.pinimg.com/736x/d8/2c/a4/d82ca4a76a9775793c4d1fd4d24ff6e4.jpg", 
     gallery: ["https://i.pinimg.com/1200x/6e/8c/8e/6e8c8e2f8e1a8e1a.jpg", "https://i.pinimg.com/1200x/5c/58/05/5c580556184566f7f7f90958133535f2.jpg"], 
     history: { EN: "Medieval capital known for stone carvings.", SI: "මධ්‍යතන යුගයේ අගනුවරයි." }, 
     shortStory: { EN: "Medieval Splendor.", SI: "මධ්‍යතන අභිමානය." }, bestTime: { EN: "Jan - Mar", SI: "ජන - මාර්" }, tips: [{ EN: "Cycle the ruins.", SI: "පාපැදියෙන් යන්න." }], hiddenEchoes: { EN: "Gal Vihara.", SI: "ගල් විහාරය." }, location: "Polonnaruwa", coordinates: { x: 62.5, y: 30.2 }
   },
   { 
     id: "dambulla", name: { EN: "Dambulla Cave Temple", SI: "දඹුලු රන් විහාරය" }, category: "ancient", 
-    image: "https://i.pinimg.com/1200x/5c/e2/f3/5ce2f34e60d60c138b49f766aacab214.jpg", 
+    image: "https://i.pinimg.com/1200x/ca/96/d8/ca96d8e009f8ad50128891ce45b59c9d.jpg", 
     gallery: ["https://i.pinimg.com/736x/87/b1/7f/87b17fb4f6d602cf2606fdf482e41c2b.jpg", "https://i.pinimg.com/1200x/5a/b9/51/5ab951459b8a2d35710d4264e4ce1503.jpg"], 
     history: { EN: "Largest rock temple complex in Lanka.", SI: "ලොකුම ලෙන් විහාර සංකීර්ණය." }, 
     shortStory: { EN: "Golden Grotto.", SI: "රන් ලෙන්." }, bestTime: { EN: "Year round", SI: "වසර පුරා" }, tips: [{ EN: "Climb at dusk.", SI: "සවස් කාලයේ යන්න." }], hiddenEchoes: { EN: "Ancient murals.", SI: "පැරණි බිතුසිතුවම්." }, location: "Dambulla", coordinates: { x: 52.5, y: 41.2 }
   },
   { 
     id: "ruwanwelisaya", name: { EN: "Ruwanwelisaya", SI: "රුවන්වැලිසෑය" }, category: "ancient", 
-    image: "https://i.pinimg.com/1200x/94/5b/35/945b35c5ac0c487b5da9b06dd2640ba8.jpg", 
+    image: "https://i.pinimg.com/736x/27/e6/9c/27e69c87e1fab4749b49dfc42f765171.jpg", 
     gallery: ["https://i.pinimg.com/736x/a6/ae/4f/a6ae4fd861554769766daae2f0e621d2.jpg", "https://i.pinimg.com/1200x/40/85/a5/4085a5c8f3800838222fd5868dbaf9dd.jpg"], 
     history: { EN: "Iconic stupa built by King Dutugemunu.", SI: "දුටුගැමුණු රජු කළ මහා සෑය." }, 
     shortStory: { EN: "Great Stupa.", SI: "මහා සෑය." }, bestTime: { EN: "Full moon days", SI: "පොහොය දින" }, tips: [{ EN: "Remove shoes.", SI: "පාවහන් ඉවත් කරන්න." }], hiddenEchoes: { EN: "Elephant wall.", SI: "ඇත් පවුර." }, location: "Anuradhapura", coordinates: { x: 50.2, y: 19.8 }
   },
   { 
     id: "abhayagiri", name: { EN: "Abhayagiri Vihara", SI: "අභයගිරි විහාරය" }, category: "ancient", 
-    image: "https://i.pinimg.com/1200x/5c/58/05/5c580556184566f7f7f90958133535f2.jpg", 
+    image: "https://i.pinimg.com/736x/79/fe/c8/79fec8ab620ae1cc7a884b4d7f068daf.jpg", 
     gallery: ["https://i.pinimg.com/1200x/0c/d6/36/0cd6364b766c233d0d9f25252fb16d4d.jpg", "https://i.pinimg.com/1200x/2a/63/1d/2a631d3d6664c0c84bf78db4a758a2a9.jpg"], 
     history: { EN: "A major monastery site in Anuradhapura.", SI: "අනුරාධපුරයේ ප්‍රධාන ආරාම සංකීර්ණයකි." }, 
     shortStory: { EN: "Scholarly Hub.", SI: "අධ්‍යාපනික මධ්‍යස්ථානය." }, bestTime: { EN: "Sep - Mar", SI: "සැප් - මාර්" }, tips: [{ EN: "See Twin Ponds.", SI: "කුට්ටම් පොකුණ බලන්න." }], hiddenEchoes: { EN: "Samadhi Buddha.", SI: "සමාධි බුදු පිළිමය." }, location: "Anuradhapura", coordinates: { x: 50.1, y: 17.5 }
   },
   { 
     id: "mihintale", name: { EN: "Mihintale", SI: "මිහින්තලේ" }, category: "ancient", 
-    image: "https://i.pinimg.com/1200x/ce/b7/d6/ceb7d6e0eba3935d85da2d37f1ee8875.jpg", 
-    gallery: ["https://i.pinimg.com/1200x/41/40/73/4140733c7c83c7c83c7c83.jpg"], 
+    image: "https://i.pinimg.com/736x/d0/d7/53/d0d75337511525edd5b08c6ddd5a5daf.jpg", 
+    gallery: ["https://i.pinimg.com/1200x/ce/b7/d6/ceb7d6e0eba3935d85da2d37f1ee8875.jpg", "https://i.pinimg.com/1200x/41/40/73/4140733c7c83c7c83c7c83.jpg"], 
     history: { EN: "The cradle of Buddhism in Sri Lanka.", SI: "ලංකාවේ බුදුදහම ස්ථාපිත වූ ස්ථානය." }, 
     shortStory: { EN: "Cradle of Faith.", SI: "ඇදහිල්ලේ තොටිල්ල." }, bestTime: { EN: "June", SI: "ජූනි" }, tips: [{ EN: "Sunset is best.", SI: "හිරු බැසීම මනරම්ය." }], hiddenEchoes: { EN: "Ancient hospital.", SI: "පැරණි රෝහල." }, location: "Anuradhapura", coordinates: { x: 54.2, y: 18.2 }
   },
   { 
     id: "jaffna-fort", name: { EN: "Jaffna Fort", SI: "යාපනය බලකොටුව" }, category: "ancient", 
-    image: "https://i.pinimg.com/1200x/c1/98/9c/c1989cb28206977268d8768d8768d876.jpg", 
-    gallery: ["https://i.pinimg.com/1200x/5c/58/05/5c580556184566f7f7f90958133535f2.jpg"], 
+    image: "https://i.pinimg.com/736x/5a/b6/84/5ab6845bde96dacaf328db90f0b2124b.jpg", 
+    gallery: ["https://i.pinimg.com/1200x/c1/98/9c/c1989cb28206977268d8768d8768d876.jpg", "https://i.pinimg.com/1200x/5c/58/05/5c580556184566f7f7f90958133535f2.jpg"], 
     history: { EN: "Portuguese and Dutch era fortress.", SI: "පෘතුගීසි සහ ලන්දේසි යුගයේ බලකොටුවකි." }, 
     shortStory: { EN: "Northern Bastion.", SI: "උතුරේ බලකොටුව." }, bestTime: { EN: "Jan - Sep", SI: "ජන - සැප්" }, tips: [{ EN: "Walk the walls.", SI: "පවුර දිගේ ඇවිදින්න." }], hiddenEchoes: { EN: "Queen's House.", SI: "රැජිනගේ නිවස." }, location: "Jaffna", coordinates: { x: 38.5, y: 5.2 }
   },
@@ -188,7 +188,7 @@ const BASE_DESTINATIONS: Destination[] = [
     image: "https://i.pinimg.com/1200x/1f/61/a5/1f61a5f00d68b86b64e2dd496ba70d33.jpg", 
     gallery: ["https://i.pinimg.com/1200x/44/d5/78/44d578cb5b3d6f8e558f3e07eb45a5a5.jpg"], 
     history: { EN: "Important wetland for flamingos.", SI: "සියක්කාරයින් සිටින වැදගත් තෙත්බිමක්." }, 
-    shortStory: { EN: "Flamingo Flats.", SI: "සියක්කාර විල්ලුව." }, bestTime: { EN: "Dec - Mar", SI: "දෙසැ - මාර්" }, tips: [{ EN: "Migratory season.", SI: "සංක්‍රමණික කාලය." }], hiddenEchoes: { EN: "Salt pans.", SI: "ලුණු ලේවායන්." }, location: "Hambantota", coordinates: { x: 74, y: 92 }
+    shortStory: { EN: "Flamingo Flats.", SI: "සියක්කාර විල්ලුව." }, bestTime: { EN: "Dec - Mar", SI: "දෙසැ - මාර්" }, tips: [{ EN: "Migරටරි season.", SI: "සංක්‍රමණික කාලය." }], hiddenEchoes: { EN: "Salt pans.", SI: "ලුණු ලේවායන්." }, location: "Hambantota", coordinates: { x: 74, y: 92 }
   },
   { 
     id: "sinharaja", name: { EN: "Sinharaja Forest", SI: "සිංහරාජය" }, category: "wildlife", 
