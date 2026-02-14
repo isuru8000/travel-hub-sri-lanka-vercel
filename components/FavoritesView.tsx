@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState } from 'react';
 import { Language, Destination } from '../types.ts';
 import { DESTINATIONS, FOODS_DATA, HERITAGE_MUSIC_DATA, MEDICINE_DATA, TEA_DATA, HIKING_DATA, FESTIVALS_DATA } from '../constants.tsx';
@@ -213,18 +214,18 @@ const FavoritesView: React.FC<FavoritesViewProps> = ({ language, savedIds, toggl
                   <img src={item.data.image} alt={item.data.name[language]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[6000ms]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                   
-                  <div className="absolute top-8 left-8">
-                     <div className="bg-white/95 backdrop-blur-md px-5 py-2 rounded-full shadow-2xl flex items-center gap-2 border border-white/20">
-                        <Sparkles size={14} className="text-[#E1306C]" />
-                        <span className="text-[9px] font-black text-[#0a0a0a] uppercase tracking-widest">{item.typeLabel}</span>
+                  <div className="absolute top-4 left-4">
+                     <div className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-2xl flex items-center gap-2 border border-white/20">
+                        <Sparkles size={12} className="text-[#E1306C]" />
+                        <span className="text-[8px] font-black text-[#0a0a0a] uppercase tracking-widest">{item.typeLabel}</span>
                      </div>
                   </div>
 
                   <button 
                     onClick={() => toggleSave(item.category, item.id)}
-                    className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-red-500 shadow-xl hover:bg-red-500 hover:text-white transition-all active:scale-90"
+                    className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-red-500 shadow-xl hover:bg-red-500 hover:text-white transition-all active:scale-90"
                   >
-                    <Trash2 size={20} />
+                    <Trash2 size={18} />
                   </button>
                   
                   <div className="absolute bottom-6 left-8">

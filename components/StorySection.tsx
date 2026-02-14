@@ -22,6 +22,14 @@ const StorySection: React.FC<StorySectionProps> = ({ language, setView }) => {
     {
       EN: "Travel isn't just about the place, it's about connecting with the memories of our ancestors.",
       SI: "සංචාරය යනු ස්ථානයක් ගැන පමණක් නොවේ, එය අපගේ මුතුන් මිත්තන්ගේ මතකයන් සමඟ සම්බන්ධ වීමයි."
+    },
+    {
+      EN: "The white lighthouse stood as a silent guardian against the crimson sky as the call to prayer echoed from the fort. We walked the ancient ramparts, feeling the salty spray of the Indian Ocean against our skin. Every stone beneath our feet whispered a story of seafaring trade and colonial echoes that shaped our island.",
+      SI: "කොටු පවුරෙන් ඇසෙන යාඥා හඬත් සමඟ රතු පැහැති අහස යට සුදු පැහැති ප්‍රදීපාගාරය නිහඬ මුරකරුවෙකු මෙන් නැගී සිටියේය. ඉන්දියන් සාගරයේ ලුණු මිශ්‍ර සුවඳ අපේ සමට දැනෙන විට අපි පැරණි පවුරු දිගේ ඇවිද ගියෙමු. අපේ පාමුල ඇති සෑම ගලක්ම අපේ දිවයින හැඩගැස්වූ මුහුදු වෙළඳාමේ සහ පැරණි මතකයන්ගේ කතන්දර රහසින් මුමුණයි."
+    },
+    {
+      EN: "Your own journey is a sacred thread waiting to be woven into the grand tapestry of our island's living history. Every path you tread adds a high-fidelity layer to our collective archival memory for future generations. We invite you to share your unique experiences with us and let your footprints guide the voyagers of tomorrow.",
+      SI: "ඔබේ පුද්ගලික සංචාරය අපගේ දිවයිනේ සජීවී ඉතිහාසයට එක් වීමට බලා සිටින පූජනීය මතකයකි. ඔබ ඇවිද යන සෑම මාවතක්ම අනාගත පරපුර උදෙසා අපගේ පොදු සංරක්ෂණාගාරයට අලුත් අරුතක් එක් කරයි. ඔබේ සුවිශේෂී අත්දැකීම් අප සමඟ බෙදා ගනිමින් හෙට දවසේ ගවේෂකයින්ට මඟ පෙන්වන ලෙස අපි ඔබට ආරාධනා කරන්නෙමු."
     }
   ];
 
@@ -75,18 +83,18 @@ const StorySection: React.FC<StorySectionProps> = ({ language, setView }) => {
 
             <div className="space-y-8 pt-20">
               <div className="story-ring p-[2px] rounded-[3rem] shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-700 overflow-hidden">
-                 <img src="https://images.unsplash.com/photo-1580794749460-76f97b7180d8?auto=format&fit=crop&w=800&q=80" className="rounded-[2.9rem] w-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-1000" alt="Temple" />
+                 <img src="https://images.unsplash.com/photo-1580794749460-76f97b7180d8?auto=format&fit=crop&w=800&q=80" className="rounded-[2.9rem] w-full hover:opacity-100 transition-all duration-1000" alt="Temple" />
               </div>
               <div className="story-ring p-[2px] rounded-[3rem] shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-700 overflow-hidden">
-                 <img src="https://images.unsplash.com/photo-1563297054-94676106c59b?auto=format&fit=crop&w=800&q=80" className="rounded-[2.9rem] w-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-1000" alt="Statue" />
+                 <img src="https://images.unsplash.com/photo-1563297054-94676106c59b?auto=format&fit=crop&w=800&q=80" className="rounded-[2.9rem] w-full hover:opacity-100 transition-all duration-1000" alt="Statue" />
               </div>
             </div>
             <div className="space-y-8">
               <div className="story-ring p-[2px] rounded-[3rem] shadow-2xl transform rotate-6 hover:rotate-0 transition-transform duration-700 overflow-hidden">
-                 <img src="https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=800&q=80" className="rounded-[2.9rem] w-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-1000" alt="Culture" />
+                 <img src="https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=800&q=80" className="rounded-[2.9rem] w-full hover:opacity-100 transition-all duration-1000" alt="Culture" />
               </div>
               <div className="story-ring p-[2px] rounded-[3rem] shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-700 overflow-hidden">
-                 <img src="https://images.unsplash.com/photo-1620054604245-566083771259?auto=format&fit=crop&w=800&q=80" className="rounded-[2.9rem] w-full grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-1000" alt="Nature" />
+                 <img src="https://images.unsplash.com/photo-1620054604245-566083771259?auto=format&fit=crop&w=800&q=80" className="rounded-[2.9rem] w-full hover:opacity-100 transition-all duration-1000" alt="Nature" />
               </div>
             </div>
           </div>

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+
+import React, { useState, useEffect, useMemo } from 'react';
 import { Language } from '../types.ts';
 import { 
   Send, 
@@ -7,6 +8,7 @@ import {
   Instagram, 
   Facebook, 
   Youtube, 
+  Music2,
   ShieldCheck, 
   Loader2, 
   ArrowRight,
@@ -125,7 +127,7 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
       color: 'hover:bg-[#1877F2]',
       text: 'text-[#1877F2]',
       handle: 'Travel Hub SL',
-      url: '#'
+      url: 'https://www.facebook.com/share/1DJJ35Hq4k/'
     },
     { 
       name: 'YouTube', 
@@ -134,6 +136,14 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
       text: 'text-[#FF0000]',
       handle: '@TravelHublk-123',
       url: 'https://www.youtube.com/@TravelHublk-123'
+    },
+    { 
+      name: 'TikTok', 
+      icon: <Music2 size={48} />, 
+      color: 'hover:bg-black',
+      text: 'text-white',
+      handle: '@travelhubsl',
+      url: 'https://vm.tiktok.com/ZS91cdnNLXNp3-gURJB/'
     }
   ];
 
@@ -201,7 +211,7 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
       <div className="relative z-10 pt-32 pb-20 px-6 text-center">
         <div className="max-w-4xl mx-auto space-y-12">
            <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/5 backdrop-blur-2xl border border-white/10 text-white shadow-2xl animate-in slide-in-from-bottom-4 duration-1000">
-              <div className="w-2 h-2 bg-[#E1306C] rounded-full animate-ping shadow-[0_0_10px_#E1306C]" />
+              <div className="w-2 h-2 bg-[#E1306C] rounded-full animate-ping shadow-[0_0_100px_#E1306C]" />
               <span className="text-[10px] font-black uppercase tracking-[0.5em]">Direct_Handshake_Active</span>
            </div>
            
@@ -220,18 +230,23 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           
-          {/* FOLLOW US Section */}
+          {/* FOLLOW US Section (Transmissions) */}
           <div className="lg:col-span-4 space-y-8 order-2 lg:order-1">
-            <div className="bg-black/40 backdrop-blur-3xl p-12 rounded-[4rem] shadow-2xl border border-white/10 space-y-12 group">
-               <div className="space-y-3 text-center md:text-left">
+            <div className="relative overflow-hidden p-12 rounded-[4rem] shadow-2xl border border-white/10 space-y-12 group">
+               {/* Animated Transmission Background Colors */}
+               <div className="absolute inset-0 bg-[#0a0a0a] z-0" />
+               <div className="absolute inset-0 z-0 opacity-20 bg-gradient-to-tr from-[#E1306C] via-[#3B82F6] to-[#0EA5E9] animate-gradient-shift-fast" style={{ backgroundSize: '200% 200%' }} />
+               <div className="absolute inset-0 z-0 backdrop-blur-3xl" />
+
+               <div className="relative z-10 space-y-3 text-center md:text-left">
                   <div className="flex items-center justify-center md:justify-start gap-4">
                     <Users size={24} className="text-[#E1306C] animate-pulse" />
                     <h3 className="text-3xl font-heritage font-bold text-white uppercase tracking-tighter">Island Network</h3>
                   </div>
-                  <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.4em] ml-1">Live Social Transmissions</p>
+                  <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.4em] ml-1">Live Social Transmissions</p>
                </div>
 
-               <div className="grid grid-cols-1 gap-6">
+               <div className="relative z-10 grid grid-cols-1 gap-6">
                  {socialChannels.map((social, idx) => (
                    <a 
                      key={idx} 
@@ -258,7 +273,7 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
                  ))}
                </div>
 
-               <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+               <div className="relative z-10 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-ping shadow-[0_0_10px_#22c55e]" />
                     <span className="text-[9px] font-black text-white/30 uppercase tracking-widest">Registry_Stable</span>
@@ -470,6 +485,14 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
           10% { opacity: 0.8; }
           90% { opacity: 0.8; }
           100% { bottom: 100%; opacity: 0; }
+        }
+        @keyframes gradient-shift-fast {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-shift-fast {
+          animation: gradient-shift-fast 5s ease infinite;
         }
         .animate-scan-line {
           animation: scan-line 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;

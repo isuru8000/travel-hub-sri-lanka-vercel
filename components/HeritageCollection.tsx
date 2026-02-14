@@ -24,14 +24,21 @@ const HIDDEN_GEMS = [
     tag: { EN: 'Oceanic Serenity', SI: 'සාගර නිශ්ශබ්දතාවය' },
     image: 'https://cdn.pixabay.com/photo/2016/11/29/04/19/ocean-1867285_1280.jpg',
     rating: '5.0'
+  },
+  {
+    id: 'meemure-gem',
+    name: { EN: 'Meemure Deep Node', SI: 'මීමුරේ රහස් මග' },
+    tag: { EN: 'Primal Isolation', SI: 'හුදකලා අසිරිය' },
+    image: 'https://i.pinimg.com/1200x/9d/21/2e/9d212e3794b123394712f2065098d5c.jpg',
+    rating: '5.0'
   }
 ];
 
 const HeritageCollection: React.FC<{ language: Language }> = ({ language }) => {
   return (
     <section className="py-20 md:py-32 bg-white overflow-hidden" style={{ perspective: '3000px' }}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 md:gap-12 mb-12 md:mb-20 transform translateZ(50px) md:translateZ(100px)">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 md:gap-12 mb-16 md:mb-24 transform translateZ(50px) md:translateZ(100px)">
           <div className="space-y-4 md:space-y-6">
             <div className="flex items-center gap-3 md:gap-4 text-[#E1306C] font-black text-[10px] md:text-[12px] uppercase tracking-[0.4em] md:tracking-[0.6em]">
               <Gem size={14} className="md:w-5 md:h-5 animate-bounce" />
@@ -48,7 +55,8 @@ const HeritageCollection: React.FC<{ language: Language }> = ({ language }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
+        {/* UPDATED TO 4 COLUMNS ON LG/XL SCREENS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-12">
           {HIDDEN_GEMS.map((gem, idx) => (
             <div key={gem.id} className="group relative" style={{ transformStyle: 'preserve-3d' }}>
               <div 

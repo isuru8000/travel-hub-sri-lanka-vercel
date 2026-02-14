@@ -20,13 +20,6 @@ export interface DestinationDeepDive {
 }
 
 /**
- * Initializes the GoogleGenAI client using process.env.API_KEY directly.
- */
-const getAIClient = () => {
-  return new GoogleGenAI({ apiKey: process.env.API_KEY });
-};
-
-/**
  * Decodes a base64 string into a Uint8Array.
  */
 export function decode(base64: string): Uint8Array {
@@ -62,7 +55,7 @@ export function encode(bytes: Uint8Array): string {
  */
 export const analyzeFoodImage = async (base64Image: string, language: Language): Promise<string> => {
   try {
-    const ai = getAIClient();
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const model = 'gemini-3-flash-preview';
     
     const prompt = `
@@ -78,12 +71,7 @@ export const analyzeFoodImage = async (base64Image: string, language: Language):
 
     const result = await ai.models.generateContent({
       model,
-      contents: {
-        parts: [
-          { inlineData: { data: base64Image, mimeType: 'image/jpeg' } },
-          { text: prompt }
-        ]
-      }
+      contents: [{ parts: [{ inlineData: { data: base64Image, mimeType: 'image/jpeg' } }, { text: prompt }] }]
     });
 
     return result.text || "Identification failed.";
@@ -135,12 +123,10 @@ export function createPcmBlob(data: Float32Array): { data: string; mimeType: str
  */
 export const getDestinationDeepDive = async (destinationName: string, language: Language): Promise<DestinationDeepDive | null> => {
   try {
-    const ai = getAIClient();
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const result = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: `You are the "Master Archivist" for Travel Hub Sri Lanka. 
-      Provide a structured, comprehensive, high-fidelity deep-dive for: ${destinationName}. 
-      Use poetic yet informative language. Language: ${language === 'SI' ? 'Sinhala' : 'English'}.`,
+      contents: [{ parts: [{ text: `You are the "Master Archivist" for Travel Hub Sri Lanka. Provide a structured, comprehensive, high-fidelity deep-dive for: ${destinationName}. Use poetic yet informative language. Language: ${language === 'SI' ? 'Sinhala' : 'English'}.` }] }],
       config: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -177,7 +163,7 @@ export const getLankaGuideResponse = async (
   isThinkingMode: boolean = false
 ): Promise<AIResponse | string> => {
   try {
-    const ai = getAIClient();
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     const systemInstruction = `
       You are "Lanka Guide AI", a prestige travel intelligence unit for "Travel Hub Sri Lanka". 
@@ -192,11 +178,14 @@ export const getLankaGuideResponse = async (
 
     const response = await ai.models.generateContent({
       model,
-      contents: prompt,
+      contents: [{ parts: [{ text: prompt }] }],
       config: {
         systemInstruction,
         tools,
-        ...(isThinkingMode && { thinkingConfig: { thinkingBudget: 32768 } }),
+        ...(isThinkingMode && { 
+          thinkingConfig: { thinkingBudget: 16000 },
+          maxOutputTokens: 20000
+        }),
         ...(!isThinkingMode && location && {
           toolConfig: {
             retrievalConfig: {
@@ -206,7 +195,7 @@ export const getLankaGuideResponse = async (
               }
             }
           }
-        })
+        } as any)
       },
     });
 
@@ -239,18 +228,21 @@ export const getLankaGuideResponse = async (
  */
 export const searchGrounding = async (query: string, language: Language, isThinkingMode: boolean = true): Promise<AIResponse> => {
   try {
-    const ai = getAIClient();
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     const response = await ai.models.generateContent({
       model: "gemini-3-pro-preview",
-      contents: query,
+      contents: [{ parts: [{ text: query }] }],
       config: {
         systemInstruction: `You are the "Neural Intelligence Hub" for Travel Hub Sri Lanka. 
         Provide up-to-the-minute, accurate travel information using real-time search.
         ${isThinkingMode ? 'Use your deep reasoning capabilities to analyze trends and provide insightful conclusions.' : ''}
         Format with clean Markdown. Language: ${language === 'SI' ? 'Sinhala' : 'English'}.`,
         tools: [{ googleSearch: {} }],
-        ...(isThinkingMode && { thinkingConfig: { thinkingBudget: 20000 } })
+        ...(isThinkingMode && { 
+          thinkingConfig: { thinkingBudget: 16000 },
+          maxOutputTokens: 20000
+        })
       },
     });
 
@@ -278,10 +270,10 @@ export const searchGrounding = async (query: string, language: Language, isThink
     }
     
     try {
-      const ai = getAIClient();
+      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const fallback = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
-        contents: `Provide general information about: ${query}. (Note: Search registry offline, providing archival data.) Language: ${language === 'SI' ? 'Sinhala' : 'English'}`
+        contents: [{ parts: [{ text: `Provide general information about: ${query}. (Note: Search registry offline, providing archival data.) Language: ${language === 'SI' ? 'Sinhala' : 'English'}` }] }]
       });
       return { text: fallback.text || "Neural connection intermittent.", links: [] };
     } catch (inner) {
@@ -295,12 +287,12 @@ export const searchGrounding = async (query: string, language: Language, isThink
  */
 export const refineTravelStory = async (story: string, language: Language): Promise<string> => {
   try {
-    const ai = getAIClient();
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = `Refine this travel story to be more poetic and atmospheric. Return ONLY the text. Language: ${language === 'SI' ? 'Sinhala' : 'English'}. Story: "${story}"`;
     
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: prompt,
+      contents: [{ parts: [{ text: prompt }] }],
     });
     return response.text || story;
   } catch (e) {
@@ -313,15 +305,16 @@ export const refineTravelStory = async (story: string, language: Language): Prom
  */
 export const generateDetailedItinerary = async (destination: string, language: Language): Promise<string> => {
   try {
-    const ai = getAIClient();
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const systemInstruction = `You are an elite travel planner. Create high-end 3-day itineraries. Language: ${language === 'SI' ? 'Sinhala' : 'English'}. Use deep reasoning for logistics.`;
     
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
-      contents: `Create a detailed 3-day immersive itinerary for ${destination}, Sri Lanka.`,
+      contents: [{ parts: [{ text: `Create a detailed 3-day immersive itinerary for ${destination}, Sri Lanka.` }] }],
       config: { 
         systemInstruction,
-        thinkingConfig: { thinkingBudget: 32768 } 
+        thinkingConfig: { thinkingBudget: 16000 },
+        maxOutputTokens: 20000
       }
     });
     return response.text || "";

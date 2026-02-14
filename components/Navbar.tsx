@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Language, User } from '../types.ts';
 import { 
@@ -31,26 +30,82 @@ import {
   Briefcase,
   Building2,
   Car,
-  Route
+  Route,
+  Orbit,
+  Atom
 } from 'lucide-react';
 
 /**
- * TravelHubLogo Component - Named export for LoadingScreen
+ * TravelHubLogo Component - Animated Archival Logo
  */
 export const TravelHubLogo: React.FC<{ size?: number; className?: string }> = ({ size = 40, className = "" }) => (
   <div className={`relative group ${className}`}>
-    <div className="absolute inset-0 bg-[#0EA5E9] rounded-full blur-lg opacity-0 group-hover:opacity-40 transition-opacity duration-700"></div>
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10">
-      <circle cx="50" cy="50" r="48" fill="#0a0a0a" stroke="url(#logo_grad_blue)" strokeWidth="2" />
-      <path d="M50 25C40 25 32 33 32 50C32 67 40 75 50 75C60 75 68 67 68 50C68 33 60 25 50 25Z" stroke="white" strokeWidth="0.5" strokeDasharray="2 2" />
-      <text x="50" y="65" textAnchor="middle" fill="white" fontSize="45" fontWeight="bold" fontFamily="serif">T</text>
+    {/* Dynamic Background Glow */}
+    <div className="absolute inset-0 bg-[#0EA5E9] rounded-full blur-xl opacity-20 group-hover:opacity-60 transition-opacity duration-1000 animate-pulse"></div>
+    
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 overflow-visible">
+      {/* Outer Rotating Dash Ring */}
+      <circle 
+        cx="50" 
+        cy="50" 
+        r="48" 
+        stroke="url(#logo_grad_blue)" 
+        strokeWidth="1.5" 
+        strokeDasharray="15 10" 
+        className="animate-[spin_8s_linear_infinite]"
+      />
+      
+      {/* Inner Rotating Dash Ring (Reverse) */}
+      <circle 
+        cx="50" 
+        cy="50" 
+        r="42" 
+        stroke="#0EA5E9" 
+        strokeWidth="0.5" 
+        strokeDasharray="4 4" 
+        className="animate-[spin_12s_linear_infinite_reverse] opacity-30"
+      />
+
+      {/* Solid Core Background */}
+      <circle cx="50" cy="50" r="38" fill="#0a0a0a" className="shadow-2xl" />
+      
+      {/* Centered 'T' with Glow */}
+      <text 
+        x="50" 
+        y="66" 
+        textAnchor="middle" 
+        fill="white" 
+        fontSize="48" 
+        fontWeight="bold" 
+        fontFamily="serif"
+        className="select-none drop-shadow-[0_0_10px_rgba(14,165,233,0.8)]"
+      >
+        T
+      </text>
+
+      {/* Decorative Orbits */}
+      <path 
+        d="M50 20C40 20 32 28 32 45C32 62 40 70 50 70C60 70 68 62 68 45C68 28 60 20 50 20Z" 
+        stroke="white" 
+        strokeWidth="0.2" 
+        strokeDasharray="2 2" 
+        className="animate-pulse opacity-40"
+      />
+
       <defs>
         <linearGradient id="logo_grad_blue" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
           <stop stopColor="#0EA5E9" />
+          <stop offset="0.5" stopColor="#3B82F6" />
           <stop offset="1" stopColor="#2563EB" />
         </linearGradient>
       </defs>
     </svg>
+
+    {/* Floating Particles Around Logo */}
+    <div className="absolute inset-0 pointer-events-none">
+       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0EA5E9] rounded-full animate-ping opacity-40"></div>
+       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0EA5E9] rounded-full animate-ping opacity-40 delay-700"></div>
+    </div>
   </div>
 );
 
@@ -120,16 +175,7 @@ const Navbar: React.FC<NavbarProps> = ({
     },
     { id: 'community', label: { EN: 'Memories', SI: 'මතකයන්' }, icon: <Heart size={14} /> },
     { id: 'shop', label: { EN: 'Gear', SI: 'භාණ්ඩ' }, icon: <ShoppingCart size={14} /> },
-    { 
-      id: 'future-nav', 
-      label: { EN: 'Future', SI: 'අනාගතය' }, 
-      icon: <Zap size={14} className="text-[#0EA5E9]" />,
-      hasDropdown: true,
-      items: [
-        { id: 'legacy-archive', label: { EN: 'Legacy', SI: 'පුරාණ' }, icon: <Library size={14} /> },
-        { id: 'vr-trip', label: { EN: 'VR Trip', SI: 'VR චාරිකාව' }, icon: <Box size={14} /> }
-      ]
-    },
+    { id: 'vr-portal', label: { EN: 'VR Trip', SI: 'VR චාරිකාව' }, icon: <Zap size={14} className="text-[#E1306C]" /> },
   ];
 
   const handleNav = (id: string) => {
@@ -146,7 +192,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <TravelHubLogo size={isScrolled ? 34 : 42} />
           <div className="flex flex-col items-start leading-none transition-all duration-700">
             <h1 className="text-xl md:text-2xl font-heritage font-black tracking-tight uppercase text-[#0a0a0a]">Travel Hub</h1>
-            <span className="text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] mt-0.5 text-gray-400">sri lanka</span>
+            <span className="text-[7px] md:text-[8px] font-black uppercase tracking-[0.3em] mt-0.5 text-gray-400">sri lanka</span>
           </div>
         </div>
 

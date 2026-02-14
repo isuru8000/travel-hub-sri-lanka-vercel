@@ -3,12 +3,6 @@ import { Language, Destination } from '../types.ts';
 import { DESTINATIONS, UI_STRINGS } from '../constants.tsx';
 import { MapPin, History, Sparkles, Compass, ArrowRight, ShieldCheck, Box } from 'lucide-react';
 
-interface PopularHighlightsProps {
-  language: Language;
-  onSelectDestination: (dest: Destination) => void;
-  setView: (view: any) => void;
-}
-
 const HighlightCard: React.FC<{ dest: Destination; index: number; language: Language; onClick: () => void }> = ({ dest, index, language, onClick }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -81,10 +75,10 @@ const HighlightCard: React.FC<{ dest: Destination; index: number; language: Lang
             <Box size={14} className="md:w-5 md:h-5 animate-spin-slow" />
             {dest.location}
           </div>
-          <h3 className="text-3xl md:text-6xl font-heritage font-bold text-[#0a0a0a] leading-[1.1] md:leading-[1] tracking-tighter drop-shadow-lg">
+          <h3 className="text-2xl md:text-4xl lg:text-5xl font-heritage font-bold text-[#0a0a0a] leading-[1.1] md:leading-[1] tracking-tighter drop-shadow-sm max-w-lg break-words">
             {dest.name[language]}
           </h3>
-          <p className="text-xl md:text-3xl text-gray-400 font-light italic leading-tight border-l-[6px] md:border-l-[10px] border-[#0EA5E9]/20 pl-6 md:pl-12 py-2 md:py-3">
+          <p className="text-xl md:text-2xl lg:text-3xl text-gray-400 font-light italic leading-tight border-l-[6px] md:border-l-[10px] border-[#0EA5E9]/20 pl-6 md:pl-12 py-2 md:py-3">
             {dest.shortStory[language]}
           </p>
         </div>
@@ -111,6 +105,13 @@ const HighlightCard: React.FC<{ dest: Destination; index: number; language: Lang
     </div>
   );
 };
+
+// Fix: Added missing PopularHighlightsProps interface to correctly define the props for the PopularHighlights component
+interface PopularHighlightsProps {
+  language: Language;
+  onSelectDestination: (dest: Destination) => void;
+  setView: (view: any) => void;
+}
 
 const PopularHighlights: React.FC<PopularHighlightsProps> = ({ language, onSelectDestination, setView }) => {
   const popularIds = ['sigiriya', 'kandy-temple', 'ella', 'galle-fort', 'yala'];

@@ -1,4 +1,6 @@
 
+
+
 export type Language = 'EN' | 'SI';
 
 export interface User {
@@ -7,56 +9,75 @@ export interface User {
   photo: string;
 }
 
+export interface NearbyAttraction {
+  id: string;
+  name: { EN: string; SI: string };
+  image: string;
+}
+
 export interface Destination {
   id: string;
   name: { EN: string; SI: string };
-  category: 'ancient' | 'beach' | 'wildlife' | 'mountains';
+  category: 'ancient' | 'beach' | 'wildlife' | 'mountains' | 'waterfalls' | 'camping';
   image: string;
   gallery: string[];
   videoUrl?: string;
+  sourceUrl?: string;
   history: { EN: string; SI: string };
   shortStory: { EN: string; SI: string };
-  detailedAbout?: { EN: string; SI: string }; // New field for user copy-paste details
+  detailedAbout?: { EN: string; SI: string };
   masterRecord?: { EN: string; SI: string };
   bestTime: { EN: string; SI: string };
   tips: { EN: string; SI: string }[];
   hiddenEchoes: { EN: string; SI: string };
   location: string;
   coordinates?: { x: number; y: number };
+  nearbyAttractions?: NearbyAttraction[];
 }
 
+// Fix: Added missing Food interface to resolve export error in constants.tsx and Foods.tsx
+export interface Food {
+  id: string;
+  name: { EN: string; SI: string };
+  category: "street" | "royal" | "village" | "coastal" | "sweets";
+  description: { EN: string; SI: string };
+  image: string;
+  spiciness: number;
+  ingredients: { EN: string; SI: string }[];
+  tasteProfile: { EN: string; SI: string };
+}
+
+// Fix: Added missing Transport interface to resolve export error in constants.tsx
 export interface Transport {
   id: string;
   name: { EN: string; SI: string };
-  type: 'air' | 'rail' | 'road' | 'sea';
+  type: 'road' | 'rail' | 'air';
   price: number;
   description: { EN: string; SI: string };
   image: string;
   features: { EN: string[]; SI: string[] };
 }
 
-export interface Food {
+export interface Comment {
   id: string;
-  name: { EN: string; SI: string };
-  category: 'street' | 'village' | 'sweets' | 'coastal' | 'royal';
-  description: { EN: string; SI: string };
-  image: string;
-  spiciness: 1 | 2 | 3 | 4 | 5;
-  ingredients: { EN: string; SI: string }[];
-  tasteProfile: { EN: string; SI: string };
+  userName: string;
+  userPhoto: string;
+  text: { EN: string; SI: string };
+  date: string;
 }
 
 export interface Memory {
   id: string;
   userName: string;
-  location: string;
-  title: string;
-  story: string;
+  location: { EN: string; SI: string };
+  title: { EN: string; SI: string };
+  story: { EN: string; SI: string };
   image: string;
   likes: number;
   date: string;
   rating: number;
   tags: string[];
+  comments: Comment[];
 }
 
 export interface HeritageMusic {

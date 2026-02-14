@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Language, Destination } from '../types.ts';
 import { DESTINATIONS, UI_STRINGS } from '../constants.tsx';
@@ -22,7 +21,9 @@ import {
   Play,
   Pause,
   Scan,
-  Radio
+  Radio,
+  Droplets,
+  Tent
 } from 'lucide-react';
 
 interface IslandMapManifoldProps {
@@ -53,7 +54,9 @@ const IslandMapManifold: React.FC<IslandMapManifoldProps> = ({ language, onSelec
     ancient: '#F59E0B',
     beach: '#0EA5E9',
     wildlife: '#10B981',
-    mountains: '#8B5CF6'
+    mountains: '#8B5CF6',
+    waterfalls: '#3B82F6',
+    camping: '#059669'
   };
 
   const handleNext = () => {
@@ -101,8 +104,8 @@ const IslandMapManifold: React.FC<IslandMapManifoldProps> = ({ language, onSelec
                        <span className="text-[10px] font-black uppercase tracking-[0.5em]">Geospatial_Interface</span>
                     </div>
                     <div className="flex gap-1">
-                       <div className="w-1 h-1 rounded-full bg-green-500 animate-pulse" />
-                       <div className="w-1 h-1 rounded-full bg-green-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
+                       <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                       <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" style={{ animationDelay: '0.2s' }} />
                     </div>
                  </div>
                  <h2 className="text-4xl font-heritage font-bold text-white uppercase tracking-tighter">Spatial Map.</h2>
@@ -128,12 +131,12 @@ const IslandMapManifold: React.FC<IslandMapManifoldProps> = ({ language, onSelec
                            placeholder="Locate registry node..."
                            value={searchQuery}
                            onChange={(e) => setSearchQuery(e.target.value)}
-                           className="w-full pl-16 pr-6 py-5 bg-white/5 border border-white/10 rounded-2xl text-white font-bold focus:outline-none focus:ring-4 focus:ring-[#0EA5E9]/10 transition-all"
+                           className="w-full pl-12 pr-6 py-5 bg-white/5 border border-white/10 rounded-2xl text-white font-bold focus:outline-none focus:ring-4 focus:ring-[#0EA5E9]/10 transition-all"
                          />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
-                         {['all', 'ancient', 'mountains', 'beach', 'wildlife'].map((cat) => (
+                      <div className="grid grid-cols-2 gap-3 max-h-48 overflow-y-auto no-scrollbar">
+                         {['all', 'ancient', 'beach', 'wildlife', 'mountains', 'waterfalls', 'camping'].map((cat) => (
                            <button
                              key={cat}
                              onClick={() => setCategoryFilter(cat as any)}

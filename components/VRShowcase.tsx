@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Language } from '../types.ts';
 import { Layers, Box, Sparkles, Target, Radio, ArrowLeft, Gem, Wind, Zap, Lock, Loader2, Cpu, Scan, Hexagon, Binary, Shield, ZapOff, Signal, FastForward, Move, Compass, RotateCw, Activity, Database, HardDrive, Sun, ArrowDown } from 'lucide-react';
@@ -12,7 +13,7 @@ const REGISTRY_01 = [
     id: 'sigiriya',
     name: { EN: 'Sigiriya Lion Rock', SI: 'සීගිරිය සිංහගිරිය' },
     status: '92% SCANNED',
-    image: 'https://images.unsplash.com/photo-1580794749460-76f97b7180d8?auto=format&fit=crop&w=800&q=80',
+    image: 'https://i.pinimg.com/736x/87/b1/7f/87b17fb4f6d602cf2606fdf482e41c2b.jpg',
     type: 'FORTRESS',
     progress: 92
   },
@@ -146,7 +147,7 @@ const VRCard: React.FC<{ space: any, language: Language, idx: number, isLocked?:
     >
       <img 
         src={space.image} 
-        className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale group-hover:grayscale-0 group-hover:opacity-80 transition-all duration-1000" 
+        className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-1000" 
         alt={space.name[language]} 
       />
       
@@ -293,13 +294,15 @@ const VRShowcase: React.FC<VRShowcaseProps> = ({ language, setView }) => {
     >
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0" style={{ backgroundImage: `url('https://www.transparenttextures.com/patterns/stardust.png')` }} />
       
+      {/* Animated Flowing Grid Background */}
       <div 
         className="fixed inset-0 opacity-[0.12] pointer-events-none transition-transform duration-1000 ease-out" 
         style={{ 
           backgroundImage: `linear-gradient(#E1306C 1px, transparent 1px), linear-gradient(90deg, #E1306C 1px, transparent 1px)`, 
           backgroundSize: '120px 120px', 
           transform: `perspective(1200px) rotateX(75deg) translateY(${position.z}px) translateX(${position.x + rotation.y * 12}px)`, 
-          maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 80%)' 
+          maskImage: 'radial-gradient(ellipse at center, black 10%, transparent 80%)',
+          animation: 'grid-flow 10s linear infinite'
         }} 
       />
       
@@ -392,7 +395,7 @@ const VRShowcase: React.FC<VRShowcaseProps> = ({ language, setView }) => {
                      <span className="text-[11px] md:text-[13px] font-black uppercase tracking-[0.6em]">Protocol_A8_Active</span>
                   </div>
                   
-                  <h2 className="text-6xl sm:text-7xl md:text-[9rem] font-heritage font-bold text-white tracking-tighter leading-[0.85] drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] uppercase">
+                  <h2 className="text-6xl sm:text-7xl md:text-[9rem] font-heritage font-bold text-white tracking-tighter uppercase leading-[0.85] drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] uppercase">
                     REWRITE <br/>
                     <span className="insta-text-gradient italic">3D SPACE.</span>
                   </h2>
@@ -506,6 +509,10 @@ const VRShowcase: React.FC<VRShowcaseProps> = ({ language, setView }) => {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes grid-flow {
+          0% { background-position: 0 0; }
+          100% { background-position: 0 120px; }
+        }
         @keyframes scan-fast {
           0% { top: 0%; opacity: 0; }
           20% { opacity: 1; }

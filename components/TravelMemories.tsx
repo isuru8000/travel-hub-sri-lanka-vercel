@@ -1,3 +1,6 @@
+
+
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Language, Memory, User } from '../types.ts';
 import { 
@@ -33,62 +36,36 @@ const INITIAL_MEMORIES: Memory[] = [
   {
     id: '1',
     userName: 'Elena R.',
-    location: 'Sigiriya',
-    title: 'Waking up the Jungle',
-    story: 'The air was crisp and smelled of damp earth. Watching the first light hit the rock was a spiritual experience that transcended any map coordinates.',
+    location: { EN: 'Sigiriya', SI: 'සීගිරිය' },
+    title: { EN: 'Waking up the Jungle', SI: 'වනය අවදි කිරීම' },
+    story: { 
+      EN: 'The air was crisp and smelled of damp earth. Watching the first light hit the rock was a spiritual experience that transcended any map coordinates.', 
+      SI: 'හිරු එළිය පර්වතයට වැටෙන අයුරු නැරඹීම සැබැවින්ම ආධ්‍යාත්මික අත්දැකීමකි. එය සිතියම් වල ඇති සීමාවලින් ඔබ්බට ගිය හැඟීමකි.' 
+    },
     image: 'https://images.unsplash.com/photo-1580794749460-76f97b7180d8?auto=format&fit=crop&w=800&q=80',
     likes: 342,
     date: '2025-10-12',
     rating: 5,
-    tags: ['first-light', 'ancient']
+    tags: ['first-light', 'ancient'],
+    // Fix: Added missing comments property to match Memory interface
+    comments: []
   },
   {
     id: '2',
     userName: 'Marco S.',
-    location: 'Ella',
-    title: 'Rainy Day Tea House',
-    story: 'The sound of the rain on the tin roof mixed with the steam of the ginger tea. Nowhere else I would rather be.',
+    location: { EN: 'Ella', SI: 'ඇල්ල' },
+    title: { EN: 'Rainy Day Tea House', SI: 'වැහි දිනක තේ පැන් හල' },
+    story: { 
+      EN: 'The sound of the rain on the tin roof mixed with the steam of the ginger tea. Nowhere else I would rather be.', 
+      SI: 'තහඩු වහලයට වහින වැස්සේ හඬත් සමඟ ඉඟුරු තේ කෝප්පයක සුවඳ විඳීම තරම් සතුටක් තවත් නැත.' 
+    },
     image: 'https://images.unsplash.com/photo-1578519050142-afb511e518de?auto=format&fit=crop&w=800&q=80',
     likes: 189,
     date: '2025-11-05',
     rating: 4,
-    tags: ['monsoon', 'tea-magic']
-  },
-  {
-    id: '3',
-    userName: 'Saito K.',
-    location: 'Galle',
-    title: 'Old Town Lullaby',
-    story: 'Cobblestone streets echoing with the distant sound of the Indian Ocean. The history here isnt in the books, it is in the breeze.',
-    image: 'https://images.unsplash.com/photo-1654561773591-57b9413c45c0?auto=format&fit=crop&w=800&q=80',
-    likes: 256,
-    date: '2025-11-20',
-    rating: 5,
-    tags: ['heritage', 'midnight']
-  },
-  {
-    id: '4',
-    userName: 'Anita B.',
-    location: 'Yala',
-    title: 'Eyes in the Bush',
-    story: 'We stopped the engine. Total silence. Then, a branch snapped. That heartbeat moment is why we travel.',
-    image: 'https://images.unsplash.com/photo-1590766940554-634a7ed41450?auto=format&fit=crop&w=800&q=80',
-    likes: 512,
-    date: '2025-12-02',
-    rating: 5,
-    tags: ['nature', 'raw']
-  },
-  {
-    id: '5',
-    userName: 'Jin L.',
-    location: 'Kandy',
-    title: 'Rhythm and Spice',
-    story: 'The market was a sensory overload in the best possible way. The colors, the shouting, the smell of roasted curry powder.',
-    image: 'https://images.unsplash.com/photo-1616070152767-3eb99cf10509?auto=format&fit=crop&w=800&q=80',
-    likes: 124,
-    date: '2025-12-15',
-    rating: 4,
-    tags: ['local', 'spice']
+    tags: ['monsoon', 'tea-magic'],
+    // Fix: Added missing comments property to match Memory interface
+    comments: []
   }
 ];
 
@@ -99,7 +76,14 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
   const [isSuccess, setIsSuccess] = useState(false);
   const [isRefining, setIsRefining] = useState(false);
   
-  const [newMemory, setNewMemory] = useState<Partial<Memory>>({
+  const [newMemory, setNewMemory] = useState<{
+    title: string;
+    location: string;
+    story: string;
+    rating: number;
+    tags: string[];
+    image: string;
+  }>({
     title: '',
     location: '',
     story: '',
@@ -129,14 +113,16 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
       const memory: Memory = {
         id: Date.now().toString(),
         userName: user.name,
-        location: newMemory.location || 'Unknown',
-        title: newMemory.title || 'Untitled Memory',
-        story: newMemory.story || '',
-        image: newMemory.image || 'https://images.unsplash.com/photo-1580794749460-76f97b7180d8?auto=format&fit=crop&w=800&q=80',
+        location: { EN: newMemory.location, SI: newMemory.location },
+        title: { EN: newMemory.title, SI: newMemory.title },
+        story: { EN: newMemory.story, SI: newMemory.story },
+        image: newMemory.image,
         likes: 0,
         date: new Date().toISOString().split('T')[0],
-        rating: newMemory.rating || 5,
-        tags: newMemory.tags || []
+        rating: newMemory.rating,
+        tags: newMemory.tags,
+        // Fix: Added missing comments property to match Memory interface
+        comments: []
       };
 
       setMemories([memory, ...memories]);
@@ -160,7 +146,7 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
 
   return (
     <div className="min-h-screen bg-[#fafafa] pb-32">
-      <div className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-black">
+      <div className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-black text-left">
         <div 
           className="absolute inset-0 bg-cover bg-fixed bg-center opacity-40" 
           style={{ backgroundImage: `url('https://images.unsplash.com/photo-1580794749460-76f97b7180d8?auto=format&fit=crop&w=1920&q=80')` }}
@@ -169,10 +155,10 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
         <div className="relative text-center space-y-6 px-4">
           <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.5em] mb-4">
              <Sparkles size={16} className="text-[#E1306C]" />
-             Public Archives
+             {language === 'EN' ? 'Public Archives' : 'පොදු සංරක්ෂණාගාරය'}
           </div>
           <h2 className="text-5xl md:text-8xl font-heritage font-bold text-white tracking-tighter uppercase leading-[0.85]">
-            Travel <br/><span className="italic insta-text-gradient">Memories.</span>
+            {language === 'EN' ? <>Travel <br/><span className="italic insta-text-gradient">Memories.</span></> : <>සංචාරක <br/><span className="italic insta-text-gradient">මතකයන්.</span></>}
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-lg md:text-2xl font-light italic leading-relaxed">
             {language === 'EN' 
@@ -188,7 +174,9 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
               <h3 className="text-3xl font-heritage font-bold text-[#262626]">
                 {language === 'EN' ? 'Share Your Journey' : 'ඔබේ සංචාරය බෙදාගන්න'}
               </h3>
-              <p className="text-gray-400 text-sm font-medium italic">Join our archival registry of Sri Lankan adventures.</p>
+              <p className="text-gray-400 text-sm font-medium italic">
+                {language === 'EN' ? 'Join our archival registry of Sri Lankan adventures.' : 'ශ්‍රී ලංකාවේ සංචාරක අත්දැකීම් එකතුවට එක් වන්න.'}
+              </p>
            </div>
            <button 
              onClick={() => user ? setShowForm(true) : onLogin()}
@@ -197,19 +185,19 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
              {user ? (
                <>
                  <Plus size={18} />
-                 Initialize Upload
+                 {language === 'EN' ? 'Initialize Upload' : 'ඡායාරූප එක් කරන්න'}
                </>
              ) : (
                <>
                  <Lock size={18} />
-                 Login to Access
+                 {language === 'EN' ? 'Login to Access' : 'සම්බන්ධ වන්න'}
                </>
              )}
            </button>
         </div>
 
         {showForm && (
-          <div className="bg-white p-10 md:p-16 rounded-[4rem] shadow-2xl border border-gray-100 animate-in slide-in-from-bottom-8 duration-700 relative overflow-hidden">
+          <div className="bg-white p-10 md:p-16 rounded-[4rem] shadow-2xl border border-gray-100 animate-in slide-in-from-bottom-8 duration-700 relative overflow-hidden text-left">
             {isSuccess && (
               <div className="absolute inset-0 z-50 bg-white/98 backdrop-blur-md flex flex-col items-center justify-center text-center p-12 space-y-12 animate-in fade-in duration-700">
                 <div className="relative">
@@ -219,21 +207,27 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
                    <div className="absolute -inset-6 border-2 border-dashed border-green-500/20 rounded-full animate-spin-slow" />
                 </div>
                 <div className="space-y-6">
-                  <h4 className="text-3xl font-heritage font-bold text-[#0a0a0a]">Memory Archived</h4>
-                  <p className="text-gray-400 font-medium italic">Synchronization with public registry complete.</p>
+                  <h4 className="text-3xl font-heritage font-bold text-[#0a0a0a]">
+                    {language === 'EN' ? 'Memory Archived' : 'මතකය සංරක්ෂණය කරන ලදී'}
+                  </h4>
+                  <p className="text-gray-400 font-medium italic">
+                    {language === 'EN' ? 'Synchronization with public registry complete.' : 'දත්ත ඇතුළත් කිරීම සාර්ථකයි.'}
+                  </p>
                 </div>
               </div>
             )}
 
             <div className="flex justify-between items-center mb-12">
-               <h4 className="text-3xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">New Registry Entry</h4>
+               <h4 className="text-3xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">
+                 {language === 'EN' ? 'New Registry Entry' : 'අලුත් මතක සටහනක්'}
+               </h4>
                <button onClick={() => setShowForm(false)} className="p-3 hover:bg-gray-100 rounded-full transition-colors"><X size={24} /></button>
             </div>
 
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-12">
                <div className="space-y-8">
                   <div className="space-y-3">
-                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Destination Name</label>
+                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">{language === 'EN' ? 'Destination Name' : 'ස්ථානය'}</label>
                     <input 
                       required
                       type="text" 
@@ -245,7 +239,7 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Archive Title</label>
+                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">{language === 'EN' ? 'Archive Title' : 'මාතෘකාව'}</label>
                     <input 
                       required
                       type="text" 
@@ -258,7 +252,7 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
 
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">The Narrative</label>
+                      <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">{language === 'EN' ? 'The Narrative' : 'කතාව'}</label>
                       <button 
                         type="button"
                         onClick={handleRefine}
@@ -266,7 +260,7 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
                         className="flex items-center gap-2 text-[9px] font-black text-[#E1306C] uppercase tracking-widest bg-[#E1306C]/5 px-4 py-1.5 rounded-full hover:bg-[#E1306C]/10 transition-all disabled:opacity-30"
                       >
                         {isRefining ? <Loader2 size={12} className="animate-spin" /> : <Wand2 size={12} />}
-                        Refine with AI
+                        {language === 'EN' ? 'Refine with AI' : 'AI හරහා සකසන්න'}
                       </button>
                     </div>
                     <textarea 
@@ -282,7 +276,7 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
 
                <div className="space-y-8">
                   <div className="space-y-3">
-                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Visual Evidence (URL)</label>
+                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">{language === 'EN' ? 'Visual Evidence (URL)' : 'ඡායාරූපය (ලින්ක්)'}</label>
                     <div className="relative group">
                       <ImageIcon className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[#E1306C] transition-colors" size={20} />
                       <input 
@@ -296,13 +290,13 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
                   </div>
 
                   <div className="space-y-3">
-                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">Resonance Level</label>
+                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-widest ml-1">{language === 'EN' ? 'Resonance Level' : 'තක්සේරුව'}</label>
                     <div className="flex gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
                        {[1,2,3,4,5].map(star => (
                          <button 
                            key={star}
                            type="button"
-                           onClick={() => setNewMemory(prev => ({...prev, rating: star as any}))}
+                           onClick={() => setNewMemory(prev => ({...prev, rating: star}))}
                            className={`transition-all ${star <= (newMemory.rating || 0) ? 'text-yellow-400 scale-125' : 'text-gray-200 hover:text-yellow-200'}`}
                          >
                            <Star size={24} fill="currentColor" />
@@ -321,7 +315,7 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
                         <Loader2 size={24} className="animate-spin" />
                       ) : (
                         <>
-                          Commit to Archive
+                          {language === 'EN' ? 'Commit to Archive' : 'සංරක්ෂණය කරන්න'}
                           <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                         </>
                       )}
@@ -332,7 +326,7 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-left">
           {memories.map((memory) => (
             <div 
               key={memory.id}
@@ -341,7 +335,7 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
               <div className="relative h-80 overflow-hidden">
                 <img 
                   src={memory.image} 
-                  alt={memory.title} 
+                  alt={memory.title[language]} 
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[4000ms]"
                 />
                 <div className="absolute top-6 right-6 px-4 py-1.5 bg-white/90 backdrop-blur-md rounded-full shadow-lg flex items-center gap-2">
@@ -366,17 +360,17 @@ const TravelMemories: React.FC<TravelMemoriesProps> = ({ language, user, onLogin
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-[#E1306C]">
                     <MapPin size={12} />
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em]">{memory.location}</span>
+                    <span className="text-[10px] font-black uppercase tracking-[0.3em]">{memory.location[language]}</span>
                   </div>
                   <h3 className="text-2xl font-heritage font-bold text-[#0a0a0a] group-hover:insta-text-gradient transition-all uppercase tracking-tight">
-                    {memory.title}
+                    {memory.title[language]}
                   </h3>
                 </div>
 
                 <div className="relative">
                   <Quote size={24} className="text-[#E1306C]/10 absolute -top-4 -left-4" />
                   <p className="text-gray-500 leading-relaxed italic font-light line-clamp-4 relative z-10">
-                    "{memory.story}"
+                    "{memory.story[language]}"
                   </p>
                 </div>
 

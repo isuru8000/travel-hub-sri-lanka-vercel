@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { X, Globe, Chrome, ShieldCheck, Info } from 'lucide-react';
+import { X, Globe, Chrome, ShieldCheck, Info, Loader2, AlertCircle } from 'lucide-react';
 import { Language } from '../types.ts';
 import { supabase, IS_MOCK_AUTH } from '../lib/supabase.ts';
 
@@ -19,10 +19,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, language }) =>
     setError(null);
     
     try {
-      if (IS_MOCK_AUTH) {
-        throw new Error("MOCK_MODE_ACTIVE");
-      }
-
+      // In a real environment with Supabase keys, this redirects the browser
       const { error: authError } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
@@ -35,24 +32,18 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, language }) =>
       });
       
       if (authError) throw authError;
+
+      // If we are in mock mode, the custom mock client in lib/supabase.ts 
+      // will handle the state locally instead of redirecting.
+      if (IS_MOCK_AUTH) {
+        onClose();
+      }
     } catch (err: any) {
-      console.warn("Real authentication unavailable, initiating Demo Session:", err.message);
-      
-      // Fallback: Create a simulated user session so the user can test the app
-      setTimeout(() => {
-        if ((window as any).__triggerMockLogin) {
-          (window as any).__triggerMockLogin({
-            id: 'demo-user-123',
-            email: 'explorer@travelhub.lk',
-            user_metadata: {
-              full_name: 'Lanka Explorer',
-              avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80'
-            }
-          });
-          onClose();
-        }
-        setIsLoading(false);
-      }, 1200);
+      console.error("Authentication Error:", err);
+      setError(language === 'EN' 
+        ? "Could not establish a secure handshake with the identity provider." 
+        : "අනන්‍යතා සේවාව සමඟ සම්බන්ධ වීමට නොහැකි විය.");
+      setIsLoading(false);
     }
   };
 
@@ -76,7 +67,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, language }) =>
           <div className="text-center space-y-4">
             <div className="w-20 h-20 story-ring p-1 rounded-3xl mx-auto shadow-2xl flex items-center justify-center">
               <div className="bg-white w-full h-full rounded-[22px] flex items-center justify-center">
-                <Globe size={32} className="text-[#E1306C]" />
+                <Globe size={32} className="text-[#0EA5E9]" />
               </div>
             </div>
             <div className="space-y-2">
@@ -92,19 +83,26 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, language }) =>
           </div>
 
           <div className="space-y-6">
+            {error && (
+              <div className="p-4 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-3 text-red-600 animate-in slide-in-from-top-2">
+                <AlertCircle size={18} className="shrink-0" />
+                <p className="text-[10px] font-bold uppercase tracking-widest leading-relaxed">{error}</p>
+              </div>
+            )}
+
             <button
               onClick={handleGoogleLogin}
               disabled={isLoading}
-              className="group w-full flex items-center justify-center gap-5 py-6 px-8 bg-[#0a0a0a] text-white rounded-full font-black text-[10px] uppercase tracking-[0.3em] transition-all hover:shadow-[0_20px_50px_rgba(225,48,108,0.3)] active:scale-95 disabled:opacity-50 overflow-hidden relative"
+              className="group w-full flex items-center justify-center gap-5 py-6 px-8 bg-[#0a0a0a] text-white rounded-full font-black text-[10px] uppercase tracking-[0.3em] transition-all hover:shadow-[0_20px_50px_rgba(14,165,233,0.3)] active:scale-95 disabled:opacity-50 overflow-hidden relative"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-[#E1306C] border-t-transparent rounded-full animate-spin"></div>
+                <Loader2 size={20} className="text-[#0EA5E9] animate-spin" />
               ) : (
                 <Chrome size={20} className="text-white group-hover:rotate-12 transition-transform" />
               )}
               <span className="relative z-10">
-                {isLoading ? "Syncing Identity..." : (language === 'EN' ? "Continue with Google" : "ගූගල් සමඟ සම්බන්ධ වන්න")}
+                {isLoading ? "Negotiating Uplink..." : (language === 'EN' ? "Continue with Google" : "ගූගල් සමඟ සම්බන්ධ වන්න")}
               </span>
             </button>
             
@@ -113,17 +111,19 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, language }) =>
               <span className="relative px-6 bg-white text-[9px] font-black text-gray-300 uppercase tracking-[0.5em]">Secure Protocol</span>
             </div>
 
-            {IS_MOCK_AUTH && (
+            {IS_MOCK_AUTH && !isLoading && (
               <div className="flex items-start gap-4 p-6 rounded-[2rem] bg-blue-50/50 border border-blue-100 animate-pulse">
                 <Info size={18} className="text-blue-500 mt-0.5 shrink-0" />
-                <p className="text-[10px] font-bold text-blue-700 leading-relaxed uppercase tracking-widest">
-                  Environment: <span className="font-black">Development</span><br/>
-                  Using demo credentials for preview.
-                </p>
+                <div className="text-left space-y-1">
+                  <p className="text-[10px] font-black text-blue-700 uppercase tracking-widest leading-none">Archival Preview Mode</p>
+                  <p className="text-[9px] font-medium text-blue-600/80 italic leading-relaxed">
+                    Real keys not detected. Using a simulated neural signature for exploration.
+                  </p>
+                </div>
               </div>
             )}
 
-            <div className="flex items-center gap-5 p-6 rounded-[2rem] bg-gray-50 border border-gray-100">
+            <div className="flex items-center gap-5 p-6 rounded-[2rem] bg-gray-50 border border-gray-100 transition-all hover:bg-white hover:shadow-xl">
               <ShieldCheck size={24} className="text-green-500" />
               <div className="text-left">
                 <p className="text-[10px] font-black uppercase text-[#0a0a0a] tracking-widest">Verified Handshake</p>
@@ -134,7 +134,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, language }) =>
 
           <p className="text-[9px] text-center text-gray-300 font-bold uppercase tracking-[0.2em] leading-relaxed px-8">
             By connecting, you agree to the <br/> 
-            <span className="text-gray-400 hover:text-[#E1306C] cursor-pointer transition-colors">Heritage Archive Terms</span> & <span className="text-gray-400 hover:text-[#E1306C] cursor-pointer transition-colors">Privacy Policy</span>
+            <span className="text-gray-400 hover:text-[#0EA5E9] cursor-pointer transition-colors">Heritage Archive Terms</span> & <span className="text-gray-400 hover:text-[#0EA5E9] cursor-pointer transition-colors">Privacy Policy</span>
           </p>
         </div>
       </div>

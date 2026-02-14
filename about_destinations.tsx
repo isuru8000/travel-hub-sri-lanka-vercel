@@ -1,220 +1,261 @@
+
 /**
- * Detailed Archival Narratives for All Registry Destinations.
- * Expanded with Weather, Nearby Places, and Suitability.
+ * THE NEURAL ARCHIVE: MASTER REGISTRY DATA
+ * 
+ * This file contains the highest fidelity narratives for all island nodes.
+ * Designed for seamless parsing by human readers and AI Intelligence Units.
  */
+
 export const ABOUT_DATA: Record<string, { EN: string, SI: string }> = {
+  // --- ANCIENT ---
   sigiriya: {
-    EN: `Sigiriya, a UNESCO World Heritage site, is a magnificent testament to ancient Sri Lankan engineering, urban planning, and art. Known as the "Lion Rock," it stands nearly 200 meters high, rising abruptly from the central plains. Built in the 5th century by King Kasyapa, the fortress was designed as a royal palace and a military stronghold.
-
-[Atmospheric Synchronization]
-The region experiences a tropical climate. Best viewed between December and April, when the central plains are vibrant. Morning climbs (starting at 6:30 AM) are highly recommended to avoid the peak heat and witness the golden light hitting the frescoes.
-
-[Nearby Registry Nodes]
-- Pidurangala Rock: Directly opposite Sigiriya, providing the most iconic panoramic view of the Sky Palace.
-- Minneriya National Park: A short drive away, famous for the "Great Gathering" of wild elephants.
-- Dambulla Cave Temple: A complex of ancient cave shrines carved into a massive granite rock.
-
-[Voyager Suitability]
-Ideal for history enthusiasts, fitness-oriented travelers (1200+ steps), and photographers seeking monumental silhouettes. Families should exercise caution with younger children on the steeper upper sections.`,
-    SI: `සීගිරිය යනු යුනෙස්කෝ ලෝක උරුමයක් වන අතර එය පැරණි ශ්‍රී ලාංකීය ඉංජිනේරු ශිල්පය, නාගරික සැලසුම්කරණය සහ කලාව පිළිබඳ විශිෂ්ට සාක්ෂියකි. "සිංහගිරිය" ලෙස හැඳින්වෙන මෙය මධ්‍යම තැනිතලාවෙන් හදිසියේ නැගී එන මීටර් 200ක් පමණ උසැති දැවැන්ත පර්වතයකි. 5 වන සියවසේදී කාශ්‍යප රජු විසින් ඉදිකරන ලද මෙම බලකොටුව රාජකීය මාලිගාවක් සහ හමුදා මූලස්ථානයක් ලෙස නිර්මාණය කර ඇත.
-
-[පරිසරය සහ දේශගුණය]
-මෙහි පවතින්නේ නිවර්තන දේශගුණයකි. දෙසැම්බර් සිට අප්‍රේල් දක්වා සංචාරයට වඩාත් සුදුසුයි. දැඩි හිරු රශ්මියෙන් වැළකීමට සහ බිතුසිතුවම්වල සුන්දරත්වය නැරඹීමට උදෑසන 6:30 ට පමණ ගමන ආරම්භ කිරීම නිර්දේශ කෙරේ.
-
-[අසල ඇති ස්ථාන]
-- පින්දූරංගල පර්වතය: සීගිරිය පර්වතයට සෘජුවම මුහුණ ලා පිහිටා ඇති අතර සීගිරිය නැරඹීමට ඇති හොඳම ස්ථානය මෙයයි.
-- මින්නේරිය ජාතික වනෝද්‍යානය: අලි රංචු නැරඹීම සඳහා ප්‍රසිද්ධියට පත් ස්ථානයකි.
-- දඹුල්ල රජමහා විහාරය: මීටර් කිහිපයක් දුරින් පිහිටි පැරණි ලෙන් විහාර සංකීර්ණයකි.
-
-[සංචාරක යෝග්‍යතාවය]
-ඉතිහාසයට ලැදි අයට, ශාරීරිකව ශක්තිමත් සංචාරකයින්ට (පියගැට 1200 කට වඩා ඇත) සහ ඡායාරූප ශිල්පීන්ට ඉතා සුදුසුයි.`
+    EN: `[Chronicle] 5th-century mountain citadel. [Manifest] Palace baths, Lion stairs. [Wisdom] Climb at 6:30 AM.`,
+    SI: `[ඓතිහාසික] 5 වන සියවසේ බලකොටුව. [විස්තර] සිංහ පඩිපෙළ. [උපදෙස්] පාන්දරින් යන්න.`
   },
-  ella: {
-    EN: `Ella is a picturesque mountain village perched 1,041 meters above sea level in Sri Lanka's central highlands. Surrounded by dramatic ridges, lush tea plantations, and misty peaks, this town is the ultimate hill country paradise for explorers.
-
-[Best Time to Visit]
-The peak season is January to March, offering warm afternoons and refreshingly chilly nights. The dry season (January to May) is ideal for hiking, while the "Green Season" from June to September provides lush, vibrant landscapes with minimal rainfall.
-
-[Top Things to Do]
-• Nine Arches Bridge: Completed in 1921, this colonial-era stone bridge spans 91 meters. Visit at 6:00 AM to catch the first train passing through the jungle canopy.
-• Little Adam's Peak: A manageable 45-minute hike offering panoramic views of the Ella Gap.
-• Ella Rock: A challenging 3-hour trek through tea estates for those seeking high-altitude solitude.
-• Ravana Falls: A stunning cascade near town, most impressive during the rainy season.
-
-[The Iconic Train Journey]
-The rail journey from Kandy to Ella is globally recognized as one of the most scenic train rides on Earth. It winds through misty cloud forests and emerald tea valleys, offering a highlight experience for any Sri Lankan itinerary.
-
-[Climate & Weather]
-Expect temperatures between 20-30°C year-round. The elevation ensures a pleasant break from the coastal heat, though misty mornings and sudden fog are common archival features of this node.
-
-[Voyager Suitability]
-Perfect for hikers, digital nomads, and families seeking a relaxed mountain vibe. Ella's vibrant cafe scene, led by hubs like Cafe Chill, makes it highly suitable for solo travelers and social explorers alike.`,
-    SI: `ඌව පළාතේ පිහිටි ඇල්ල, එහි සිසිල් කාලගුණය සහ මනරම් කඳුකර දර්ශන නිසා ප්‍රසිද්ධියට පත් කුඩා නගරයකි. "අහස් පාලම" ලෙසද හැඳින්වෙන ආරුක්කු නවය පාලම මෙහි වඩාත් සුවිශේෂී සලකුණයි.
-
-[පරිසරය සහ දේශගුණය]
-වසර පුරා සිසිල් සහ මීදුම සහිත කාලගුණයක් පවතී. උෂ්ණත්වය සෙල්සියස් අංශක 15 ත් 25 ත් අතර පවතී. ඔක්තෝබර් සිට දෙසැම්බර් දක්වා පවතින මඳ වර්ෂාව තේ වතුවලට අපූරු සුන්දරත්වයක් එක් කරයි.
-
-[අසල ඇති ස්ථාන]
-- පුංචි ශ්‍රී පාදය: තේ වතු මැදින් වැටී ඇති පහසු පා ගමනකින් පසු මනරම් දර්ශනයක් නැරඹිය හැකිය.
-- රාවණා ඇල්ල: රාම-රාවණා පුරාවෘත්ත හා බැඳුණු දර්ශනීය දිය ඇල්ලකි.
-- ඇල්ල රොක්: කඳු තරණයට ලැදි අය සඳහා වඩාත් උචිත ස්ථානයකි.
-
-[සංචාරක යෝග්‍යතාවය]
-කඳු තරණයට ලැදි අයට, නිදහසේ විවේක ගැනීමට කැමති අයට සහ නවීන කැෆේ සංස්කෘතියට ප්‍රිය කරන අයට ඉතා සුදුසුයි.`
+  "kandy-temple": {
+    EN: `[Chronicle] Last Kingdom's relic house. [Manifest] Gold roof, rituals. [Wisdom] Wear white clothes.`,
+    SI: `[ඓතිහාසික] දන්ත ධාතු මාලිගාව. [විස්තර] රන් වහලය. [උපදෙස්] සුදු අඳින්න.`
+  },
+  polonnaruwa: {
+    EN: `[Chronicle] Medieval capital ruins. [Manifest] Gal Vihara sculptures. [Wisdom] Cycle through the site.`,
+    SI: `[ඓතිහාසික] මධ්‍යතන අගනුවර. [විස්තර] ගල් විහාරය. [උපදෙස්] පාපැදියෙන් යන්න.`
+  },
+  dambulla: {
+    EN: `[Chronicle] Rock cave temple. [Manifest] Ancient frescoes. [Wisdom] Panoramic views from the top.`,
+    SI: `[ඓතිහාසික] රන් ලෙන් විහාරය. [විස්තර] බිතුසිතුවම්. [උපදෙස්] ඉහළ සිට දර්ශනය මනරම්ය.`
+  },
+  ruwanwelisaya: {
+    EN: `[Chronicle] Great stupa of Lanka. [Manifest] Elephant wall. [Wisdom] Visit during full moon.`,
+    SI: `[ඓතිහාසික] මහා සෑය. [විස්තර] ඇත් පවුර. [උපදෙස්] පොහොය දිනක යන්න.`
+  },
+  abhayagiri: {
+    EN: `[Chronicle] Scholarly monastic hub. [Manifest] Massive stupa. [Wisdom] Visit the Twin Ponds nearby.`,
+    SI: `[ඓතිහාසික] අභයගිරි විහාරය. [විස්තර] මහා දාගැබ. [උපදෙස්] කුට්ටම් පොකුණ බලන්න.`
+  },
+  mihintale: {
+    EN: `[Chronicle] Cradle of Buddhism. [Manifest] 1840 granite steps. [Wisdom] Climb for sunset views.`,
+    SI: `[ඓතිහාසික] මිහින්තලේ. [විස්තර] ගල් පඩි 1840. [උපදෙස්] හිරු බැසීම මනරම්ය.`
+  },
+  "jaffna-fort": {
+    EN: `[Chronicle] Northern bastion. [Manifest] Star-shaped walls. [Wisdom] View the lagoon at sunset.`,
+    SI: `[ඓතිහාසික] යාපනය කොටුව. [විස්තර] තාරකා හැඩැති පවුරු. [උපදෙස්] හිරු බැසීම බලන්න.`
   },
   "galle-fort": {
-    EN: `Galle Fort, on the southwest coast of Sri Lanka, is a living heritage site where history and daily life intertwine. Originally built by the Portuguese in 1588, it is a perfectly preserved colonial citadel.
-
-[Atmospheric Synchronization]
-Coastal maritime weather with high humidity. Best visited from December to April. Sunset walks along the ramparts (around 5:30 PM) offer a golden-hour experience where the ocean meets the colonial architecture in a high-fidelity light display.
-
-[Nearby Registry Nodes]
-- Unawatuna Beach: A crescent-shaped bay known for its turquoise waters and lively nightlife.
-- Jungle Beach: A hidden cove reachable by a short hike, offering secluded swimming.
-- Koggala Lake: Famous for its stilt fishermen and traditional island temples.
-
-[Voyager Suitability]
-Highly suitable for families, architectural students, and luxury travelers. The fort's narrow streets are pedestrian-friendly, making it a safe and immersive destination for all age groups.`,
-    SI: `ශ්‍රී ලංකාවේ නිරිතදිග වෙරළ තීරයේ පිහිටි ගාල්ල කොටුව, ඉතිහාසය සහ එදිනෙදා ජීවිතය එකට බැඳී පවතින සජීවී උරුමයකි. 1588 දී පෘතුගීසීන් විසින් ප්‍රථමයෙන් ඉදිකරන ලද මෙය යුනෙස්කෝ ලෝක උරුමයකි.
-
-[පරිසරය සහ දේශගුණය]
-වෙරළබඩ තීරයේ පවතින උණුසුම් කාලගුණයට හුරු වන්න. දෙසැම්බර් සිට අප්‍රේල් දක්වා කාලය සංචාරයට සුදුසුයි. සවස 5:30 ට පමණ කොටු පවුර දිගේ ඇවිද යාමෙන් අතිශය සුන්දර හිරු බැස යන දර්ශනයක් නැරඹිය හැකිය.
-
-[අසල ඇති ස්ථාන]
-- උණවටුන වෙරළ: සංචාරකයින් අතර ඉතා ජනප්‍රිය වෙරළ තීරයකි.
-- ජංගල් බීච්: රහසිගතව සැඟවුණු නිස්කලංක වෙරළ කලාපයකි.
-- කොග්ගල වැව: රිටි පන්නයේ ධීවරයින් සහ වැව මැද ඇති දූපත් නැරඹිය හැකිය.
-
-[සංචාරක යෝග්‍යතාවය]
-පවුලේ සැමට, වාස්තු විද්‍යාවට ලැදි අයට සහ සුවපහසු සංචාරකයින්ට ඉතා සුදුසුයි. මෙය සෑම වයස් කාණ්ඩයකටම ගැලපෙන ආරක්ෂිත සංචාරක කලාපයකි.`
+    EN: `[Chronicle] UNESCO heritage city. [Manifest] Dutch ramparts. [Wisdom] Explore the narrow lanes.`,
+    SI: `[ඓතිහාසික] ගාල්ල කොටුව. [විස්තර] ලන්දේසි පවුරු. [උපදෙස්] වීදි දිගේ ඇවිදින්න.`
   },
-  yapahuwa: { 
-    EN: `Yapahuwa Rock Fortress is a 13th-century rock fortress that once served as the capital of Sri Lanka and housed the Sacred Tooth Relic of Buddha. The fortress sits atop a 90-meter-high rock and showcases the architectural prowess of the 13th century. Often called Sri Lanka's best-kept secret, it offers an authentic experience with far fewer crowds.
-
-[Historical Significance]
-King Bhuvenakabahu declared Yapahuwa as the capital in 1272 with the Sacred Tooth Relic. Following the king's death in 1284, the site was attacked by the Pandyans, who captured the Sacred Tooth Relic. The capital lasted only 11 years, but its legacy remains impressive.
-
-[Atmospheric Synchronization]
-Dry zone climate. Best from November to January for cooler temperatures. December to September is recommended during the dry season to avoid rain and ensure clear views from the summit. March and April are the hottest months, reaching 36°C.
-
-[Key Attractions]
-- The Ornamental Staircase: Over 30 meters high with intricate stone carvings of musicians and dancers.
-- Stone Lions: Flanking the staircase, reminiscent of ancient Chinese designs.
-- Pierced-Stone Windows: Masterpieces of stone craft (relics in National Museum).
-- Cave Temple: A tranquil site with beautiful frescoes near the base.
-
-[Nearby Registry Nodes]
-- Arankele Monastery: An ancient forest monastery.
-- Panduwasnuwara Kingdom Ruins: A 12th-century archaeological site.
-
-[Voyager Suitability]
-Perfect for hardcore archeology fans, solo travelers seeking off-the-beaten-path history, and hikers ready for a moderate, steep climb.`, 
-    SI: `යාපහුව යනු 13 වන සියවසේදී ශ්‍රී ලංකාවේ අගනුවර ලෙස පැවති මීටර් 90ක් උසැති පර්වතයක් මත ඉදිකරන ලද දර්ශනීය බලකොටුවකි. මෙහි කලක් දළදා වහන්සේ වැඩසිටි අතර එය ශ්‍රී ලංකාවේ සැඟවුණු ඓතිහාසික මැණිකක් ලෙස සැලකේ.
-
-[පරිසරය සහ දේශගුණය]
-වියළි කලාපීය දේශගුණයක් පවතී. නොවැම්බර් සිට ජනවාරි දක්වා කාලය සංචාරයට වඩාත් සුදුසුයි. උෂ්ණත්වය සෙල්සියස් අංශක 36 දක්වා ඉහළ යා හැකි බැවින් උදෑසන කාලය තෝරාගන්න.
-
-[සුවිශේෂී ලක්ෂණ]
-මෙහි ඇති කැටයම් කරන ලද සිංහ රූප, නර්තන ශිල්පීන්ගේ රූප සහිත අලංකාර පියගැටපෙළ ලොව පුරා ප්‍රසිද්ධය. පර්වතය මුදුනට ගිය විට වටපිටාවේ ඇති හරිත වනාන්තරයේ මනරම් දර්ශනයක් දැකගත හැකිය.
-
-[සංචාරක යෝග්‍යතාවය]
-පුරාවිද්‍යා ගවේෂකයින්ට, ඉතිහාසයට ලැදි අයට සහ නිස්කලංකව සංචාරය කිරීමට කැමති අයට ඉතා සුදුසුයි.` 
+  yapahuwa: {
+    EN: `[Chronicle] Short-lived capital rock. [Manifest] Lion stone stairs. [Wisdom] Steep climb, use caution.`,
+    SI: `[ඓතිහාසික] යාපහුව. [විස්තර] සිංහ පඩිපෙළ. [උපදෙස්] තරණය දුෂ්කරය.`
   },
-  anuradhapura: { 
-    EN: `The first capital of the island, spanning centuries of faith and architectural magnitude. Home to the world's tallest ancient brick structures.
-    
-[Atmospheric Synchronization]
-Warm and sunny dry zone climate. December to March is optimal for comfortable exploration. Full moon (Poya) days offer a unique spiritual atmosphere as thousands of white-clad pilgrims gather.
-    
-[Nearby Registry Nodes]
-- Mihintale Peak: The cradle of Buddhism in Sri Lanka.
-- Isurumuniya Temple: Famous for ancient rock carvings.
-    
-[Voyager Suitability]
-Pilgrims, spiritual seekers, and history buffs. Ideal for those who enjoy long walks or cycling through vast archaeological complexes.`, 
-    SI: `දිවයිනේ ප්‍රථම අගනුවර වන අනුරාධපුරය ශ්‍රද්ධාවේ සහ ඉතිහාසයේ කේන්ද්‍රස්ථානයයි. මෙහි ඇති දැවැන්ත ස්තූපයන් ලොව පුදුමයන් හා සමාන වේ.
-    
-[දේශගුණය]
-සාමාන්‍යයෙන් උණුසුම්ය. දෙසැම්බර් සිට මාර්තු දක්වා වඩාත් සුදුසුයි. වෙසක් සහ පොසොන් පොහොය දිනවල මෙහි ඇති ආගමික පරිසරය ඉතාමත් සුවිශේෂී වේ.
-    
-[සංචාරක යෝග්‍යතාවය]
-වන්දනාකරුවන්ට, ඉතිහාස ගවේෂකයින්ට සහ පා පැදියෙන් නගරය ගවේෂණය කිරීමට කැමති අයට ඉතා සුදුසුයි.` 
+
+  // --- BEACHES ---
+  mirissa: {
+    EN: `[Chronicle] Southern surf spot. [Manifest] Whale watching hub. [Wisdom] Visit Coconut Tree Hill.`,
+    SI: `[වෙරළ] මිරිස්ස. [විස්තර] තල්මසුන් නැරඹීම. [උපදෙස්] කොස් ගස් කන්දට යන්න.`
   },
-  trincomalee: { 
-    EN: `A deep blue natural harbor with crystal clear horizons and a history that stretches back to ancient maritime trade routes.
-    
-[Atmospheric Synchronization]
-East coast season is May to September, offering calm seas and perfect visibility for diving. December to February can be windy with seasonal monsoons.
-    
-[Nearby Registry Nodes]
-- Nilaveli Beach: Famous for its pristine white sands.
-- Pigeon Island National Park: One of the best snorkeling spots in the region.
-- Koneswaram Temple: A sacred Hindu temple perched on a cliff edge.
-    
-[Voyager Suitability]
-Divers, whale watchers, beach lovers, and spiritual tourists visiting the Koneswaram temple.`, 
-    SI: `ත්‍රිකුණාමලය යනු ලොව හොඳම ස්වභාවික වරායකින් හෙබි නිල්වන් වෙරළ තීරයකි. මෙය තල්මසුන් නැරඹීම සඳහා ලොව සුප්‍රසිද්ධය.
-    
-[දේශගුණය]
-මැයි සිට සැප්තැම්බර් දක්වා කාලය සංචාරයට වඩාත් සුදුසුයි. මුහුද ඉතා සන්සුන් බැවින් කිමිදීම සඳහා වඩාත් යෝග්‍ය කාලය මෙයයි.
-    
-[සංචාරක යෝග්‍යතාවය]
-මුහුදු ක්‍රීඩා වලට, තල්මසුන් නැරඹීමට සහ වෙරළ තීරයේ විවේක ගැනීමට කැමති අයට සුදුසුයි.` 
+  nilaveli: {
+    EN: `[Chronicle] Eastern paradise. [Manifest] Pigeon Island park. [Wisdom] Ideal for snorkeling.`,
+    SI: `[වෙරළ] නිලාවේලි. [විස්තර] පරෙවි දූපත. [උපදෙස්] කිමිදීමට කදිමයි.`
   },
-  yala: { 
-    EN: `Yala National Park is Sri Lanka's premier wildlife sanctuary, located in the southeastern corner of the island. Covering 1,268 square kilometers of scrub, light forest, and coastal lagoons, it is world-renowned for having one of the highest leopard densities on the planet.
-
-[Atmospheric Synchronization]
-Peak wildlife viewing season is February to July, when dry weather reduces foliage and animals converge on waterholes. Birdwatching is exceptional from November to January with arrival of migratory species. Note that the park typically closes for maintenance in September.
-
-[Wildlife Highlights]
-• Leopards: Apex predators with the highest concentration worldwide, especially in Block 1.
-• Elephants: Approximately 350 residents roam the scrublands.
-• Sloth Bears: Rare and elusive residents of the forested areas.
-• Birds: Over 215 species, including endemics like the Sri Lankan Junglefowl.
-
-[Voyager Wisdom]
-The morning safari (6:00 AM) offers the highest probability for predator sightings. Consider visiting Block 5 for a more peaceful, less crowded experience compared to the popular Block 1.
-
-[Registry Pricing (Estimated)]
-Entry fees range from $25-$35 USD for foreign adults. Jeep hire typically costs $25-$35 per person in shared vehicles, or $100-$150 for private half-day sessions.
-
-[Voyager Suitability]
-Ideal for wildlife photographers, adventure seekers, and families. Be prepared for long, dusty rides and strict park protocols to protect the sanctuary's integrity.`, 
-    SI: `යාල යනු දිවියන්ගේ අණසක පවතින මනරම් වන අරණකි. ශ්‍රී ලංකාවේ වැඩිම දිවියන් ප්‍රමාණයක් දැකගත හැකි ස්ථානය මෙයයි.
-    
-[දේශගුණය]
-පෙබරවාරි සිට ජූනි දක්වා කාලය වඩාත් සුදුසුයි. වියළි කාලගුණය පවතින විට සතුන් නැරඹීම වඩාත් පහසු වේ.
-    
-[සංචාරක යෝග්‍යතාවය]
-සත්ව ලෝලීන්ට, ඡායාරූප ශිල්පීන්ට සහ සෆාරි සංචාරකයින්ට ඉතා සුදුසුයි.` 
+  unawatuna: {
+    EN: `[Chronicle] Semicircular bay. [Manifest] Protected reefs. [Wisdom] Hike to Jungle Beach.`,
+    SI: `[වෙරළ] උණවටුන. [විස්තර] කොරල් පර. [උපදෙස්] ජංගල් බීච් වෙත යන්න.`
   },
-  "kandy-temple": { 
-    EN: `The Temple of the Sacred Tooth Relic (Sri Dalada Maligawa) is a magnificent Buddhist shrine in Kandy, located in the Royal Palace complex of the former Kandyan Kingdom. Designated as a UNESCO World Heritage site in 1988, it houses the most sacred object in the Buddhist world: the left canine tooth relic of the Buddha.
+  bentota: {
+    EN: `[Chronicle] Water sports capital. [Manifest] River mouth. [Wisdom] Try a boat safari.`,
+    SI: `[වෙරළ] බෙන්තොට. [විස්තර] ජල ක්‍රීඩා. [උපදෙස්] බෝට්ටු සෆාරියක යන්න.`
+  },
+  hikkaduwa: {
+    EN: `[Chronicle] Coral sanctuary. [Manifest] Surf culture. [Wisdom] Visit the turtle farms.`,
+    SI: `[වෙරළ] හික්කඩුව. [විස්තර] කොරල් පර. [උපදෙස්] කැස්බෑ මධ්‍යස්ථාන බලන්න.`
+  },
+  "arugam-bay": {
+    EN: `[Chronicle] World-class surf. [Manifest] Point breaks. [Wisdom] Best vibes in August.`,
+    SI: `[වෙරළ] ආරුගම්බේ. [විස්තර] රළ පැදීම. [උපදෙස්] අගෝස්තු මාසය සුදුසුයි.`
+  },
+  negombo: {
+    EN: `[Chronicle] Historic lagoon town. [Manifest] Lellama market. [Wisdom] Eat fresh sea food.`,
+    SI: `[වෙරළ] මීගමුව. [විස්තර] ධීවර නගරය. [උපදෙස්] නැවුම් මුහුදු ආහාර රස බලන්න.`
+  },
+  pasikudah: {
+    EN: `[Chronicle] Shallow bay waters. [Manifest] Luxury retreats. [Wisdom] Calm for families.`,
+    SI: `[වෙරළ] පාසිකුඩා. [විස්තර] නොගැඹුරු මුහුද. [උපදෙස්] පවුලේ සැමට සුදුසුයි.`
+  },
+  "trincomalee-bay": {
+    EN: `[Chronicle] Natural deep harbour. [Manifest] Fort Frederick. [Wisdom] Watch deer inside fort.`,
+    SI: `[වෙරළ] ලන්දේසි බොක්ක. [විස්තර] ස්වභාවික වරාය. [උපදෙස්] කොටුව තුළ මුවන් බලන්න.`
+  },
+  tangalle: {
+    EN: `[Chronicle] Romantic coastline. [Manifest] Silent bays. [Wisdom] Great for relaxation.`,
+    SI: `[වෙරළ] තංගල්ල. [විස්තර] නිස්කලංක බොකු. [උපදෙස්] නිදහසේ විවේක ගන්න.`
+  },
 
-[Historical Significance]
-Historically, the relic has played a pivotal role in local governance; it was believed that whoever held the relic held the right to rule the nation. According to tradition, the tooth was retrieved from the Buddha's funeral pyre in India and smuggled to Sri Lanka in the 4th century by Princess Hemamala, hidden within the coils of her hair.
+  // --- WILDLIFE ---
+  yala: {
+    EN: `[Chronicle] World-class park. [Manifest] Leopard density. [Wisdom] Book a full-day jeep.`,
+    SI: `[වනජීවී] යාල. [විස්තර] දිවියන්. [උපදෙස්] මුළු දවසක් වෙන් කරන්න.`
+  },
+  udawalawe: {
+    EN: `[Chronicle] Elephant sanctuary. [Manifest] Massive reservoir. [Wisdom] Visit Transit Home.`,
+    SI: `[වනජීවී] උඩවලව. [විස්තර] අලි රංචු. [උපදෙස්] ඇත් අතුරු සෙවණට යන්න.`
+  },
+  wilpattu: {
+    EN: `[Chronicle] Land of lakes. [Manifest] Dense scrub. [Wisdom] Watch for sloth bears.`,
+    SI: `[වනජීවී] විල්පත්තු. [විස්තර] ස්වභාවික විල්. [උපදෙස්] වලසුන් බලන්න.`
+  },
+  minneriya: {
+    EN: `[Chronicle] Great elephant gathering. [Manifest] Ancient tank. [Wisdom] Visit in dry season.`,
+    SI: `[වනජීවී] මින්නේරිය. [විස්තර] අලි රංචුව. [උපදෙස්] වියළි කාලයේ යන්න.`
+  },
+  kumana: {
+    EN: `[Chronicle] Bird paradise. [Manifest] Mangrove swamp. [Wisdom] Bring zoom lens.`,
+    SI: `[වනජීවී] කුමන. [විස්තර] පක්ෂීන්. [උපදෙස්] කැමරාවක් රැගෙන යන්න.`
+  },
+  bundala: {
+    EN: `[Chronicle] Wetland oasis. [Manifest] Flamingos. [Wisdom] Best at early dawn.`,
+    SI: `[වනජීවී] බුන්දල. [විස්තර] සියක්කාරයින්. [උපදෙස්] උදෑසන මනරම්ය.`
+  },
+  sinharaja: {
+    EN: `[Chronicle] UNESCO rainforest. [Manifest] Endemic birds. [Wisdom] Hire a local trekker.`,
+    SI: `[වනජීවී] සිංහරාජය. [විස්තර] වැසි වනාන්තරය. [උපදෙස්] මඟ පෙන්වන්නෙකු ගන්න.`
+  },
+  wasgamuwa: {
+    EN: `[Chronicle] Rugged wilderness. [Manifest] Untamed wildlife. [Wisdom] Pack extra water.`,
+    SI: `[වනජීවී] වස්ගමුව. [විස්තර] වන සතුන්. [උපදෙස්] අමතර ජලය රැගෙන යන්න.`
+  },
+  "pigeon-island": {
+    EN: `[Chronicle] Marine park. [Manifest] Reef sharks. [Wisdom] Snorkel the inner reef.`,
+    SI: `[වනජීවී] පරෙවි දූපත. [විස්තර] කොරල් පර. [උපදෙස්] කිමිදී බලන්න.`
+  },
+  "horton-plains-wild": {
+    EN: `[Chronicle] Highland plateau. [Manifest] Sambar deer. [Wisdom] Start trek at 6 AM.`,
+    SI: `[වනජීවී] හෝර්ටන් තැන්න. [විස්තර] මුවන්. [උපදෙස්] උදේ 6 ට පටන් ගන්න.`
+  },
 
-[Atmospheric Synchronization]
-The temple is open daily from 5:30 AM to 8:00 PM. High-fidelity spiritual synchronization is best experienced during "Puja" times (5:30 AM, 9:30 AM, and 6:30 PM) when the inner sanctum is opened to the sounds of traditional hevisi drumming and melodic horns.
+  // --- HILLS ---
+  ella: {
+    EN: `[Chronicle] Mountain village hub. [Manifest] Gap views. [Wisdom] Walk Nine Arch bridge.`,
+    SI: `[කඳුකර] ඇල්ල. [විස්තර] කඳුකර අසිරිය. [උපදෙස්] පාලම බලන්න යන්න.`
+  },
+  "nuwara-eliya": {
+    EN: `[Chronicle] High hill retreat. [Manifest] Tea estates. [Wisdom] Coolest city in Lanka.`,
+    SI: `[කඳුකර] නුවරඑළිය. [විස්තර] තේ වතු. [උපදෙස්] සිසිල් කාලගුණය.`
+  },
+  haputale: {
+    EN: `[Chronicle] Southern ridge edge. [Manifest] Lipton's seat. [Wisdom] View across 7 provinces.`,
+    SI: `[කඳුකර] හපුතලේ. [විස්තර] ලිප්ටන් සීට්. [උපදෙස්] පළාත් 7 ක් පෙනේ.`
+  },
+  "adams-peak": {
+    EN: `[Chronicle] Sacred mountain. [Manifest] 5,000 steps. [Wisdom] Climb for the shadow.`,
+    SI: `[කඳුකර] ශ්‍රී පාදය. [විස්තර] පූජනීය කන්ද. [උපදෙස්] සෙවනැල්ල බලන්න.`
+  },
+  "badulla-demodara": {
+    EN: `[Chronicle] Railway marvel. [Manifest] Spiral tunnel. [Wisdom] Ride the local train.`,
+    SI: `[කඳුකර] දෙමෝදර. [විස්තර] දුම්රිය වටය. [උපදෙස්] දුම්රියේ යන්න.`
+  },
+  hanthana: {
+    EN: `[Chronicle] Trekking hills. [Manifest] Tea museum. [Wisdom] Close to University.`,
+    SI: `[කඳුකර] හන්තාන. [විස්තර] කඳුපන්තිය. [උපදෙස්] මහනුවරට ආසන්නයි.`
+  },
+  hatton: {
+    EN: `[Chronicle] Tea heartland. [Manifest] Castlereagh lake. [Wisdom] Base for Sri Pada.`,
+    SI: `[කඳුකර] හැටන්. [විස්තර] තේ වගාව. [උපදෙස්] සිරිපා ගමනේ මගයි.`
+  },
+  bandarawela: {
+    EN: `[Chronicle] Perfect climate. [Manifest] Mild sun. [Wisdom] Great for health stays.`,
+    SI: `[කඳුකර] බණ්ඩාරවෙල. [විස්තර] හිතකර දේශගුණය. [උපදෙස්] සුව පහසුයි.`
+  },
+  pidurutalagala: {
+    EN: `[Chronicle] Highest peak. [Manifest] High altitude. [Wisdom] Drive up the summit.`,
+    SI: `[කඳුකර] පිදුරුතලාගල. [විස්තර] උසම ස්ථානය. [උපදෙස්] වාහනයෙන් යා හැකිය.`
+  },
+  deniyaya: {
+    EN: `[Chronicle] Green slopes. [Manifest] Patna rock. [Wisdom] Gateway to rainforest.`,
+    SI: `[කඳුකර] දෙණියාය. [විස්තර] හරිත බෑවුම්. [උපදෙස්] වනාන්තර ද්වාරයයි.`
+  },
 
-[Top Things to See]
-• The Sacred Relic Chamber: The heart of the temple where the relic is housed in seven nested gold caskets.
-• Paththirippuwa (Octagonal Tower): Built by the last king of Kandy, it originally served as a royal viewing platform.
-• Temple Museum: Houses gifts from global devotees and historical artifacts of the Kandyan royalty.
-• Alut Maligawa: A modern shrine containing dozens of serene Buddha statues.
+  // --- WATERFALLS ---
+  diyaluma: {
+    EN: `[Chronicle] Majestic vertical flow. [Manifest] Infinity pools. [Wisdom] Hike to the top.`,
+    SI: `[දියඇලි] දියලුම. [විස්තර] දෙවන උසම ඇල්ල. [උපදෙස්] ඉහළට නගින්න.`
+  },
+  dunhinda: {
+    EN: `[Chronicle] Smoky cascade. [Manifest] Mist spray. [Wisdom] Trail is slippery.`,
+    SI: `[දියඇලි] දුන්හිඳ. [විස්තර] දුමාරය. [උපදෙස්] පාවහන් ගැන සිතන්න.`
+  },
+  bambarakanda: {
+    EN: `[Chronicle] Vertical peak fall. [Manifest] 263 meters. [Wisdom] Highest in the island.`,
+    SI: `[දියඇලි] බඹර කන්ද. [විස්තර] උසම දියඇල්ල. [උපදෙස්] මීටර් 263 කි.`
+  },
+  laxapana: {
+    EN: `[Chronicle] Energy source. [Manifest] Wide flow. [Wisdom] Linked to Buddha legend.`,
+    SI: `[දියඇලි] ලක්ෂපාන. [විස්තර] ප්‍රබල දියවර. [උපදෙස්] බුදුසිරිත හා බැඳේ.`
+  },
+  "bakers-falls": {
+    EN: `[Chronicle] Plain treasure. [Manifest] Cold mist. [Wisdom] Inside national park.`,
+    SI: `[දියඇලි] බේකර්ස් ඇල්ල. [විස්තර] හෝර්ටන් තැන්නේ. [උපදෙස්] සීතලයි.`
+  },
+  "ravana-falls": {
+    EN: `[Chronicle] Epic mystery. [Manifest] Multi-tier. [Wisdom] Watch from road.`,
+    SI: `[දියඇලි] රාවණා ඇල්ල. [විස්තර] රාවණා පුරාවෘත්තය. [උපදෙස්] පාර අයිනේ.`
+  },
+  "st-clairs": {
+    EN: `[Chronicle] Little Niagara. [Manifest] Tea valley. [Wisdom] Best view from road.`,
+    SI: `[දියඇලි] සෙන්ට් ක්ලෙයාර්. [විස්තර] තේ මිටියාවතේ. [උපදෙස්] පාරේ සිට බලන්න.`
+  },
+  "devon-falls": {
+    EN: `[Chronicle] Planter's jewel. [Manifest] Slender drop. [Wisdom] Opposite St. Clair's.`,
+    SI: `[දියඇලි] ඩෙවොන් ඇල්ල. [විස්තර] මනරම් හැඩය. [උපදෙස්] තේ මධ්‍යස්ථානය.`
+  },
+  "aberdeen-falls": {
+    EN: `[Chronicle] Twin beauty. [Manifest] Deep pool. [Wisdom] Scenic hike required.`,
+    SI: `[දියඇලි] ඇබර්ඩීන් ඇල්ල. [විස්තර] නිවුන් ඇල්ල. [උපදෙස්] තරමක් ඇවිදින්න.`
+  },
+  "bopath-ella": {
+    EN: `[Chronicle] Leaf shape. [Manifest] Bo-leaf form. [Wisdom] Near Ratnapura.`,
+    SI: `[දියඇලි] බෝපත් ඇල්ල. [විස්තර] බෝ පතක හැඩය. [උපදෙස්] රත්නපුර අසල.`
+  },
 
-[The Esala Perahera]
-Annually in July or August, Kandy hosts Asia's grandest pageant. For 10 nights, the streets come alive with hundreds of decorated elephants, fire dancers, whip-crackers, and drummers in a monumental tribute to the Sacred Relic.
-
-[Voyager Wisdom]
-Strict modest dress code applies (shoulders and knees must be covered). Shoes and hats must be removed before entering the sacred perimeter. Arrive at least 30 minutes before puja ceremonies to navigate the large crowds of devotees.`, 
-    SI: `සිංහල රජුන්ගේ අවසාන රාජධානිය වූ සෙංකඩගලපුර පිහිටි ශ්‍රී දළදා මාළිගාව රටේ පූජනීයම ස්ථානයයි.
-    
-[දේශගුණයේ]
-සාමාන්‍යයෙන් සිසිල් සහ වර්ෂා සහිත කාලගුණයක් පවතී. අගෝස්තු මස පැවැත්වෙන ඇසළ පෙරහැර නැරඹීම අමතක නොකළ යුතු අත්දැකීමකි.
-    
-[සංචාරක යෝග්‍යතාවය]
-ආගමික සහ සංස්කෘතික ගවේෂකයින්ට මෙන්ම පවුලේ සැමට සංචාරය කිරීමට ඉතා සුදුසුයි.` 
+  // --- CAMPING ---
+  knuckles: {
+    EN: `[Chronicle] UNESCO range. [Manifest] High biodiversity. [Wisdom] Rugged camping area.`,
+    SI: `[කඳවුරු] නකල්ස්. [විස්තර] ලෝක උරුමය. [උපදෙස්] දුෂ්කර තරණයකි.`
+  },
+  belihuloya: {
+    EN: `[Chronicle] Transition node. [Manifest] River meet. [Wisdom] Ideal eco-camping.`,
+    SI: `[කඳවුරු] බෙලිහුල්ඔය. [විස්තර] ගංගා හමුව. [උපදෙස්] කඳවුරු වලට කදිමයි.`
+  },
+  riverston: {
+    EN: `[Chronicle] Mist mountains. [Manifest] Windy peaks. [Wisdom] Very windy at night.`,
+    SI: `[කඳවුරු] රිවර්ස්ටන්. [විස්තර] මීදුම. [උපදෙස්] රාත්‍රියේ සුළඟ වැඩියි.`
+  },
+  meemure: {
+    EN: `[Chronicle] Remote village. [Manifest] Cultural stay. [Wisdom] No digital signal.`,
+    SI: `[කඳවුරු] මීමුරේ. [විස්තර] හුදකලා ගම. [උපදෙස්] දුරකථන සංඥා නැත.`
+  },
+  kitulgala: {
+    EN: `[Chronicle] Adventure base. [Manifest] Rafting. [Wisdom] River-side tents.`,
+    SI: `[කඳවුරු] කිතුල්ගල. [විස්තර] රැෆ්ටින්. [උපදෙස්] ගඟ අයිනේ කඳවුරු.`
+  },
+  "ohiya-camping": {
+    EN: `[Chronicle] Rail-side ridge. [Manifest] Cold nights. [Wisdom] Near Horton Plains.`,
+    SI: `[කඳවුරු] ඔහිය. [විස්තර] සීතල රාත්‍රී. [උපදෙස්] කඳුකර ගමනක්.`
+  },
+  "gal-oya": {
+    EN: `[Chronicle] Inland safari. [Manifest] Lake views. [Wisdom] Wild camping feel.`,
+    SI: `[කඳවුරු] ගල් ඔය. [විස්තර] වැව අසල. [උපදෙස්] වනගත අත්දැකීමක්.`
+  },
+  madulsima: {
+    EN: `[Chronicle] Cliff edge. [Manifest] Rolling clouds. [Wisdom] Unique cliff camp.`,
+    SI: `[කඳවුරු] මඩුල්සීම. [විස්තර] පවුර. [උපදෙස්] කෙළවරේ කඳවුරු බැඳීම.`
+  },
+  namunukula: {
+    EN: `[Chronicle] Peak trekking. [Manifest] High Uva. [Wisdom] Panoramic summit.`,
+    SI: `[කඳවුරු] නමුණුකුල. [විස්තර] උසම මුදුන. [උපදෙස්] තරණය සුන්දරයි.`
+  },
+  kalupahana: {
+    EN: `[Chronicle] Cascade base. [Manifest] Long trails. [Wisdom] Sturdy gear required.`,
+    SI: `[කඳවුරු] කළුපහණ. [විස්තර] පඩිපෙළ. [උපදෙස්] හොඳ උපකරණ රැගෙන යන්න.`
   }
 };

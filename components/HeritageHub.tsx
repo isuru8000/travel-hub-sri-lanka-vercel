@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { Language } from '../types.ts';
 import { Mountain, Utensils, Music, Activity, ArrowRight, Sparkles, Database, Box, Layers, Target } from 'lucide-react';
@@ -40,7 +41,7 @@ const HeritageCard: React.FC<{
         transformStyle: 'preserve-3d'
       }}
     >
-      <img src={image} className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-all duration-1000 grayscale group-hover:grayscale-0" alt={title} />
+      <img src={image} className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-all duration-1000" alt={title} />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
       
       {/* Bioluminescent Aura */}

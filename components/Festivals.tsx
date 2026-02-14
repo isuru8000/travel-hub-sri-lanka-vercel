@@ -2,13 +2,16 @@
 import React, { useState, useMemo } from 'react';
 import { Language, Festival } from '../types.ts';
 import { FESTIVALS_DATA } from '../constants.tsx';
-import { Calendar, Sparkles, Info, Star, Landmark, LayoutGrid, Waves, Palette, Sprout, Search } from 'lucide-react';
+// Fix: Added ArrowLeft import for the back button
+import { Calendar, Sparkles, Info, Star, Landmark, LayoutGrid, Waves, Palette, Sprout, Search, ArrowLeft } from 'lucide-react';
 
 interface FestivalsProps {
   language: Language;
+  // Fix: Added missing onBack prop definition to resolve error in App.tsx
+  onBack: () => void;
 }
 
-const Festivals: React.FC<FestivalsProps> = ({ language }) => {
+const Festivals: React.FC<FestivalsProps> = ({ language, onBack }) => {
   const [activeCategory, setActiveCategory] = useState<Festival['category'] | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -48,6 +51,14 @@ const Festivals: React.FC<FestivalsProps> = ({ language }) => {
         <div className="absolute inset-0 insta-gradient opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-t from-white via-black/40 to-transparent" />
         
+        {/* Fix: Added Back Button for consistency with other archive views and to utilize the onBack prop */}
+        <div className="absolute top-10 left-10 z-[70]">
+          <button onClick={onBack} className="flex items-center gap-4 px-8 py-4 bg-white/80 backdrop-blur-xl border border-gray-200 text-[#0a0a0a] rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:bg-white transition-all shadow-xl group">
+            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> 
+            {language === 'EN' ? 'Home' : 'මුල් පිටුව'}
+          </button>
+        </div>
+
         <div className="relative text-center space-y-8 px-4 animate-in fade-in zoom-in duration-1000">
           <div className="flex flex-col items-center gap-6">
              <div className="w-24 h-24 story-ring rounded-[2.5rem] p-1 animate-pulse">
@@ -71,7 +82,7 @@ const Festivals: React.FC<FestivalsProps> = ({ language }) => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-8 -mt-24 relative z-10 space-y-24">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-8 -mt-24 relative z-10 space-y-24">
         
         {/* EYE-CATCHING TAB NAVIGATION */}
         <div className="flex flex-col items-center gap-12">
@@ -112,15 +123,15 @@ const Festivals: React.FC<FestivalsProps> = ({ language }) => {
           </div>
         </div>
 
-        {/* Curated Festivals Grid - Updated with gap-10 md:gap-16 pt-8 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 pt-8">
+        {/* Curated Festivals Grid - Updated to 4 columns on XL screens */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 pt-8">
           {filteredFestivals.map((item, idx) => (
             <div 
               key={item.id}
               className="bg-white rounded-[4rem] overflow-hidden shadow-2xl border border-gray-100 flex flex-col group hover:-translate-y-4 transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) animate-in slide-in-from-bottom-8"
               style={{ animationDelay: `${idx * 40}ms` }}
             >
-              <div className="relative h-80 overflow-hidden">
+              <div className="relative h-64 overflow-hidden">
                 <img 
                   src={item.image} 
                   alt={item.name[language]} 
@@ -129,44 +140,44 @@ const Festivals: React.FC<FestivalsProps> = ({ language }) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                 
-                <div className="absolute top-8 left-8">
-                   <div className="bg-white/95 backdrop-blur-md px-5 py-2 rounded-full shadow-2xl flex items-center gap-2 border border-white/20">
-                      <Calendar size={14} className="text-[#E1306C]" />
-                      <span className="text-[9px] font-black text-[#0a0a0a] uppercase tracking-widest">{item.date[language]}</span>
+                <div className="absolute top-4 left-4">
+                   <div className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-2xl flex items-center gap-2 border border-white/20">
+                      <Calendar size={12} className="text-[#E1306C]" />
+                      <span className="text-[8px] font-black text-[#0a0a0a] uppercase tracking-widest">{item.date[language]}</span>
                    </div>
                 </div>
 
-                <div className="absolute top-8 right-8">
-                   <div className="bg-black/80 backdrop-blur-md px-5 py-2 rounded-full shadow-2xl border border-white/10">
-                      <span className="text-[8px] font-black text-white/60 uppercase tracking-widest">{item.category}</span>
+                <div className="absolute top-4 right-4">
+                   <div className="bg-black/80 backdrop-blur-md px-3 py-1 rounded-full shadow-2xl border border-white/10">
+                      <span className="text-[7px] font-black text-white/60 uppercase tracking-widest">{item.category}</span>
                    </div>
                 </div>
                 
-                <div className="absolute bottom-6 left-8">
-                   <span className="text-[10px] font-black text-white/80 uppercase tracking-[0.4em] drop-shadow-md">Archive_Node #F{idx+1}</span>
+                <div className="absolute bottom-4 left-6">
+                   <span className="text-[9px] font-black text-white/80 uppercase tracking-[0.4em] drop-shadow-md">Archive_Node #F{idx+1}</span>
                 </div>
               </div>
 
-              <div className="p-12 space-y-8 flex flex-col flex-grow">
-                <div className="space-y-3">
-                  <h3 className="text-3xl font-heritage font-bold text-[#0a0a0a] group-hover:insta-text-gradient transition-all leading-tight uppercase tracking-tight">
+              <div className="p-8 md:p-10 space-y-6 flex flex-col flex-grow">
+                <div className="space-y-2">
+                  <h3 className="text-xl md:text-2xl font-heritage font-bold text-[#0a0a0a] group-hover:insta-text-gradient transition-all leading-tight uppercase tracking-tight">
                     {item.name[language]}
                   </h3>
-                  <div className="w-12 h-1 bg-gray-100 rounded-full group-hover:w-24 group-hover:bg-[#E1306C] transition-all duration-500" />
+                  <div className="w-10 h-1 bg-gray-100 rounded-full group-hover:w-16 group-hover:bg-[#E1306C] transition-all duration-500" />
                 </div>
 
-                <p className="text-lg text-gray-500 leading-relaxed font-light italic border-l-4 border-gray-50 pl-6">
+                <p className="text-sm md:text-base text-gray-500 leading-relaxed font-light italic border-l-2 border-gray-50 pl-4 line-clamp-3">
                   "{item.description[language]}"
                 </p>
 
-                <div className="mt-auto pt-8 border-t border-gray-50">
-                  <div className="bg-[#fafafa] p-6 rounded-[2.5rem] border border-gray-100 relative overflow-hidden group-hover:bg-white group-hover:shadow-inner transition-colors">
-                    <Sparkles size={40} className="absolute -bottom-2 -right-2 text-[#E1306C] opacity-[0.05] group-hover:opacity-[0.1] transition-opacity" />
-                    <div className="flex items-center gap-3 mb-3">
-                       <Info size={14} className="text-[#E1306C]" />
-                       <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Cultural Significance</p>
+                <div className="mt-auto pt-6 border-t border-gray-50">
+                  <div className="bg-[#fafafa] p-4 rounded-[1.5rem] border border-gray-100 relative overflow-hidden group-hover:bg-white group-hover:shadow-inner transition-colors">
+                    <Sparkles size={24} className="absolute -bottom-1 -right-1 text-[#E1306C] opacity-[0.05] group-hover:opacity-[0.1] transition-opacity" />
+                    <div className="flex items-center gap-2 mb-2">
+                       <Info size={12} className="text-[#E1306C]" />
+                       <p className="text-[8px] font-black text-gray-400 uppercase tracking-widest">Significance</p>
                     </div>
-                    <p className="text-sm text-gray-700 font-medium italic leading-relaxed">
+                    <p className="text-xs text-gray-700 font-medium italic leading-relaxed line-clamp-2">
                       {item.significance[language]}
                     </p>
                   </div>

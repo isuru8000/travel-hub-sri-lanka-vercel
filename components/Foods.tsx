@@ -2,13 +2,16 @@
 import React, { useState, useMemo } from 'react';
 import { Language, Food } from '../types.ts';
 import { FOODS_DATA } from '../constants.tsx';
-import { Flame, UtensilsCrossed, Leaf, Sparkles, History, Compass, Utensils, Wheat, Candy, Waves, Crown, LayoutGrid, Search } from 'lucide-react';
+// Fix: Added ArrowLeft import for the back button
+import { Flame, UtensilsCrossed, Leaf, Sparkles, History, Compass, Utensils, Wheat, Candy, Waves, Crown, LayoutGrid, Search, ArrowLeft } from 'lucide-react';
 
 interface FoodsProps {
   language: Language;
+  // Fix: Added missing onBack prop definition to resolve error in App.tsx
+  onBack: () => void;
 }
 
-const Foods: React.FC<FoodsProps> = ({ language }) => {
+const Foods: React.FC<FoodsProps> = ({ language, onBack }) => {
   const [activeCategory, setActiveCategory] = useState<Food['category'] | 'all'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const heroImage = "https://images.unsplash.com/photo-1543353071-10c8ba85a904?auto=format&fit=crop&w=1920&q=80";
@@ -47,6 +50,14 @@ const Foods: React.FC<FoodsProps> = ({ language }) => {
         <div className="absolute inset-0 story-ring opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-t from-white via-black/40 to-transparent" />
         
+        {/* Fix: Added Back Button for consistency with other archive views and to utilize the onBack prop */}
+        <div className="absolute top-10 left-10 z-[70]">
+          <button onClick={onBack} className="flex items-center gap-4 px-8 py-4 bg-white/80 backdrop-blur-xl border border-gray-200 text-[#0a0a0a] rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:bg-white transition-all shadow-xl group">
+            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> 
+            {language === 'EN' ? 'Home' : 'මුල් පිටුව'}
+          </button>
+        </div>
+
         <div className="relative text-center space-y-8 px-6 max-w-5xl animate-in fade-in zoom-in duration-1000">
           <div className="flex flex-col items-center gap-6">
              <div className="inline-flex items-center gap-4 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-3xl text-white text-[10px] font-black uppercase tracking-[0.5em] shadow-2xl">
@@ -68,7 +79,7 @@ const Foods: React.FC<FoodsProps> = ({ language }) => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-8 -mt-24 relative z-10 space-y-24">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-8 -mt-24 relative z-10 space-y-24">
         
         {/* EYE-CATCHING TAB NAVIGATION */}
         <div className="flex flex-col items-center gap-12">
@@ -110,8 +121,8 @@ const Foods: React.FC<FoodsProps> = ({ language }) => {
           </div>
         </div>
 
-        {/* Curated Food Grid - Updated with gap-10 md:gap-16 pt-8 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 pt-8">
+        {/* Curated Food Grid - Updated to 4 columns on XL screens */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 pt-8">
           {filteredFoods.map((food, idx) => {
             return (
               <div 
@@ -119,7 +130,7 @@ const Foods: React.FC<FoodsProps> = ({ language }) => {
                 className="bg-white rounded-[4rem] overflow-hidden shadow-2xl border border-gray-100 flex flex-col group hover:-translate-y-4 transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) animate-in slide-in-from-bottom-8"
                 style={{ animationDelay: `${idx * 40}ms` }}
               >
-                <div className="relative h-80 overflow-hidden">
+                <div className="relative h-64 overflow-hidden">
                   <img 
                     src={food.image} 
                     alt={food.name[language]} 
@@ -128,42 +139,42 @@ const Foods: React.FC<FoodsProps> = ({ language }) => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                   
-                  <div className="absolute top-8 left-8">
-                     <div className="bg-white/95 backdrop-blur-md px-5 py-2 rounded-full shadow-2xl flex items-center gap-2 border border-white/20">
-                        <span className="text-[9px] font-black text-[#0a0a0a] uppercase tracking-widest">{food.category} registry</span>
+                  <div className="absolute top-4 left-4">
+                     <div className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-full shadow-2xl flex items-center gap-2 border border-white/20">
+                        <span className="text-[8px] font-black text-[#0a0a0a] uppercase tracking-widest">{food.category} registry</span>
                      </div>
                   </div>
 
-                  <div className="absolute bottom-6 left-8">
-                     <span className="text-[10px] font-black text-white/80 uppercase tracking-[0.4em] drop-shadow-md">Archive_Node #F{idx+1}</span>
+                  <div className="absolute bottom-4 left-6">
+                     <span className="text-[9px] font-black text-white/80 uppercase tracking-[0.4em] drop-shadow-md">Archive_Node #F{idx+1}</span>
                   </div>
                 </div>
 
-                <div className="p-12 flex-grow space-y-8 flex flex-col">
-                  <div className="space-y-3">
-                    <h3 className="text-3xl font-heritage font-bold text-[#0a0a0a] group-hover:insta-text-gradient transition-all leading-tight">
+                <div className="p-8 md:p-10 flex-grow space-y-6 flex flex-col">
+                  <div className="space-y-2">
+                    <h3 className="text-xl md:text-2xl font-heritage font-bold text-[#0a0a0a] group-hover:insta-text-gradient transition-all leading-tight">
                       {food.name[language]}
                     </h3>
-                    <div className="flex items-center gap-3 text-[10px] font-black text-[#0EA5E9] uppercase tracking-[0.3em]">
-                      <UtensilsCrossed size={14} />
+                    <div className="flex items-center gap-2 text-[9px] font-black text-[#0EA5E9] uppercase tracking-[0.3em]">
+                      <UtensilsCrossed size={12} />
                       {food.tasteProfile[language]}
                     </div>
                   </div>
 
-                  <p className="text-lg text-gray-500 leading-relaxed font-light italic border-l-4 border-gray-50 pl-6">
+                  <p className="text-sm md:text-base text-gray-500 leading-relaxed font-light italic border-l-2 border-gray-50 pl-4 line-clamp-3">
                     "{food.description[language]}"
                   </p>
 
-                  <div className="pt-8 border-t border-gray-50 mt-auto">
-                    <div className="flex items-center gap-3 mb-6">
-                      <Leaf size={16} className="text-green-500" />
-                      <span className="text-[10px] font-black uppercase text-gray-400 tracking-widest">Heritage Components</span>
+                  <div className="pt-6 border-t border-gray-50 mt-auto">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Leaf size={14} className="text-green-500" />
+                      <span className="text-[9px] font-black uppercase text-gray-400 tracking-widest">Heritage Components</span>
                     </div>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2">
                       {food.ingredients.map((ing, i) => (
                         <span 
                           key={i} 
-                          className="px-5 py-2 bg-gray-50 text-[#0a0a0a] text-[10px] font-black rounded-xl border border-gray-100 uppercase tracking-widest group-hover:bg-white group-hover:border-[#0EA5E9]/20 transition-all"
+                          className="px-3 py-1.5 bg-gray-50 text-[#0a0a0a] text-[8px] md:text-[9px] font-black rounded-lg border border-gray-100 uppercase tracking-widest group-hover:bg-white group-hover:border-[#0EA5E9]/20 transition-all"
                         >
                           {ing[language]}
                         </span>

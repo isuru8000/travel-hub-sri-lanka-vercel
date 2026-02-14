@@ -91,6 +91,23 @@
         animation: float 4s ease-in-out infinite;
       }
 
+      @keyframes glint {
+        0% { transform: translateX(-150%) skewX(-35deg); }
+        100% { transform: translateX(150%) skewX(-35deg); }
+      }
+      .hover-glint:hover::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(to right, transparent, rgba(255,255,255,0.25), transparent);
+        animation: glint 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+        z-index: 20;
+        pointer-events: none;
+      }
+
       :focus-visible {
         outline: 3px solid var(--theme-primary);
         outline-offset: 4px;
@@ -123,7 +140,6 @@
 </head>
   <body class="bg-[#fafafa] text-[#262626]">
     <div id="root"></div>
-    <!-- Vite will automatically handle this import during build -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>

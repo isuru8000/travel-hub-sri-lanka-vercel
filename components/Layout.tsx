@@ -1,10 +1,7 @@
-
-
 import React from 'react';
-// Fix: Added implementation to Navbar.tsx to resolve module error
 import Navbar from './Navbar.tsx';
 import { Language, User } from '../types.ts';
-import { Facebook, Instagram, Youtube, MapPin, Mail, Phone, ShieldCheck, Sparkles } from 'lucide-react';
+import { Facebook, Instagram, Youtube, Music2, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -85,36 +82,47 @@ const Layout: React.FC<LayoutProps> = ({
             <ul className="space-y-4 text-sm text-gray-400 font-bold uppercase tracking-widest">
               <li><button onClick={() => setView('home')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> Home Archive</button></li>
               <li><button onClick={() => setView('destinations')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> Reality Portals</button></li>
-              <li><button onClick={() => setView('vr-showcase')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> 3D Spatial Hub</button></li>
+              <li><button onClick={() => setView('vr-trip')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> VR Virtual Horizon</button></li>
               <li><button onClick={() => setView('memories')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> Public Journal</button></li>
             </ul>
           </div>
 
           <div className="md:col-span-4 space-y-8">
             <h3 className="text-[10px] font-black text-[#0a0a0a] uppercase tracking-[0.4em] border-b border-gray-50 pb-4">Transmission</h3>
-            <div className="flex gap-5">
+            <div className="flex gap-4">
               <a 
                 href="#" 
-                className="w-14 h-14 border border-gray-100 rounded-2xl flex items-center justify-center hover:bg-gradient-to-tr hover:from-[#fdf497] hover:via-[#d6249f] hover:to-[#285AEB] hover:text-white hover:border-transparent transition-all text-gray-400 shadow-sm" 
+                className="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center transition-all shadow-sm hover:scale-110 hover:shadow-xl group/soc" 
                 title="Instagram"
               >
-                <Instagram size={24} />
+                <Instagram size={20} className="text-[#E1306C] group-hover/soc:scale-110 transition-transform" />
               </a>
               <a 
-                href="#" 
-                className="w-14 h-14 border border-gray-100 rounded-2xl flex items-center justify-center hover:bg-[#1877F2] hover:text-white hover:border-transparent transition-all text-gray-400 shadow-sm" 
+                href="https://www.facebook.com/share/1DJJ35Hq4k/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center transition-all shadow-sm hover:scale-110 hover:shadow-xl group/soc" 
                 title="Facebook"
               >
-                <Facebook size={24} />
+                <Facebook size={20} className="text-[#1877F2] group-hover/soc:scale-110 transition-transform" />
               </a>
               <a 
                 href="https://www.youtube.com/@TravelHublk-123" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="w-14 h-14 border border-gray-100 rounded-2xl flex items-center justify-center hover:bg-[#FF0000] hover:text-white hover:border-transparent transition-all text-gray-400 shadow-sm" 
+                className="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center transition-all shadow-sm hover:scale-110 hover:shadow-xl group/soc" 
                 title="YouTube"
               >
-                <Youtube size={24} />
+                <Youtube size={20} className="text-[#FF0000] group-hover/soc:scale-110 transition-transform" />
+              </a>
+              <a 
+                href="https://vm.tiktok.com/ZS91cdnNLXNp3-gURJB/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center transition-all shadow-sm hover:scale-110 hover:shadow-xl group/soc" 
+                title="TikTok"
+              >
+                <Music2 size={20} className="text-[#000000] group-hover/soc:scale-110 transition-transform" />
               </a>
             </div>
             <p className="text-[9px] font-black text-gray-300 uppercase tracking-[0.2em] leading-relaxed">

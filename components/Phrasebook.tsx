@@ -2,13 +2,16 @@
 import React, { useState } from 'react';
 import { Language, Phrase } from '../types.ts';
 import { PHRASEBOOK_DATA } from '../constants.tsx';
-import { MessageSquare, Volume2, Search, Heart, Utensils, AlertCircle, ShoppingBag, Globe, Sparkles, BookOpen } from 'lucide-react';
+// Fix: Added ArrowLeft import for the back button
+import { MessageSquare, Volume2, Search, Heart, Utensils, AlertCircle, ShoppingBag, Globe, Sparkles, BookOpen, ArrowLeft } from 'lucide-react';
 
 interface PhrasebookProps {
   language: Language;
+  // Fix: Added missing onBack prop definition to resolve error in App.tsx
+  onBack: () => void;
 }
 
-const Phrasebook: React.FC<PhrasebookProps> = ({ language }) => {
+const Phrasebook: React.FC<PhrasebookProps> = ({ language, onBack }) => {
   const [filter, setFilter] = useState<string>('all');
   const [search, setSearch] = useState('');
 
@@ -41,6 +44,14 @@ const Phrasebook: React.FC<PhrasebookProps> = ({ language }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#fafafa] via-black/40 to-transparent" />
         <div className="absolute inset-0 pattern-overlay opacity-10" />
         
+        {/* Fix: Added Back Button for consistency with other archive views and to utilize the onBack prop */}
+        <div className="absolute top-10 left-10 z-[70]">
+          <button onClick={onBack} className="flex items-center gap-4 px-8 py-4 bg-white/80 backdrop-blur-xl border border-gray-200 text-[#0a0a0a] rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:bg-white transition-all shadow-xl group">
+            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> 
+            {language === 'EN' ? 'Home' : 'මුල් පිටුව'}
+          </button>
+        </div>
+
         <div className="max-w-4xl mx-auto text-center space-y-12 relative z-10 px-6">
           <div className="space-y-6">
             <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.5em] mb-4 shadow-2xl">
@@ -71,7 +82,7 @@ const Phrasebook: React.FC<PhrasebookProps> = ({ language }) => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-8 -mt-12 relative z-20 space-y-16">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-8 -mt-12 relative z-20 space-y-16">
         <div className="flex flex-wrap gap-4 justify-center bg-white/90 backdrop-blur-xl p-4 rounded-[3rem] shadow-xl border border-gray-100 w-fit mx-auto">
           {categories.map(cat => (
             <button
@@ -89,42 +100,42 @@ const Phrasebook: React.FC<PhrasebookProps> = ({ language }) => {
           ))}
         </div>
 
-        {/* Updated grid spacing */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 pt-8">
+        {/* Updated grid spacing to 4 columns on XL screens */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 pt-8">
           {filteredPhrases.map((p, idx) => (
             <div 
               key={p.id}
-              className="bg-white p-12 rounded-[4rem] shadow-sm border border-gray-100 group hover:-translate-y-4 hover:shadow-[0_50px_100px_rgba(0,0,0,0.08)] transition-all duration-700 relative overflow-hidden"
+              className="bg-white p-10 rounded-[4rem] shadow-sm border border-gray-100 group hover:-translate-y-4 hover:shadow-[0_50px_100px_rgba(0,0,0,0.08)] transition-all duration-700 relative overflow-hidden"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#0EA5E9]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               
-              <div className="flex justify-between items-start mb-8">
-                <span className="text-[9px] font-black text-gray-300 uppercase tracking-[0.4em] bg-gray-50 px-4 py-1.5 rounded-full border border-gray-100">
+              <div className="flex justify-between items-start mb-6">
+                <span className="text-[8px] font-black text-gray-300 uppercase tracking-[0.4em] bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
                   Node_Ref: #L0{idx + 1}
                 </span>
-                <button className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-300 group-hover:text-[#0EA5E9] group-hover:bg-white group-hover:shadow-lg transition-all active:scale-90">
-                  <Volume2 size={24} />
+                <button className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-gray-300 group-hover:text-[#0EA5E9] group-hover:bg-white group-hover:shadow-lg transition-all active:scale-90">
+                  <Volume2 size={20} />
                 </button>
               </div>
 
-              <div className="space-y-8">
-                <div className="space-y-2">
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">English_Primary</p>
-                  <p className="text-2xl font-heritage font-bold text-[#262626]">{p.english}</p>
+              <div className="space-y-6">
+                <div className="space-y-1">
+                  <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">English_Primary</p>
+                  <p className="text-xl md:text-2xl font-heritage font-bold text-[#262626]">{p.english}</p>
                 </div>
                 
                 <div className="w-full h-px bg-gradient-to-r from-gray-100 via-gray-200 to-transparent"></div>
 
-                <div className="space-y-2">
-                  <p className="text-[10px] font-black text-[#0EA5E9] uppercase tracking-widest">Sinhala_Translation</p>
-                  <p className="text-4xl font-heritage font-bold text-[#0a0a0a] leading-tight drop-shadow-sm">{p.sinhala}</p>
+                <div className="space-y-1">
+                  <p className="text-[9px] font-black text-[#0EA5E9] uppercase tracking-widest">Sinhala_Translation</p>
+                  <p className="text-2xl md:text-3xl font-heritage font-bold text-[#0a0a0a] leading-tight drop-shadow-sm">{p.sinhala}</p>
                 </div>
 
                 <div className="pt-6 border-t border-gray-50">
-                  <p className="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-2">Neural_Phonetic</p>
-                  <div className="bg-[#fafafa] p-5 rounded-3xl border border-gray-50 relative group-hover:bg-white transition-colors">
-                    <Sparkles size={14} className="absolute top-4 right-4 text-[#0EA5E9] opacity-20" />
-                    <p className="text-xl font-medium text-gray-500 italic tracking-tight">"{p.transliteration}"</p>
+                  <p className="text-[8px] font-black text-gray-300 uppercase tracking-widest mb-2">Neural_Phonetic</p>
+                  <div className="bg-[#fafafa] p-4 rounded-2xl border border-gray-50 relative group-hover:bg-white transition-colors">
+                    <Sparkles size={12} className="absolute top-3 right-3 text-[#0EA5E9] opacity-20" />
+                    <p className="text-base md:text-lg font-medium text-gray-500 italic tracking-tight">"{p.transliteration}"</p>
                   </div>
                 </div>
               </div>

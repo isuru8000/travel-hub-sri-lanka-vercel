@@ -13,43 +13,43 @@ const TeaCard: React.FC<{ item: TeaExperience; language: Language; idx: number }
     className="bg-white/95 backdrop-blur-md rounded-[4rem] overflow-hidden shadow-2xl border border-white/20 flex flex-col group hover:-translate-y-4 transition-all duration-700 animate-in slide-in-from-bottom-8"
     style={{ animationDelay: `${idx * 100}ms` }}
   >
-    <div className="relative h-80 overflow-hidden">
+    <div className="relative h-64 overflow-hidden">
       <img 
         src={item.image} 
         alt={item.name[language]} 
         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[6000ms]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40" />
-      <div className="absolute top-6 left-6 bg-white/95 backdrop-blur-md px-5 py-2.5 rounded-full shadow-lg flex items-center gap-2 border border-white/20">
-        {item.type === 'variety' ? <Coffee size={14} className="text-emerald-600" /> : item.type === 'process' ? <Sparkles size={14} className="text-emerald-600" /> : <Mountain size={14} className="text-emerald-600" />}
-        <span className="text-[10px] font-black text-[#262626] uppercase tracking-widest">
-          {item.type === 'variety' ? (language === 'EN' ? 'Tea Variety' : 'තේ වර්ගය') : item.type === 'process' ? (language === 'EN' ? 'The Craft' : 'නිෂ්පාදන ක්‍රියාවලිය') : (language === 'EN' ? 'Historic Region' : 'ඓතිහාසික කලාපය')}
+      <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full shadow-lg flex items-center gap-2 border border-white/20">
+        {item.type === 'variety' ? <Coffee size={12} className="text-emerald-600" /> : item.type === 'process' ? <Sparkles size={12} className="text-emerald-600" /> : <Mountain size={12} className="text-emerald-600" />}
+        <span className="text-[9px] font-black text-[#262626] uppercase tracking-widest">
+          {item.type === 'variety' ? (language === 'EN' ? 'Variety' : 'වර්ගය') : item.type === 'process' ? (language === 'EN' ? 'Craft' : 'කලාව') : (language === 'EN' ? 'Region' : 'කලාපය')}
         </span>
       </div>
-      <div className="absolute bottom-6 left-8">
-         <span className="text-[10px] font-black text-white/80 uppercase tracking-[0.4em] drop-shadow-md">Node_Ref #T0{idx+1}</span>
+      <div className="absolute bottom-4 left-6">
+         <span className="text-[9px] font-black text-white/80 uppercase tracking-[0.4em] drop-shadow-md">Ref #T0{idx+1}</span>
       </div>
     </div>
 
-    <div className="p-12 flex-grow space-y-8 flex flex-col">
-      <div className="space-y-2">
-        <h3 className="text-3xl font-heritage font-bold text-[#262626] group-hover:text-emerald-600 transition-all leading-tight">
+    <div className="p-8 md:p-10 flex-grow space-y-6 flex flex-col">
+      <div className="space-y-1">
+        <h3 className="text-xl md:text-2xl font-heritage font-bold text-[#262626] group-hover:text-emerald-600 transition-all leading-tight">
           {item.name[language]}
         </h3>
-        <div className="w-12 h-1 bg-gray-100 rounded-full group-hover:w-24 group-hover:bg-emerald-600 transition-all duration-500" />
+        <div className="w-10 h-1 bg-gray-100 rounded-full group-hover:w-16 group-hover:bg-emerald-600 transition-all duration-500" />
       </div>
 
-      <p className="text-lg text-gray-500 leading-relaxed font-light italic">
+      <p className="text-sm md:text-base text-gray-500 leading-relaxed font-light italic line-clamp-3">
         "{item.description[language]}"
       </p>
 
-      <div className="mt-auto pt-8 border-t border-gray-50">
-        <div className="bg-emerald-50/80 backdrop-blur-sm p-6 rounded-[2.5rem] border border-emerald-100 relative overflow-hidden group-hover:bg-white transition-colors">
-          <div className="flex items-center gap-3 mb-3">
-             <Info size={14} className="text-emerald-600" />
-             <p className="text-[10px] font-black text-emerald-600/60 uppercase tracking-widest">Heritage Fact</p>
+      <div className="mt-auto pt-6 border-t border-gray-50">
+        <div className="bg-emerald-50/80 backdrop-blur-sm p-4 rounded-[1.5rem] border border-emerald-100 relative overflow-hidden group-hover:bg-white transition-colors">
+          <div className="flex items-center gap-2 mb-2">
+             <Info size={12} className="text-emerald-600" />
+             <p className="text-[8px] font-black text-emerald-600/60 uppercase tracking-widest">Heritage Fact</p>
           </div>
-          <p className="text-sm text-emerald-900 font-medium italic leading-relaxed">
+          <p className="text-xs text-emerald-900 font-medium italic leading-relaxed line-clamp-2">
             {item.fact[language]}
           </p>
         </div>
@@ -61,7 +61,7 @@ const TeaCard: React.FC<{ item: TeaExperience; language: Language; idx: number }
 const TeaCulture: React.FC<TeaCultureProps> = ({ language }) => {
   const heroTeaBg = "https://images.unsplash.com/photo-1594631252845-29fc458695d1?q=80&w=1920&auto=format&fit=crop";
   // Updated pageBg with the new Unsplash URL provided by the user
-  const pageBg = "https://images.unsplash.com/photo-1632639521806-cead484cc369?w=1920&auto=format&fit=crop&q=80";
+  const pageBg = "https://images.unsplash.com/photo-1632639521806-cead484cc369?w=1920&auto=format&fit=crop&w=1920&q=80";
 
   return (
     <section className="min-h-screen bg-[#fafafa] pb-32 relative">
@@ -99,12 +99,12 @@ const TeaCulture: React.FC<TeaCultureProps> = ({ language }) => {
           <p className="text-white/80 max-w-3xl mx-auto text-xl md:text-3xl font-light italic drop-shadow-lg leading-relaxed">
             {language === 'EN' 
               ? "Follow the journey of the leaf that made Sri Lanka world-famous, from the misty highlands to your morning cup." 
-              : "මීදුමෙන් වැසුණු කඳුකරයේ සිට ඔබේ තේ කෝප්පය දක්වා ශ්‍රී ලංකාව ලොව පුරා ප්‍රසිද්ධ කළ තේ දල්ලේ ගමන අත්විඳින්න."}
+              : "මීදුමෙන් වැසුණු කඳුකරයේ සිට ඔබේ තේ කෝප්පය දක්වා ශ්‍රී ලංකාව ලොව පුරා ප්‍රසිද්ධ කළ තේ දල්ලේ ගමන අත්විඳින්න්න."}
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-8 -mt-24 relative z-10 space-y-20">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-8 -mt-24 relative z-10 space-y-20">
         {/* Tea Selection HUD */}
         <div className="flex justify-center">
            <div className="bg-white/95 backdrop-blur-xl border border-emerald-100 px-12 py-8 rounded-[3rem] shadow-2xl flex flex-wrap items-center justify-center gap-12">
@@ -127,8 +127,8 @@ const TeaCulture: React.FC<TeaCultureProps> = ({ language }) => {
            </div>
         </div>
 
-        {/* Updated grid spacing */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16 pt-8">
+        {/* Updated grid spacing to 4 columns on XL screens */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10 pt-8">
           {TEA_DATA.map((item, idx) => (
             <TeaCard key={item.id} item={item} language={language} idx={idx} />
           ))}
