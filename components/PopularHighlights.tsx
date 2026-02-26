@@ -1,7 +1,8 @@
+
 import React, { useState, useRef } from 'react';
 import { Language, Destination } from '../types.ts';
 import { DESTINATIONS, UI_STRINGS } from '../constants.tsx';
-import { MapPin, History, Sparkles, Compass, ArrowRight, ShieldCheck, Box } from 'lucide-react';
+import { MapPin, Sparkles, Compass, ArrowRight, ShieldCheck, Box } from 'lucide-react';
 
 const HighlightCard: React.FC<{ dest: Destination; index: number; language: Language; onClick: () => void }> = ({ dest, index, language, onClick }) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -71,33 +72,33 @@ const HighlightCard: React.FC<{ dest: Destination; index: number; language: Lang
 
       <div className="w-full lg:w-2/5 space-y-6 md:space-y-12" style={{ transform: 'translateZ(40px)' }}>
         <div className="space-y-4 md:space-y-6">
-          <div className="flex items-center gap-4 text-[#0EA5E9] font-black text-[9px] md:text-[11px] tracking-[0.5em] md:tracking-[0.7em] uppercase">
+          <div className="flex items-center gap-3 md:gap-4 text-[#0EA5E9] font-black text-[9px] md:text-[11px] tracking-[0.3em] md:tracking-[0.7em] uppercase">
             <Box size={14} className="md:w-5 md:h-5 animate-spin-slow" />
             {dest.location}
           </div>
-          <h3 className="text-2xl md:text-4xl lg:text-5xl font-heritage font-bold text-[#0a0a0a] leading-[1.1] md:leading-[1] tracking-tighter drop-shadow-sm max-w-lg break-words">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-heritage font-bold text-[#0a0a0a] leading-[1.1] md:leading-[1] tracking-tighter drop-shadow-sm max-w-lg break-words">
             {dest.name[language]}
           </h3>
-          <p className="text-xl md:text-2xl lg:text-3xl text-gray-400 font-light italic leading-tight border-l-[6px] md:border-l-[10px] border-[#0EA5E9]/20 pl-6 md:pl-12 py-2 md:py-3">
+          <p className="text-lg md:text-2xl lg:text-3xl text-gray-400 font-light italic leading-tight border-l-[4px] md:border-l-[10px] border-[#0EA5E9]/20 pl-4 md:pl-12 py-1 md:py-3">
             {dest.shortStory[language]}
           </p>
         </div>
 
-        <div className="space-y-6 md:space-y-10">
-          <p className="text-base md:text-2xl text-gray-500 leading-relaxed font-light italic opacity-80">
-            {dest.history[language].slice(0, window.innerWidth < 768 ? 150 : 250)}...
+        <div className="space-y-6 md:space-y-10 flex flex-col gap-6">
+          <p className="text-sm md:text-2xl text-gray-500 leading-relaxed font-light italic opacity-80 w-full">
+            {dest.history[language].slice(0, window.innerWidth < 768 ? 100 : 250)}...
           </p>
 
           <button 
             onClick={onClick}
-            className="group relative flex items-center gap-6 md:gap-8 px-8 py-5 md:px-16 md:py-8 bg-[#0a0a0a] text-white rounded-[1.5rem] md:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.2)] transition-all duration-700 hover:scale-110 active:scale-95 overflow-hidden w-full sm:w-auto justify-center sm:justify-start"
+            className="group relative flex items-center justify-between gap-4 md:gap-8 px-6 py-4 md:px-16 md:py-8 bg-[#0a0a0a] text-white rounded-[1.5rem] md:rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.2)] transition-all duration-700 hover:scale-105 active:scale-95 overflow-hidden w-full sm:w-auto self-start"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#0EA5E9] to-[#3B82F6] opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="relative z-10 text-[10px] md:text-[12px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em]">
-              {language === 'EN' ? 'Initialize Reality' : 'යථාර්ථය අරඹන්න'}
+            <span className="relative z-10 text-[10px] md:text-[12px] font-black uppercase tracking-[0.2em] md:tracking-[0.6em]">
+              {UI_STRINGS.exploreNode[language]}
             </span>
-            <div className="relative z-10 w-10 h-10 md:w-14 md:h-14 rounded-[1rem] md:rounded-[1.5rem] bg-white/10 backdrop-blur-md flex items-center justify-center transition-transform group-hover:rotate-12 group-hover:scale-110">
-              <ArrowRight size={20} className="md:w-7 md:h-7" />
+            <div className="relative z-10 w-8 h-8 md:w-14 md:h-14 rounded-[0.75rem] md:rounded-[1.5rem] bg-white/10 backdrop-blur-md flex items-center justify-center transition-transform group-hover:rotate-12 group-hover:scale-110">
+              <ArrowRight size={16} className="md:w-7 md:h-7" />
             </div>
           </button>
         </div>
@@ -106,7 +107,6 @@ const HighlightCard: React.FC<{ dest: Destination; index: number; language: Lang
   );
 };
 
-// Fix: Added missing PopularHighlightsProps interface to correctly define the props for the PopularHighlights component
 interface PopularHighlightsProps {
   language: Language;
   onSelectDestination: (dest: Destination) => void;
@@ -129,7 +129,7 @@ const PopularHighlights: React.FC<PopularHighlightsProps> = ({ language, onSelec
             {language === 'EN' ? 'The Best of Lanka' : 'ශ්‍රී ලංකාවේ විශිෂ්ටතම ස්ථාන'}
           </div>
           <h2 className="text-3xl md:text-7xl font-heritage font-bold text-[#0a0a0a] tracking-tighter leading-tight md:leading-[0.9] drop-shadow-2xl">
-            The Crown <br/><span className="italic insta-text-gradient">Jewels.</span>
+            {language === 'EN' ? <>Top <br/><span className="italic insta-text-gradient">Highlights.</span></> : <>ප්‍රධාන <br/><span className="italic insta-text-gradient">ආකර්ෂණයන්.</span></>}
           </h2>
           <div className="w-24 md:w-40 h-1 md:h-2 insta-gradient mx-auto rounded-full shadow-3xl mt-6 md:mt-10" />
         </div>
@@ -155,11 +155,11 @@ const PopularHighlights: React.FC<PopularHighlightsProps> = ({ language, onSelec
                   <ShieldCheck size={32} className="md:w-14 md:h-14 text-[#0EA5E9]" />
                 </div>
                 <h3 className="text-3xl md:text-7xl font-heritage font-bold text-[#0a0a0a] leading-[1.1] md:leading-[0.9] tracking-tighter">
-                  Beyond <br/><span className="insta-text-gradient italic">The Map.</span>
+                  {language === 'EN' ? <>Beyond <br/><span className="insta-text-gradient italic">The Map.</span></> : <>සිතියමෙන් <br/><span className="insta-text-gradient italic">ඔබ්බට.</span></>}
                 </h3>
                 <p className="text-gray-400 max-w-4xl mx-auto text-lg md:text-3xl font-light italic leading-relaxed md:leading-tight">
                   {language === 'EN' 
-                    ? 'Access the complete spatial registry of sacred wonders.' 
+                    ? 'See all the amazing and holy places on the island.' 
                     : 'පූජනීය පුදුමයන්ගේ සම්පූර්ණ නාමාවලිය වෙත පිවිසෙන්න.'}
                 </p>
               </div>

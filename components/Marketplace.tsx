@@ -47,7 +47,7 @@ const PREMIUM_PACKAGES = [
     type: 'ALL-INCLUSIVE',
     image: 'https://plus.unsplash.com/premium_photo-1661954483883-edd65eac3577?q=80&w=1170&auto=format&fit=crop',
     nodes: 12,
-    highlights: { EN: ['Sigiriya Rock', 'Anuradhapura', 'Polonnaruwa'], SI: ['සීගිරිය', 'අනුරාධපුරය', 'පොළොන්නරුව'] }
+    highlights: { EN: ['Sigiriya Rock', 'Mihintale', 'Gal Vihara'], SI: ['සීගිරිය', 'මිහින්තලේ', 'ගල් විහාරය'] }
   },
   {
     id: 'p2',
@@ -58,6 +58,26 @@ const PREMIUM_PACKAGES = [
     image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80',
     nodes: 8,
     highlights: { EN: ['Ella Ridge', 'Nuwara Eliya', 'Tea Factories'], SI: ['ඇල්ල', 'නුවර එළිය', 'තේ කර්මාන්තශාලා'] }
+  },
+  {
+    id: 'p3',
+    title: { EN: 'Coastal Serenity Expedition', SI: 'වෙරළබඩ නිශ්ශබ්ද සංචාරය' },
+    price: 1100,
+    duration: '6 Days',
+    type: 'ADVENTURE',
+    image: 'https://images.unsplash.com/photo-1512100356956-c1227c3317bb?auto=format&fit=crop&w=800&q=80',
+    nodes: 10,
+    highlights: { EN: ['Mirissa Whale Watch', 'Galle Fort', 'Unawatuna'], SI: ['මිරිස්ස තල්මසුන් නැරඹීම', 'ගාල්ල බලකොටුව', 'උණවටුන'] }
+  },
+  {
+    id: 'p4',
+    title: { EN: 'Wildlife Frontier Safari', SI: 'වනජීවී සෆාරි අත්දැකීම' },
+    price: 950,
+    duration: '5 Days',
+    type: 'NATURE',
+    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80',
+    nodes: 9,
+    highlights: { EN: ['Yala Safari', 'Udawalawe', 'Bundala'], SI: ['යාල සෆාරි', 'උඩවලව', 'බුන්දල'] }
   }
 ];
 
@@ -334,72 +354,72 @@ const Marketplace: React.FC<MarketplaceProps> = ({ language }) => {
       )}
 
       {/* CINEMATIC HEADER */}
-      <div className="relative h-[70vh] flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
+      <div className="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
         <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: `linear-gradient(#E1306C 1px, transparent 1px), linear-gradient(90deg, #E1306C 1px, transparent 1px)`, backgroundSize: '120px 120px' }} />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0a]/80 to-[#fafafa]" />
         
-        <div className="relative text-center space-y-10 px-6 max-w-5xl animate-in fade-in zoom-in duration-1000">
-          <div className="flex flex-col items-center gap-6">
-             <div className="inline-flex items-center gap-4 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-3xl text-white text-[10px] font-black uppercase tracking-[0.5em] shadow-2xl">
-                <Crown size={16} className="text-yellow-500 animate-pulse" />
+        <div className="relative text-center space-y-6 md:space-y-10 px-4 md:px-6 max-w-5xl animate-in fade-in zoom-in duration-1000 mt-16 md:mt-0">
+          <div className="flex flex-col items-center gap-4 md:gap-6">
+             <div className="inline-flex items-center gap-3 md:gap-4 px-4 py-2 md:px-6 md:py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-3xl text-white text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] shadow-2xl">
+                <Crown size={14} className="md:w-4 md:h-4 text-yellow-500 animate-pulse" />
                 Strategic_Market_Manifold
              </div>
-             <div className="h-16 w-px bg-gradient-to-b from-[#E1306C] to-transparent" />
+             <div className="h-12 md:h-16 w-px bg-gradient-to-b from-[#E1306C] to-transparent" />
           </div>
           
-          <h2 className="text-6xl md:text-[11rem] font-heritage font-bold text-white tracking-tighter uppercase leading-[0.8] drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
+          <h2 className="text-5xl sm:text-6xl md:text-[11rem] font-heritage font-bold text-white tracking-tighter uppercase leading-[0.85] md:leading-[0.8] drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
             ARCHIVE <br/><span className="italic insta-text-gradient">ACCESS.</span>
           </h2>
           
-          <p className="text-white/40 text-lg md:text-3xl font-light italic leading-relaxed tracking-wide max-w-3xl mx-auto">
-            "Acquire permanent high-fidelity traversals of the island's most sacred heritage nodes."
+          <p className="text-white/40 text-base md:text-3xl font-light italic leading-relaxed tracking-wide max-w-3xl mx-auto px-4">
+            "Get permanent access to the island's most famous and holy sites."
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 -mt-24 relative z-10 space-y-32">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 -mt-16 md:-mt-24 relative z-10 space-y-16 md:space-y-32">
         {/* Booking Form Card */}
         <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-[#E1306C] via-purple-500 to-[#0EA5E9] rounded-[5rem] blur-[80px] opacity-10 group-hover:opacity-20 transition-opacity" />
-          <div className="relative bg-white/95 backdrop-blur-[60px] p-8 md:p-20 rounded-[5rem] shadow-[0_50px_100px_rgba(0,0,0,0.05)] border border-gray-50 space-y-16">
-            <div className="space-y-6">
-              <div className="flex items-center gap-4 text-[#E1306C]">
-                 <Database size={20} className="animate-pulse" />
-                 <span className="text-[11px] font-black uppercase tracking-[0.5em]">Session_Configurator</span>
+          <div className="absolute -inset-1 bg-gradient-to-r from-[#E1306C] via-purple-500 to-[#0EA5E9] rounded-[2.5rem] md:rounded-[5rem] blur-[40px] md:blur-[80px] opacity-10 group-hover:opacity-20 transition-opacity" />
+          <div className="relative bg-white/95 backdrop-blur-[60px] p-6 md:p-20 rounded-[2.5rem] md:rounded-[5rem] shadow-[0_50px_100px_rgba(0,0,0,0.05)] border border-gray-50 space-y-8 md:space-y-16">
+            <div className="space-y-4 md:space-y-6">
+              <div className="flex items-center gap-3 md:gap-4 text-[#E1306C]">
+                 <Database size={16} className="md:w-5 md:h-5 animate-pulse" />
+                 <span className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em]">Session_Configurator</span>
               </div>
-              <h3 className="text-4xl md:text-6xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter leading-none">Sync Configuration.</h3>
-              <div className="w-32 h-1.5 insta-gradient rounded-full shadow-lg" />
+              <h3 className="text-3xl md:text-6xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter leading-none">Sync Configuration.</h3>
+              <div className="w-24 md:w-32 h-1.5 insta-gradient rounded-full shadow-lg" />
             </div>
 
-            <form onSubmit={handleCheckoutTrigger} className="grid grid-cols-1 xl:grid-cols-6 gap-10">
-              <div className="xl:col-span-3 space-y-4">
-                <label className="text-[11px] font-black text-gray-400 uppercase tracking-[0.4em] ml-6">Target Archive Node</label>
+            <form onSubmit={handleCheckoutTrigger} className="grid grid-cols-1 xl:grid-cols-6 gap-6 md:gap-10">
+              <div className="xl:col-span-3 space-y-3 md:space-y-4">
+                <label className="text-[9px] md:text-[11px] font-black text-gray-400 uppercase tracking-[0.3em] md:tracking-[0.4em] ml-4 md:ml-6">Target Archive Node</label>
                 <div className="relative">
                    <select 
                      required
                      value={bookingState.destination}
                      onChange={(e) => setBookingState(prev => ({...prev, destination: e.target.value}))}
-                     className="w-full px-10 py-8 bg-gray-50 border-2 border-transparent rounded-[3rem] focus:bg-white focus:border-[#E1306C]/20 outline-none transition-all font-bold text-xl appearance-none shadow-inner text-[#0a0a0a]"
+                     className="w-full px-6 py-5 md:px-10 md:py-8 bg-gray-50 border-2 border-transparent rounded-[2rem] md:rounded-[3rem] focus:bg-white focus:border-[#E1306C]/20 outline-none transition-all font-bold text-base md:text-xl appearance-none shadow-inner text-[#0a0a0a]"
                    >
                      <option value="">Select Protocol...</option>
                      {PREMIUM_PACKAGES.map(p => <option key={p.id} value={p.title.EN}>{p.title[language]}</option>)}
                    </select>
-                   <ChevronRight size={20} className="absolute right-8 top-1/2 -translate-y-1/2 rotate-90 text-gray-300 pointer-events-none" />
+                   <ChevronRight size={16} className="md:w-5 md:h-5 absolute right-6 md:right-8 top-1/2 -translate-y-1/2 rotate-90 text-gray-300 pointer-events-none" />
                 </div>
               </div>
-              <div className="xl:col-span-2 grid grid-cols-2 gap-4">
-                 <div className="space-y-4">
-                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-[0.4em] ml-6">Initialize</label>
-                    <input required type="date" value={bookingState.checkIn} onChange={e => setBookingState(p => ({...p, checkIn: e.target.value}))} className="w-full px-8 py-8 bg-gray-50 rounded-[3rem] border-2 border-transparent focus:border-[#E1306C]/20 outline-none shadow-inner font-bold text-[#0a0a0a]" />
+              <div className="xl:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                 <div className="space-y-3 md:space-y-4">
+                    <label className="text-[9px] md:text-[11px] font-black text-gray-400 uppercase tracking-[0.3em] md:tracking-[0.4em] ml-4 md:ml-6">Initialize</label>
+                    <input required type="date" value={bookingState.checkIn} onChange={e => setBookingState(p => ({...p, checkIn: e.target.value}))} className="w-full px-6 py-5 md:px-8 md:py-8 bg-gray-50 rounded-[2rem] md:rounded-[3rem] border-2 border-transparent focus:border-[#E1306C]/20 outline-none shadow-inner font-bold text-sm md:text-base text-[#0a0a0a]" />
                  </div>
-                 <div className="space-y-4">
-                    <label className="text-[11px] font-black text-gray-400 uppercase tracking-[0.4em] ml-6">Terminate</label>
-                    <input required type="date" value={bookingState.checkOut} onChange={e => setBookingState(p => ({...p, checkOut: e.target.value}))} className="w-full px-8 py-8 bg-gray-50 rounded-[3rem] border-2 border-transparent focus:border-[#E1306C]/20 outline-none shadow-inner font-bold text-[#0a0a0a]" />
+                 <div className="space-y-3 md:space-y-4">
+                    <label className="text-[9px] md:text-[11px] font-black text-gray-400 uppercase tracking-[0.3em] md:tracking-[0.4em] ml-4 md:ml-6">Terminate</label>
+                    <input required type="date" value={bookingState.checkOut} onChange={e => setBookingState(p => ({...p, checkOut: e.target.value}))} className="w-full px-6 py-5 md:px-8 md:py-8 bg-gray-50 rounded-[2rem] md:rounded-[3rem] border-2 border-transparent focus:border-[#E1306C]/20 outline-none shadow-inner font-bold text-sm md:text-base text-[#0a0a0a]" />
                  </div>
               </div>
-              <div className="xl:col-span-1 pt-8">
-                 <button type="submit" className="w-full h-full bg-[#0a0a0a] text-white rounded-[3rem] font-black text-xs uppercase tracking-widest hover:bg-[#E1306C] transition-all flex flex-col items-center justify-center gap-3 py-8 xl:py-0 shadow-2xl active:scale-95 group/btn">
-                    <Zap size={24} fill="currentColor" className="group-hover/btn:scale-125 transition-transform" />
+              <div className="xl:col-span-1 pt-4 md:pt-8">
+                 <button type="submit" className="w-full h-full bg-[#0a0a0a] text-white rounded-[2rem] md:rounded-[3rem] font-black text-[10px] md:text-xs uppercase tracking-widest hover:bg-[#E1306C] transition-all flex flex-col items-center justify-center gap-2 md:gap-3 py-6 md:py-8 xl:py-0 shadow-2xl active:scale-95 group/btn">
+                    <Zap size={20} fill="currentColor" className="md:w-6 md:h-6 group-hover/btn:scale-125 transition-transform" />
                     <span>Checkout</span>
                  </button>
               </div>
@@ -408,42 +428,42 @@ const Marketplace: React.FC<MarketplaceProps> = ({ language }) => {
         </div>
 
         {/* PACKAGE GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
            {PREMIUM_PACKAGES.map((pkg) => (
-             <div key={pkg.id} className="group relative h-[650px] rounded-[5rem] overflow-hidden bg-white border border-gray-100 shadow-2xl transition-all duration-1000 hover:-translate-y-4 flex flex-col">
-                <div className="relative h-2/3 overflow-hidden">
+             <div key={pkg.id} className="group relative h-[550px] md:h-[650px] rounded-[3rem] md:rounded-[5rem] overflow-hidden bg-white border border-gray-100 shadow-2xl transition-all duration-1000 hover:-translate-y-2 md:hover:-translate-y-4 flex flex-col">
+                <div className="relative h-1/2 md:h-2/3 overflow-hidden">
                    <img src={pkg.image} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[8000ms] group-hover:scale-110" alt="" />
                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
                    
-                   <div className="absolute top-10 left-10">
-                      <div className="px-6 py-3 bg-black/80 backdrop-blur-md rounded-2xl text-[10px] font-black uppercase tracking-widest text-white border border-white/10 shadow-2xl">
+                   <div className="absolute top-6 left-6 md:top-10 md:left-10">
+                      <div className="px-4 py-2 md:px-6 md:py-3 bg-black/80 backdrop-blur-md rounded-xl md:rounded-2xl text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white border border-white/10 shadow-2xl">
                          {pkg.type}
                       </div>
                    </div>
 
-                   <div className="absolute top-10 right-10 flex gap-2">
-                      <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20 text-white shadow-2xl">
-                         <Star size={18} fill="currentColor" className="text-yellow-400" />
+                   <div className="absolute top-6 right-6 md:top-10 md:right-10 flex gap-2">
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/20 text-white shadow-2xl">
+                         <Star size={16} fill="currentColor" className="md:w-[18px] md:h-[18px] text-yellow-400" />
                       </div>
                    </div>
                 </div>
 
-                <div className="p-12 md:p-16 flex-grow flex flex-col justify-between space-y-8 bg-white relative z-10">
-                   <div className="space-y-6">
+                <div className="p-8 md:p-12 lg:p-16 flex-grow flex flex-col justify-between space-y-6 md:space-y-8 bg-white relative z-10">
+                   <div className="space-y-4 md:space-y-6">
                       <div className="flex justify-between items-start">
-                         <div className="space-y-2">
-                            <p className="text-[11px] font-black text-[#E1306C] uppercase tracking-[0.4em] mb-1">Manifest: {pkg.duration}</p>
-                            <h4 className="text-4xl md:text-5xl font-heritage font-bold text-[#0a0a0a] leading-tight tracking-tight uppercase group-hover:insta-text-gradient transition-all">{pkg.title[language]}</h4>
+                         <div className="space-y-1 md:space-y-2">
+                            <p className="text-[9px] md:text-[11px] font-black text-[#E1306C] uppercase tracking-[0.3em] md:tracking-[0.4em] mb-1">Manifest: {pkg.duration}</p>
+                            <h4 className="text-3xl md:text-4xl lg:text-5xl font-heritage font-bold text-[#0a0a0a] leading-tight tracking-tight uppercase group-hover:insta-text-gradient transition-all">{pkg.title[language]}</h4>
                          </div>
                          <div className="text-right">
-                            <p className="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1">Entry Rate</p>
-                            <p className="text-4xl font-heritage font-bold text-[#0a0a0a] tracking-tighter">${pkg.price}</p>
+                            <p className="text-[7px] md:text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1">Entry Rate</p>
+                            <p className="text-3xl md:text-4xl font-heritage font-bold text-[#0a0a0a] tracking-tighter">${pkg.price}</p>
                          </div>
                       </div>
 
-                      <div className="flex flex-wrap gap-4 pt-4">
+                      <div className="flex flex-wrap gap-2 md:gap-4 pt-2 md:pt-4">
                          {pkg.highlights[language].map((h, i) => (
-                           <div key={i} className="flex items-center gap-3 px-5 py-2 bg-gray-50 rounded-full border border-gray-100 text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:bg-blue-50/50 group-hover:text-blue-600 transition-all">
+                           <div key={i} className="flex items-center gap-2 md:gap-3 px-3 py-1.5 md:px-5 md:py-2 bg-gray-50 rounded-full border border-gray-100 text-[8px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:bg-blue-50/50 group-hover:text-blue-600 transition-all">
                               <MapPin size={10} />
                               {h}
                            </div>
@@ -451,17 +471,17 @@ const Marketplace: React.FC<MarketplaceProps> = ({ language }) => {
                       </div>
                    </div>
 
-                   <div className="flex items-center justify-between pt-8 border-t border-gray-50">
-                      <div className="flex items-center gap-4">
-                         <div className="w-2 h-2 rounded-full bg-green-500 animate-ping shadow-[0_0_10px_#22c55e]" />
-                         <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest">{pkg.nodes} SECURE_NODES</span>
+                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 md:pt-8 border-t border-gray-50">
+                      <div className="flex items-center gap-3 md:gap-4">
+                         <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500 animate-ping shadow-[0_0_10px_#22c55e]" />
+                         <span className="text-[8px] md:text-[10px] font-black text-gray-300 uppercase tracking-widest">{pkg.nodes} SECURE_NODES</span>
                       </div>
                       <button 
                         onClick={() => setBookingState(p => ({...p, destination: pkg.title.EN}))}
-                        className="group/btn2 flex items-center gap-6 px-10 py-5 bg-[#0a0a0a] text-white rounded-3xl font-black text-[10px] uppercase tracking-[0.4em] shadow-xl hover:bg-[#E1306C] transition-all"
+                        className="w-full sm:w-auto group/btn2 flex items-center justify-center gap-4 md:gap-6 px-8 py-4 md:px-10 md:py-5 bg-[#0a0a0a] text-white rounded-2xl md:rounded-3xl font-black text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] shadow-xl hover:bg-[#E1306C] transition-all"
                       >
                          Configure Sync
-                         <ArrowRight size={18} className="group-hover/btn2:translate-x-2 transition-transform" />
+                         <ArrowRight size={16} className="md:w-[18px] md:h-[18px] group-hover/btn2:translate-x-2 transition-transform" />
                       </button>
                    </div>
                 </div>
@@ -481,7 +501,7 @@ const Marketplace: React.FC<MarketplaceProps> = ({ language }) => {
                  FUTURE <span className="text-blue-500 italic">MANIFOLDS.</span>
               </h3>
               <p className="text-gray-400 font-light italic text-xl md:text-3xl max-w-3xl mx-auto leading-relaxed opacity-80">
-                "Archival nodes currently undergoing high-fidelity calibration for next-cycle synchronization."
+                "New places are being added soon for you to explore."
               </p>
            </div>
 

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Language, User } from '../types.ts';
 import { 
@@ -34,6 +35,7 @@ import {
   Orbit,
   Atom
 } from 'lucide-react';
+import { UI_STRINGS } from '../constants.tsx';
 
 /**
  * TravelHubLogo Component - Animated Archival Logo
@@ -43,68 +45,24 @@ export const TravelHubLogo: React.FC<{ size?: number; className?: string }> = ({
     {/* Dynamic Background Glow */}
     <div className="absolute inset-0 bg-[#0EA5E9] rounded-full blur-xl opacity-20 group-hover:opacity-60 transition-opacity duration-1000 animate-pulse"></div>
     
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="relative z-10 overflow-visible">
-      {/* Outer Rotating Dash Ring */}
-      <circle 
-        cx="50" 
-        cy="50" 
-        r="48" 
-        stroke="url(#logo_grad_blue)" 
-        strokeWidth="1.5" 
-        strokeDasharray="15 10" 
-        className="animate-[spin_8s_linear_infinite]"
+    <div className="relative z-10 overflow-visible flex items-center justify-center">
+      <img 
+        src="https://cdn-icons-png.flaticon.com/512/201/201623.png" 
+        alt="Travel Hub Logo" 
+        width={size} 
+        height={size} 
+        className="object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-110"
+        onError={(e) => {
+          // Fallback if the image fails to load
+          e.currentTarget.src = "https://ui-avatars.com/api/?name=TH&background=0EA5E9&color=fff";
+        }}
       />
-      
-      {/* Inner Rotating Dash Ring (Reverse) */}
-      <circle 
-        cx="50" 
-        cy="50" 
-        r="42" 
-        stroke="#0EA5E9" 
-        strokeWidth="0.5" 
-        strokeDasharray="4 4" 
-        className="animate-[spin_12s_linear_infinite_reverse] opacity-30"
-      />
-
-      {/* Solid Core Background */}
-      <circle cx="50" cy="50" r="38" fill="#0a0a0a" className="shadow-2xl" />
-      
-      {/* Centered 'T' with Glow */}
-      <text 
-        x="50" 
-        y="66" 
-        textAnchor="middle" 
-        fill="white" 
-        fontSize="48" 
-        fontWeight="bold" 
-        fontFamily="serif"
-        className="select-none drop-shadow-[0_0_10px_rgba(14,165,233,0.8)]"
-      >
-        T
-      </text>
-
-      {/* Decorative Orbits */}
-      <path 
-        d="M50 20C40 20 32 28 32 45C32 62 40 70 50 70C60 70 68 62 68 45C68 28 60 20 50 20Z" 
-        stroke="white" 
-        strokeWidth="0.2" 
-        strokeDasharray="2 2" 
-        className="animate-pulse opacity-40"
-      />
-
-      <defs>
-        <linearGradient id="logo_grad_blue" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#0EA5E9" />
-          <stop offset="0.5" stopColor="#3B82F6" />
-          <stop offset="1" stopColor="#2563EB" />
-        </linearGradient>
-      </defs>
-    </svg>
+    </div>
 
     {/* Floating Particles Around Logo */}
     <div className="absolute inset-0 pointer-events-none">
        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0EA5E9] rounded-full animate-ping opacity-40"></div>
-       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0EA5E9] rounded-full animate-ping opacity-40 delay-700"></div>
+       <div className="absolute bottom-1/2 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0EA5E9] rounded-full animate-ping opacity-40 delay-700"></div>
     </div>
   </div>
 );
@@ -147,7 +105,7 @@ const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   const navLinks: NavItem[] = [
-    { id: 'destinations', label: { EN: 'destinations ', SI: 'ගමනාන්ත' }, icon: <Map size={14} /> },
+    { id: 'destinations', label: { EN: 'Destinations', SI: 'ගමනාන්ත' }, icon: <Map size={14} /> },
     { 
       id: 'heritage-nav', 
       label: { EN: 'Heritage', SI: 'උරුමය' }, 
@@ -167,6 +125,7 @@ const Navbar: React.FC<NavbarProps> = ({
       icon: <Briefcase size={14} />,
       hasDropdown: true,
       items: [
+        { id: 'trip-planner', label: { EN: 'Trip Architect', SI: 'සංචාරක සැලසුම්කරු' }, icon: <Compass size={14} /> },
         { id: 'marketplace', label: { EN: 'Packages', SI: 'පැකේජ' }, icon: <Box size={14} /> },
         { id: 'hotels', label: { EN: 'Hotels', SI: 'හෝටල්' }, icon: <Building2 size={14} /> },
         { id: 'transport', label: { EN: 'Transport', SI: 'ප්‍රවාහනය' }, icon: <Car size={14} /> },
@@ -185,14 +144,14 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <nav className={`fixed top-6 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 w-[98%] max-w-7xl bg-white/95 backdrop-blur-2xl border border-gray-200 rounded-full shadow-[0_25px_60px_rgba(0,0,0,0.12)] ${isScrolled ? 'py-1 px-5' : 'py-2.5 px-8'}`}>
+    <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 w-[96%] md:w-[98%] max-w-7xl bg-white/95 backdrop-blur-2xl border border-gray-200 rounded-full shadow-[0_25px_60px_rgba(0,0,0,0.12)] ${isScrolled ? 'py-1 px-4 md:px-5' : 'py-2 px-4 md:py-2.5 md:px-8'}`}>
       <div className="flex items-center justify-between">
         {/* Brand */}
-        <div className="flex items-center gap-4 cursor-pointer group shrink-0" onClick={() => handleNav('home')}>
-          <TravelHubLogo size={isScrolled ? 34 : 42} />
+        <div className="flex items-center gap-3 md:gap-4 cursor-pointer group shrink-0" onClick={() => handleNav('home')}>
+          <TravelHubLogo size={isScrolled ? 28 : (window.innerWidth < 768 ? 32 : 42)} />
           <div className="flex flex-col items-start leading-none transition-all duration-700">
-            <h1 className="text-xl md:text-2xl font-heritage font-black tracking-tight uppercase text-[#0a0a0a]">Travel Hub</h1>
-            <span className="text-[7px] md:text-[8px] font-black uppercase tracking-[0.3em] mt-0.5 text-gray-400">sri lanka</span>
+            <h1 className="text-lg md:text-xl lg:text-2xl font-heritage font-black tracking-tight uppercase text-[#0a0a0a]">Travel Hub</h1>
+            <span className="text-[6px] md:text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] mt-0.5 text-gray-400">sri lanka</span>
           </div>
         </div>
 
@@ -245,9 +204,13 @@ const Navbar: React.FC<NavbarProps> = ({
           <div className="h-8 w-px bg-gray-100 mx-4" />
 
           <div className="flex items-center gap-4">
-            <button onClick={() => setLanguage(language === 'EN' ? 'SI' : 'EN')} className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 text-[10px] font-black uppercase tracking-widest bg-white text-gray-600 hover:border-[#0EA5E9]/40 shadow-sm">
-              <Globe size={13} className="text-[#0EA5E9]" />
-              {language}
+            <button 
+              onClick={() => setLanguage(language === 'EN' ? 'SI' : 'EN')} 
+              className="group flex items-center gap-3 px-5 py-2.5 rounded-2xl border border-[#0EA5E9]/20 text-[10px] font-black uppercase tracking-widest bg-white text-gray-600 hover:bg-[#0EA5E9] hover:text-white hover:border-transparent transition-all shadow-sm"
+              title={language === 'EN' ? "Switch to Sinhala Vision" : "ආපසු ඉංග්‍රීසි දැක්මට"}
+            >
+              <Globe size={13} className={`${language === 'EN' ? 'text-[#0EA5E9]' : 'text-white'} group-hover:text-white transition-colors`} />
+              {language === 'EN' ? 'Sinhala Vision' : 'English View'}
             </button>
 
             {user ? (
@@ -255,61 +218,69 @@ const Navbar: React.FC<NavbarProps> = ({
                  <img src={user.photo} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
               </button>
             ) : (
-              <button onClick={onLogin} className="px-8 py-3 bg-[#0a0a0a] text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:scale-105 active:scale-95 transition-all shadow-md">Registry</button>
+              <button onClick={onLogin} className="px-8 py-3 bg-[#0a0a0a] text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:scale-105 active:scale-95 transition-all shadow-md">
+                {UI_STRINGS.registry[language]}
+              </button>
             )}
           </div>
         </div>
 
         {/* Mobile Toggle */}
-        <button className="lg:hidden p-3 rounded-2xl bg-gray-100 border border-gray-200 text-[#0a0a0a]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+        <button className="lg:hidden p-2 md:p-3 rounded-xl md:rounded-2xl bg-gray-100 border border-gray-200 text-[#0a0a0a]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X size={20} className="md:w-[22px] md:h-[22px]" /> : <Menu size={20} className="md:w-[22px] md:h-[22px]" />}
         </button>
       </div>
 
       {/* Mobile Drawer */}
       {isMenuOpen && (
-        <div className="fixed inset-x-0 top-full mt-4 bg-[#0a0a0a]/95 backdrop-blur-3xl rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.6)] border border-white/10 p-8 flex flex-col gap-8 animate-in slide-in-from-top-4 duration-500 max-h-[85vh] overflow-y-auto w-full">
+        <div className="fixed inset-x-0 top-full mt-2 md:mt-4 bg-[#0a0a0a]/95 backdrop-blur-3xl rounded-[2rem] md:rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.6)] border border-white/10 p-4 md:p-8 flex flex-col gap-4 md:gap-8 animate-in slide-in-from-top-4 duration-500 max-h-[85vh] overflow-y-auto w-full">
           {/* Header Identity in Mobile Menu */}
-          <div className="flex items-center gap-5 px-6 py-4 bg-white rounded-[2.5rem] shadow-xl">
-             <TravelHubLogo size={32} />
+          <div className="flex items-center gap-3 md:gap-5 px-4 py-3 md:px-6 md:py-4 bg-white rounded-[1.5rem] md:rounded-[2.5rem] shadow-xl shrink-0">
+             <TravelHubLogo size={24} className="md:w-8 md:h-8" />
              <div className="flex flex-col items-start leading-none">
-                <span className="text-sm font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">TRAVEL HUB</span>
-                <span className="text-[7px] font-black text-gray-400 uppercase tracking-[0.3em]">sri lanka</span>
+                <span className="text-xs md:text-sm font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">TRAVEL HUB</span>
+                <span className="text-[6px] md:text-[7px] font-black text-gray-400 uppercase tracking-[0.2em] md:tracking-[0.3em]">sri lanka</span>
              </div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-2 md:space-y-4 overflow-y-auto pr-2">
             {navLinks.map((link) => (
-              <div key={link.id} className="space-y-3">
+              <div key={link.id} className="space-y-1 md:space-y-3">
                 <button
-                  onClick={() => !link.hasDropdown && handleNav(link.id)}
-                  className={`w-full flex items-center justify-between p-6 rounded-[2.5rem] transition-all duration-500 border ${
+                  onClick={() => {
+                    if (link.hasDropdown) {
+                      setActiveDropdown(activeDropdown === link.id ? null : link.id);
+                    } else {
+                      handleNav(link.id);
+                    }
+                  }}
+                  className={`w-full flex items-center justify-between p-3 md:p-6 rounded-[1.25rem] md:rounded-[2.5rem] transition-all duration-500 border ${
                     currentView === link.id || (link.hasDropdown && link.items?.some(i => i.id === currentView))
                       ? 'bg-white text-[#0a0a0a] border-transparent shadow-2xl scale-[1.02]' 
                       : 'bg-white/5 text-white/60 border-white/5 hover:bg-white/10'
                   }`}
                 >
-                  <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-3 md:gap-6">
                     <span className={currentView === link.id ? 'text-[#0EA5E9]' : ''}>{link.icon}</span>
-                    <span className="text-lg font-heritage font-bold uppercase tracking-widest">{link.label[language]}</span>
+                    <span className="text-xs md:text-lg font-heritage font-bold uppercase tracking-widest">{link.label[language]}</span>
                   </div>
-                  {link.hasDropdown && <ChevronDown size={20} className={activeDropdown === link.id ? 'rotate-180 transition-transform' : 'transition-transform'} />}
+                  {link.hasDropdown && <ChevronDown size={16} className={`md:w-5 md:h-5 ${activeDropdown === link.id ? 'rotate-180 transition-transform' : 'transition-transform'}`} />}
                 </button>
 
-                {link.hasDropdown && (
-                  <div className="grid grid-cols-2 gap-3 px-2">
+                {link.hasDropdown && activeDropdown === link.id && (
+                  <div className="grid grid-cols-2 gap-2 md:gap-3 px-1 md:px-2 py-1">
                     {link.items?.map((subItem) => (
                       <button
                         key={subItem.id}
                         onClick={() => handleNav(subItem.id)}
-                        className={`flex items-center gap-4 p-5 rounded-2xl text-[9px] font-black uppercase tracking-[0.2em] transition-all border ${
+                        className={`flex items-center gap-2 md:gap-4 p-2.5 md:p-5 rounded-xl md:rounded-2xl text-[8px] md:text-[9px] font-black uppercase tracking-[0.1em] md:tracking-[0.2em] transition-all border ${
                           currentView === subItem.id 
                             ? 'bg-[#0EA5E9]/20 text-[#0EA5E9] border-[#0EA5E9]/40 shadow-lg' 
                             : 'bg-white/[0.03] text-white/30 border-white/5 hover:text-white/60 hover:bg-white/5'
                         }`}
                       >
-                        <span className="opacity-60">{subItem.icon}</span>
-                        {subItem.label[language]}
+                        <span className="opacity-60 scale-75 md:scale-100">{subItem.icon}</span>
+                        <span className="truncate">{subItem.label[language]}</span>
                       </button>
                     ))}
                   </div>
@@ -318,37 +289,39 @@ const Navbar: React.FC<NavbarProps> = ({
             ))}
           </div>
 
-          <div className="pt-6 border-t border-white/10 flex flex-col gap-4">
-             <div className="grid grid-cols-2 gap-4">
+          <div className="pt-3 md:pt-6 border-t border-white/10 flex flex-col gap-3 md:gap-4 shrink-0">
+             <div className="grid grid-cols-2 gap-2 md:gap-4">
                 <button 
                   onClick={() => { setLanguage(language === 'EN' ? 'SI' : 'EN'); setIsMenuOpen(false); }} 
-                  className="py-6 rounded-[2.5rem] bg-white/5 border border-white/10 text-white/60 font-black text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-4 hover:bg-white/10 transition-all"
+                  className="py-3 md:py-6 rounded-[1.25rem] md:rounded-[2.5rem] bg-[#0EA5E9]/20 border border-[#0EA5E9]/40 text-white font-black text-[8px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] flex items-center justify-center gap-2 md:gap-4 hover:bg-[#0EA5E9] transition-all"
                 >
-                  <Globe size={18} className="text-[#0EA5E9]" />
-                  {language === 'EN' ? 'සිංහල' : 'ENGLISH'}
+                  <Globe size={12} className="md:w-[18px] md:h-[18px] text-white" />
+                  {language === 'EN' ? 'Sinhala Vision' : 'English View'}
                 </button>
 
                 {user ? (
                   <button 
                     onClick={onLogout} 
-                    className="py-6 bg-red-500/10 border border-red-500/20 text-red-500 rounded-[2.5rem] font-black text-[10px] uppercase tracking-[0.3em] hover:bg-red-500 hover:text-white transition-all"
+                    className="py-3 md:py-6 bg-red-500/10 border border-red-500/20 text-red-500 rounded-[1.25rem] md:rounded-[2.5rem] font-black text-[8px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] hover:bg-red-500 hover:text-white transition-all"
                   >
-                    DISCONNECT
+                    {language === 'EN' ? 'DISCONNECT' : 'විසන්ධි වන්න'}
                   </button>
                 ) : (
                   <button 
                     onClick={onLogin} 
-                    className="py-6 bg-white text-[#0a0a0a] rounded-[2.5rem] font-black text-[10px] uppercase tracking-[0.3em] shadow-xl hover:scale-105 active:scale-95 transition-all"
+                    className="py-3 md:py-6 bg-white text-[#0a0a0a] rounded-[1.25rem] md:rounded-[2.5rem] font-black text-[8px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] shadow-xl hover:scale-105 active:scale-95 transition-all"
                   >
-                    SYNC_REGISTRY
+                    {language === 'EN' ? 'SYNC_REGISTRY' : 'පද්ධතියට_එක්වන්න'}
                   </button>
                 )}
              </div>
              
              {/* Decorative Footer info */}
-             <div className="flex justify-center items-center gap-4 pt-4 opacity-20">
-                <Activity size={14} className="text-[#0EA5E9] animate-pulse" />
-                <span className="text-[8px] font-black text-white uppercase tracking-[0.6em]">Neural_Link_Stable_v4.5</span>
+             <div className="flex justify-center items-center gap-3 pt-2 opacity-20">
+                <Activity size={12} className="text-[#0EA5E9] animate-pulse" />
+                <span className="text-[7px] md:text-[8px] font-black text-white uppercase tracking-[0.4em] md:tracking-[0.6em]">
+                  {language === 'EN' ? 'Neural_Link_Stable_v4.5' : 'නාභිගත_සබැඳිය_ස්ථායී_v4.5'}
+                </span>
              </div>
           </div>
         </div>

@@ -14,28 +14,31 @@ import Festivals from './components/Festivals.tsx';
 import CategoriesSection from './components/CategoriesSection.tsx';
 import StorySection from './components/StorySection.tsx';
 import AIModal from './components/AIModal.tsx';
-import Quiz from './components/Quiz.tsx';
-import VRExperience from './components/VRExperience.tsx';
-import VRShowcase from './components/VRShowcase.tsx';
-import SearchPortal from './components/SearchPortal.tsx';
-import LoginModal from './components/LoginModal.tsx';
-import Contact from './components/Contact.tsx';
+import IslandMapManifold from './components/IslandMapManifold.tsx';
+import VRTripFuture from './components/VRTripFuture.tsx';
+import VRComingSoon from './components/VRComingSoon.tsx';
+import TripPlanner from './components/TripPlanner.tsx';
+import NexusRewards from './components/NexusRewards.tsx';
 import Marketplace from './components/Marketplace.tsx';
 import Hotels from './components/Hotels.tsx';
 import Transport from './components/Transport.tsx';
 import BookingDestinations from './components/BookingDestinations.tsx';
-import NexusRewards from './components/NexusRewards.tsx';
-import ScrollControls from './components/ScrollControls.tsx';
 import TravelStore from './components/TravelStore.tsx';
 import DestinationDetail from './components/DestinationDetail.tsx';
-import IslandMapManifold from './components/IslandMapManifold.tsx';
-import VRTripFuture from './components/VRTripFuture.tsx';
-import VRComingSoon from './components/VRComingSoon.tsx';
-import HeritageHub from './components/HeritageHub.tsx';
-import { supabase } from './lib/supabase.ts';
-import { Sparkles, Compass, ShieldCheck, Star, MapPin, ArrowRight, Database, Box, Layers, Zap, Lock, Scan, Map as MapIcon, Heart, Globe, Library, Wind, Activity, Target, PawPrint } from 'lucide-react';
+import Quiz from './components/Quiz.tsx';
+import VRExperience from './components/VRExperience.tsx';
+import VRShowcase from './components/VRShowcase.tsx';
+import SearchPortal from './components/SearchPortal.tsx';
+import Contact from './components/Contact.tsx';
+import LoginModal from './components/LoginModal.tsx';
+import ScrollControls from './components/ScrollControls.tsx';
+import LockedView from './components/LockedView.tsx';
+import ComingSoonView from './components/ComingSoonView.tsx';
+import Lenis from 'lenis';
+import { UI_STRINGS } from './constants.tsx';
+import { Sparkles, Compass, ShieldCheck, Star, MapPin, ArrowRight, Database, Box, Layers, Zap, Lock, Scan, Map as MapIcon, Heart, Globe, Library, Wind, Activity, Target, PawPrint, Landmark, Sprout, Mountain } from 'lucide-react';
 
-type View = 'home' | 'destinations' | 'map' | 'hotels' | 'transport' | 'booking-destinations' | 'about' | 'foods' | 'music' | 'interests' | 'medicine' | 'phrases' | 'essentials' | 'festivals' | 'memories' | 'quiz' | 'vr-experience' | 'vr-showcase' | 'search' | 'contact' | 'marketplace' | 'community' | 'shop' | 'destination-detail' | 'vr-trip' | 'vr-portal';
+type View = 'home' | 'destinations' | 'map' | 'hotels' | 'transport' | 'booking-destinations' | 'about' | 'foods' | 'music' | 'interests' | 'medicine' | 'phrases' | 'essentials' | 'festivals' | 'memories' | 'quiz' | 'vr-experience' | 'vr-showcase' | 'search' | 'contact' | 'marketplace' | 'community' | 'shop' | 'destination-detail' | 'vr-trip' | 'vr-portal' | 'trip-planner';
 
 export default function App() {
   const [language, setLanguage] = useState<Language>('EN');
@@ -46,45 +49,86 @@ export default function App() {
   const [selectedDestinationData, setSelectedDestinationData] = useState<Destination | null>(null);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [view]);
 
   useEffect(() => {
-    const handleScroll = () => setScrollPos(window.scrollY);
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    const isMobile = window.innerWidth < 768;
     
-    if (!supabase || !supabase.auth) {
-      return;
+    // Disable Lenis smooth scrolling on mobile for better performance
+    let lenis: Lenis | null = null;
+    let rafId: number;
+
+    if (!isMobile) {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        infinite: false,
+      });
+
+      function raf(time: number) {
+        lenis?.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
+
+      rafId = requestAnimationFrame(raf);
     }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        setUser({
-          name: session.user.user_metadata.full_name || session.user.email?.split('@')[0] || 'Explorer',
-          email: session.user.email || '',
-          photo: session.user.user_metadata.avatar_url || `https://ui-avatars.com/api/?name=${session.user.email}`
-        });
+    const handleScroll = () => {
+      if (!isMobile) {
+        setScrollPos(window.scrollY);
       }
-    }).catch(err => {
-      console.warn("Session check failed:", err);
-    });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Fetch user session from our custom server
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/auth/me');
+        if (response.ok) {
+          const userData = await response.json();
+          setUser({
+            name: userData.name || userData.email?.split('@')[0] || 'Explorer',
+            email: userData.email || '',
+            photo: userData.picture || `https://ui-avatars.com/api/?name=${userData.email}`
+          });
+        }
+      } catch (err) {
+        console.warn("Session check failed:", err);
+      }
+    };
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
+    fetchUser();
+
+    // Listen for OAuth success message from popup
+    const handleOAuthMessage = (event: MessageEvent) => {
+      const origin = event.origin;
+      // Validate origin (allow .run.app and localhost)
+      if (!origin.endsWith('.run.app') && !origin.includes('localhost')) {
+        return;
+      }
+      if (event.data?.type === 'OAUTH_AUTH_SUCCESS') {
+        const userData = event.data.user;
         setUser({
-          name: session.user.user_metadata.full_name || session.user.email?.split('@')[0] || 'Explorer',
-          email: session.user.email || '',
-          photo: session.user.user_metadata.avatar_url || `https://ui-avatars.com/api/?name=${session.user.email}`
+          name: userData.name || userData.email?.split('@')[0] || 'Explorer',
+          email: userData.email || '',
+          photo: userData.picture || `https://ui-avatars.com/api/?name=${userData.email}`
         });
         setIsLoginModalOpen(false);
-      } else {
-        setUser(null);
       }
-    });
+    };
+
+    window.addEventListener('message', handleOAuthMessage);
 
     return () => {
-      if (subscription) subscription.unsubscribe();
+      lenis.destroy();
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('message', handleOAuthMessage);
     };
   }, []);
 
@@ -93,8 +137,10 @@ export default function App() {
   };
 
   const handleLogout = async () => {
-    if (supabase?.auth) {
-      await supabase.auth.signOut();
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (err) {
+      console.error("Logout failed:", err);
     }
     setUser(null);
   };
@@ -102,6 +148,7 @@ export default function App() {
   const navigateToDestination = (dest: Destination) => {
     setSelectedDestinationData(dest);
     setView('destination-detail');
+    window.scrollTo({ top: 0, behavior: 'instant' });
   };
 
   const renderContent = () => {
@@ -112,19 +159,21 @@ export default function App() {
         return <VRTripFuture language={language} setView={setView} />;
       case 'vr-portal':
         return <VRComingSoon language={language} setView={setView} />;
+      case 'trip-planner':
+        return <ComingSoonView language={language} setView={setView} title={language === 'EN' ? 'Trip Architect' : 'සංචාරක සැලසුම්කරු'} />;
       case 'community':
       case 'memories':
         return <NexusRewards language={language} user={user} onLogin={handleLogin} setView={setView} />;
       case 'marketplace':
-        return <div className="pt-24"><Marketplace language={language} /></div>;
+        return <ComingSoonView language={language} setView={setView} title={language === 'EN' ? 'Marketplace' : 'වෙළඳපොළ'} />;
       case 'hotels':
-        return <div className="pt-24"><Hotels language={language} /></div>;
+        return <ComingSoonView language={language} setView={setView} title={language === 'EN' ? 'Accommodations' : 'නවාතැන්'} />;
       case 'transport':
-        return <div className="pt-24"><Transport language={language} /></div>;
+        return <ComingSoonView language={language} setView={setView} title={language === 'EN' ? 'Logistics' : 'ප්‍රවාහනය'} />;
       case 'booking-destinations':
-        return <div className="pt-24"><BookingDestinations language={language} setView={setView} /></div>;
+        return <ComingSoonView language={language} setView={setView} title={language === 'EN' ? 'Booking' : 'වෙන් කිරීම්'} />;
       case 'shop':
-        return <div className="pt-24"><TravelStore language={language} /></div>;
+        return <ComingSoonView language={language} setView={setView} title={language === 'EN' ? 'Travel Store' : 'සංචාරක වෙළඳසැල'} />;
       case 'destinations':
         return (
           <div className="pt-24">
@@ -169,22 +218,32 @@ export default function App() {
             <div className="relative z-10">
               <PopularHighlights language={language} onSelectDestination={navigateToDestination} setView={setView} />
               
-              <div className="py-20 flex justify-center bg-white border-y border-gray-100 gap-8">
+              <div className="py-12 md:py-20 flex flex-col md:flex-row justify-center bg-white border-y border-gray-100 gap-4 md:gap-8 px-6">
                 <button 
                   onClick={() => setView('map')}
-                  className="group relative px-12 py-6 bg-[#0a0a0a] text-white rounded-full font-black text-xs uppercase tracking-[0.4em] flex items-center gap-6 shadow-2xl hover:scale-105 active:scale-95 transition-all overflow-hidden"
+                  className="group relative px-8 py-5 md:px-12 md:py-6 bg-[#0a0a0a] text-white rounded-full font-black text-[10px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] flex items-center justify-center gap-4 md:gap-6 shadow-2xl hover:scale-105 active:scale-95 transition-all overflow-hidden w-full md:w-auto"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 opacity-0 group-hover:opacity-20 transition-opacity" />
-                  <MapIcon size={20} className="text-cyan-400 group-hover:rotate-12 transition-transform" />
-                  Initialize Global Map Manifold
-                  <ArrowRight size={16} />
+                  <MapIcon size={18} className="text-cyan-400 group-hover:rotate-12 transition-transform md:w-5 md:h-5" />
+                  {UI_STRINGS.initializeMap[language]}
+                  <ArrowRight size={14} className="md:w-4 md:h-4" />
+                </button>
+
+                <button 
+                  onClick={() => setView('trip-planner')}
+                  className="group relative px-8 py-5 md:px-12 md:py-6 bg-white text-black border border-black/10 rounded-full font-black text-[10px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] flex items-center justify-center gap-4 md:gap-6 shadow-xl hover:scale-105 active:scale-95 transition-all overflow-hidden w-full md:w-auto"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-400 opacity-0 group-hover:opacity-10 transition-opacity" />
+                  <Compass size={18} className="text-emerald-600 group-hover:rotate-180 transition-transform duration-1000 md:w-5 md:h-5" />
+                  {language === 'EN' ? 'Trip Architect' : 'සංචාරක සැලසුම්කරු'}
+                  <ArrowRight size={14} className="md:w-4 md:h-4" />
                 </button>
               </div>
 
               {/* IMPROVED DESTINY SECTION: ARCHIVAL SHARDS GRID (4 COLUMNS PER ROW) */}
-              <div className="py-32 md:py-52 px-6 relative overflow-hidden bg-white">
+              <div className="py-20 md:py-52 px-4 md:px-6 relative overflow-hidden bg-white">
                 <div className="max-w-7xl mx-auto">
-                  <div className="relative rounded-[4rem] md:rounded-[6rem] bg-[#0a0a0a] overflow-hidden group/card shadow-[0_60px_150px_rgba(0,0,0,0.3)] border border-white/5">
+                  <div className="relative rounded-[3rem] md:rounded-[6rem] bg-[#0a0a0a] overflow-hidden group/card shadow-[0_30px_100px_rgba(0,0,0,0.3)] md:shadow-[0_60px_150px_rgba(0,0,0,0.3)] border border-white/5">
                     
                     {/* Atmospheric Background Mesh */}
                     <div className="absolute inset-0 opacity-20 pointer-events-none z-0">
@@ -192,24 +251,24 @@ export default function App() {
                        <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.15)_0%,transparent_50%)]" />
                     </div>
 
-                    <div className="relative z-10 p-10 md:p-24 space-y-20">
+                    <div className="relative z-10 p-6 sm:p-10 md:p-24 space-y-12 md:space-y-20">
                        {/* HEADER CONTENT */}
-                       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-10 border-b border-white/5 pb-16">
-                          <div className="space-y-12">
-                             <div className="inline-flex items-center gap-5 px-8 py-3 rounded-full bg-white/10 border border-white/20 text-[#E1306C] text-[11px] font-black uppercase tracking-[0.6em] backdrop-blur-xl">
-                               <span className="animate-pulse"><Sparkles size={18} /></span>
+                       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 md:gap-10 border-b border-white/5 pb-10 md:pb-16">
+                          <div className="space-y-8 md:space-y-12">
+                             <div className="inline-flex items-center gap-3 md:gap-5 px-6 py-2 md:px-8 md:py-3 rounded-full bg-white/10 border border-white/20 text-[#E1306C] text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] backdrop-blur-xl">
+                               <span className="animate-pulse"><Sparkles size={14} className="md:w-[18px] md:h-[18px]" /></span>
                                {language === 'EN' ? 'Personalized Exploration' : 'පුද්ගලීකරණය කළ ගවේෂණය'}
                              </div>
                              
-                             <div className="space-y-8">
-                               <h2 className="text-5xl md:text-[8rem] font-heritage font-bold text-white leading-[0.85] tracking-tighter uppercase mb-4">
+                             <div className="space-y-6 md:space-y-8">
+                               <h2 className="text-4xl sm:text-5xl md:text-[8rem] font-heritage font-bold text-white leading-[0.9] md:leading-[0.85] tracking-tighter uppercase mb-2 md:mb-4">
                                   {language === 'EN' ? (
                                     <>Uncover Your <br/><span className="italic insta-text-gradient">Destiny.</span></>
                                   ) : (
                                     <>ඔබේ <span className="insta-text-gradient italic">දෛවය</span> <br/>සොයාගන්න.</>
                                   )}
                                </h2>
-                               <p className="text-gray-400 text-xl md:text-2xl font-light italic leading-relaxed border-l-4 border-[#E1306C]/30 pl-8">
+                               <p className="text-gray-400 text-lg sm:text-xl md:text-2xl font-light italic leading-relaxed border-l-4 border-[#E1306C]/30 pl-6 md:pl-8">
                                   {language === 'EN' 
                                     ? "Every voyager carries a unique signature. We match your neural archetype to the perfect archival nodes."
                                     : "සෑම සංචාරකයෙකුටම සුවිශේෂී අනන්‍යතාවයක් ඇත. ඔබේ රුචිකත්වයන්ට වඩාත් ගැලපෙන ස්ථාන අපි හඳුනා ගනිමු."}
@@ -219,12 +278,12 @@ export default function App() {
 
                           <button 
                             onClick={() => setView('quiz')}
-                            className="group relative px-16 py-8 md:px-20 md:py-10 bg-white text-black font-black rounded-[4rem] hover:scale-110 active:scale-95 transition-all shadow-[0_40px_100px_rgba(255,255,255,0.1)] flex items-center gap-8 overflow-hidden"
+                            className="group relative px-8 py-5 w-full md:w-auto md:px-20 md:py-10 bg-white text-black font-black rounded-[2.5rem] md:rounded-[4rem] hover:scale-105 md:hover:scale-110 active:scale-95 transition-all shadow-[0_20px_60px_rgba(255,255,255,0.1)] md:shadow-[0_40px_100px_rgba(255,255,255,0.1)] flex items-center justify-center gap-4 md:gap-8 overflow-hidden"
                           >
                             <div className="absolute inset-0 bg-gradient-to-r from-pink-600/10 to-orange-400/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <Compass size={24} className="relative z-10 text-[#E1306C] group-hover:rotate-180 transition-transform duration-1000" />
-                            <span className="relative z-10 uppercase tracking-[0.6em] text-[12px]">
-                               {language === 'EN' ? 'Start Discovery' : 'ගවේෂණය අරඹන්න'}
+                            <Compass size={20} className="relative z-10 text-[#E1306C] group-hover:rotate-180 transition-transform duration-1000 md:w-6 md:h-6" />
+                            <span className="relative z-10 uppercase tracking-[0.4em] md:tracking-[0.6em] text-[10px] md:text-[12px]">
+                               {UI_STRINGS.startDiscovery[language]}
                             </span>
                           </button>
                        </div>

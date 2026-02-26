@@ -6,15 +6,10 @@ import {
   Orbit, 
   Scan, 
   Activity, 
-  Target, 
-  Zap, 
   Compass, 
-  Wind, 
-  Waves,
   RotateCw,
   X,
-  Move,
-  Info
+  Move
 } from 'lucide-react';
 
 interface VRTripFutureProps {
@@ -341,19 +336,19 @@ const VRTripFuture: React.FC<VRTripFutureProps> = ({ language, setView }) => {
           </div>
         )}
 
-        <div className="space-y-8 animate-in fade-in slide-in-from-top-12 duration-1000">
-           <div className="flex flex-col items-center gap-6">
-              <div className="inline-flex items-center gap-5 px-10 py-4 rounded-full bg-[#0EA5E9]/10 border border-[#0EA5E9]/30 text-white text-[12px] font-black uppercase tracking-[0.6em] mx-auto backdrop-blur-2xl shadow-3xl">
-                <Scan size={20} className="text-[#0EA5E9] animate-pulse" />
-                Phase_04_3D_Reality_Buffer
+        <div className="space-y-12 animate-in fade-in slide-in-from-top-12 duration-1000">
+           <div className="flex flex-col items-center gap-8">
+              <div className="inline-flex items-center gap-6 px-12 py-5 rounded-full bg-[#0EA5E9]/15 border border-[#0EA5E9]/40 text-white text-[13px] font-black uppercase tracking-[0.7em] mx-auto backdrop-blur-3xl shadow-[0_0_80px_rgba(14,165,233,0.3)] animate-pulse">
+                <Scan size={24} className="text-[#0EA5E9]" />
+                Registry_Phase_04_3D_Buffer
               </div>
-              <h2 className="text-6xl md:text-[10rem] font-heritage font-bold text-white tracking-tighter uppercase leading-[0.8] drop-shadow-[0_20px_80px_rgba(0,0,0,1)]">
+              <h2 className="text-7xl md:text-[12rem] font-heritage font-bold text-white tracking-tighter uppercase leading-[0.8] drop-shadow-[0_30px_100px_rgba(0,0,0,1)]">
                 VIRTUAL <br/><span className="italic insta-text-gradient">HORIZON.</span>
               </h2>
            </div>
-           <p className="text-gray-400 text-xl md:text-3xl font-light italic leading-relaxed max-w-3xl mx-auto opacity-90">
+           <p className="text-gray-400 text-2xl md:text-4xl font-light italic leading-relaxed max-w-4xl mx-auto opacity-90 border-l-4 border-[#0EA5E9]/30 pl-10">
              {language === 'EN' 
-               ? "Synchronize with high-fidelity volumetric reconstructions of sacred island nodes." 
+               ? "See high-quality 3D models of the island's most holy places." 
                : "දිවයිනේ පූජනීය ස්ථානවල උසස් තත්වයේ ත්‍රිමාණ ප්‍රතිනිර්මාණ සමඟ සම්බන්ධ වන්න."}
            </p>
         </div>

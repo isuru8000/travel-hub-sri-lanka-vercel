@@ -19,30 +19,31 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, language }) =>
     setError(null);
     
     try {
-      // In a real environment with Supabase keys, this redirects the browser
-      const { error: authError } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: window.location.origin,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'select_account',
-          },
-        }
-      });
-      
-      if (authError) throw authError;
+      // 1. Fetch the OAuth URL from our server
+      const response = await fetch('/api/auth/google/url');
+      if (!response.ok) throw new Error('Failed to get auth URL');
+      const { url } = await response.json();
 
-      // If we are in mock mode, the custom mock client in lib/supabase.ts 
-      // will handle the state locally instead of redirecting.
-      if (IS_MOCK_AUTH) {
-        onClose();
+      // 2. Open the Google OAuth URL directly in a popup
+      const authWindow = window.open(
+        url,
+        'google_oauth_popup',
+        'width=600,height=700'
+      );
+
+      if (!authWindow) {
+        throw new Error('Popup blocked. Please allow popups for this site.');
       }
+
+      // The success message will be handled by the listener in App.tsx or here
+      // Let's add a listener here as well for immediate feedback if needed, 
+      // but App.tsx is better for global state.
+      
     } catch (err: any) {
       console.error("Authentication Error:", err);
-      setError(language === 'EN' 
+      setError(err.message || (language === 'EN' 
         ? "Could not establish a secure handshake with the identity provider." 
-        : "අනන්‍යතා සේවාව සමඟ සම්බන්ධ වීමට නොහැකි විය.");
+        : "අනන්‍යතා සේවාව සමඟ සම්බන්ධ වීමට නොහැකි විය."));
       setIsLoading(false);
     }
   };

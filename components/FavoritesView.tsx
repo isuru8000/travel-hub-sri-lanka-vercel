@@ -1,7 +1,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { Language, Destination } from '../types.ts';
-import { DESTINATIONS, FOODS_DATA, HERITAGE_MUSIC_DATA, MEDICINE_DATA, TEA_DATA, HIKING_DATA, FESTIVALS_DATA } from '../constants.tsx';
+import { DESTINATIONS, FOODS_DATA, HERITAGE_MUSIC_DATA, MEDICINE_DATA, FESTIVALS_DATA } from '../constants.tsx';
 // Fix: Added missing Lock import to resolve name collision with browser's global Lock interface
 import { Heart, ArrowLeft, ArrowRight, Trash2, Box, Database, Sparkles, MapPin, ExternalLink, Compass, Globe, Zap, Navigation, Loader2, Lock } from 'lucide-react';
 
@@ -42,18 +42,6 @@ const FavoritesView: React.FC<FavoritesViewProps> = ({ language, savedIds, toggl
     savedIds.medicine.forEach(id => {
       const item = MEDICINE_DATA.find(m => m.id === id);
       if (item) list.push({ id, category: 'medicine', data: item, typeLabel: 'Wellness' });
-    });
-
-    // Tea
-    savedIds.tea.forEach(id => {
-      const item = TEA_DATA.find(t => t.id === id);
-      if (item) list.push({ id, category: 'tea', data: item, typeLabel: 'Tea' });
-    });
-
-    // Hiking
-    savedIds.hiking.forEach(id => {
-      const item = HIKING_DATA.find(h => h.id === id);
-      if (item) list.push({ id, category: 'hiking', data: item, typeLabel: 'Expedition' });
     });
 
     // Festivals

@@ -18,7 +18,10 @@ import {
   Activity,
   Scan,
   Globe,
-  ArrowLeft
+  ArrowLeft,
+  BookOpen,
+  Sparkles,
+  Layers
 } from 'lucide-react';
 
 interface BookingDestinationsProps {
@@ -35,125 +38,185 @@ const BookingDestinations: React.FC<BookingDestinationsProps> = ({ language, set
   }));
 
   return (
-    <div className="min-h-screen bg-[#fafafa] pb-32">
-      {/* MANIFEST HEADER */}
-      <div className="relative h-[70vh] flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
-        <div className="absolute inset-0 bg-cover bg-center opacity-40 transition-transform duration-[20000ms] animate-slow-zoom" 
-             style={{ backgroundImage: `url('https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=1920&q=80')` }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a0a]/90 to-[#fafafa]" />
+    <div className="min-h-screen bg-[#fafafa] pb-32 font-sans">
+      {/* EDITORIAL HERO SECTION */}
+      <div className="relative h-[100vh] md:h-[90vh] flex flex-col md:flex-row overflow-hidden bg-white">
+        <div className="w-full h-[40vh] md:w-1/2 md:h-full relative overflow-hidden shrink-0">
+          <img 
+            src="https://images.unsplash.com/photo-1546708973-b339540b5162?auto=format&fit=crop&w=1920&q=80" 
+            className="w-full h-full object-cover animate-slow-zoom" 
+            alt="Sri Lanka Landscape" 
+          />
+          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute bottom-6 left-6 md:bottom-12 md:left-12 text-white space-y-1 md:space-y-2">
+            <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] opacity-60">Location_Archive_#001</p>
+            <h3 className="text-xl md:text-3xl font-heritage font-bold uppercase tracking-tighter">The Central Highlands</h3>
+          </div>
+        </div>
         
-        {/* Spatial Scanning Pattern */}
-        <div className="absolute inset-0 opacity-[0.05]" 
-             style={{ backgroundImage: `radial-gradient(#E1306C 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
-
-        <div className="relative text-center space-y-12 px-6 max-w-5xl animate-in fade-in zoom-in duration-1000">
-          <div className="flex flex-col items-center gap-6">
-             <div className="inline-flex items-center gap-5 px-10 py-4 rounded-full bg-[#E1306C]/10 border border-[#E1306C]/30 text-white text-[11px] font-black uppercase tracking-[0.6em] mx-auto backdrop-blur-3xl shadow-2xl animate-pulse">
-                <Target size={20} fill="currentColor" />
-                Mission_Briefing_Manifest
-             </div>
-             <div className="h-20 w-px bg-gradient-to-b from-[#E1306C] to-transparent" />
+        <div className="w-full flex-grow md:w-1/2 md:h-full flex flex-col justify-center p-6 md:p-24 space-y-8 md:space-y-12 bg-white">
+          <div className="space-y-4 md:space-y-6">
+            <div className="inline-flex items-center gap-2 md:gap-4 px-4 py-1.5 md:px-6 md:py-2 rounded-full bg-black/5 border border-black/10 text-gray-400 text-[8px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em]">
+              <BookOpen size={12} className="md:w-3.5 md:h-3.5 text-[#E1306C]" />
+              The_Voyager_Essay
+            </div>
+            <h1 className="text-5xl sm:text-6xl md:text-[8rem] font-heritage font-bold text-[#0a0a0a] leading-[0.85] tracking-tighter uppercase">
+              THE ART OF <br/><span className="italic insta-text-gradient">TRAVERSAL.</span>
+            </h1>
           </div>
           
-          <h2 className="text-6xl md:text-[11rem] font-heritage font-bold text-white tracking-tighter uppercase leading-[0.8] drop-shadow-[0_20px_80px_rgba(0,0,0,1)]">
-            ROUTE <br/><span className="italic insta-text-gradient">SYNTHESIS.</span>
-          </h2>
-          
-          <p className="text-white/40 text-xl md:text-3xl font-light italic leading-relaxed tracking-wide max-w-4xl mx-auto">
-            "Targeting optimal traversal trajectories across the island's primary archival nodes."
-          </p>
+          <div className="space-y-6 md:space-y-8 max-w-xl">
+            <p className="text-lg md:text-2xl text-gray-500 font-light italic leading-relaxed border-l-4 border-[#E1306C]/20 pl-4 md:pl-8">
+              "To travel is to archive the soul's resonance with the earth. In Sri Lanka, every path is a narrative thread, every destination a sacred node in a living history that spans millennia."
+            </p>
+            <p className="text-gray-400 text-xs md:text-base leading-relaxed tracking-wide">
+              We invite you to synthesize your own journey. Below is our curated manifest of archival nodes—destinations that offer the highest fidelity of experience, from the misty peaks of the central hills to the azure rhythms of the southern coast.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4 md:gap-8 pt-4 md:pt-8">
+            <div className="flex -space-x-3 md:-space-x-4">
+              {[1,2,3,4].map(i => (
+                <div key={i} className="w-8 h-8 md:w-12 md:h-12 rounded-full border-2 border-white bg-gray-100 overflow-hidden shadow-lg">
+                  <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" />
+                </div>
+              ))}
+            </div>
+            <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-gray-400">
+              <span className="text-[#0a0a0a]">1.2k+ Voyagers</span> <br/> Currently Synchronized
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 -mt-24 relative z-10 space-y-32">
-        {/* EXPEDITION MANIFEST LIST */}
-        <div className="space-y-16">
-          {bookingRegistry.map((item, idx) => (
-            <div 
-              key={item.id} 
-              className={`group relative flex flex-col lg:flex-row bg-white rounded-[5rem] overflow-hidden border border-gray-100 shadow-xl transition-all duration-1000 animate-in slide-in-from-bottom-12 ${item.isLocked ? 'grayscale opacity-60' : 'hover:shadow-[0_80px_150px_rgba(0,0,0,0.1)] hover:-translate-y-2'}`}
-              style={{ animationDelay: `${idx * 120}ms` }}
-            >
-               {item.isLocked && (
-                 <div className="absolute inset-0 z-20 bg-black/40 backdrop-blur-md flex flex-col items-center justify-center gap-6">
-                    <div className="w-20 h-20 rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-white shadow-2xl animate-pulse">
-                       <Lock size={32} />
-                    </div>
-                    <div className="bg-white px-10 py-5 rounded-full flex items-center gap-4 shadow-3xl">
-                       <span className="text-[11px] font-black text-[#0a0a0a] uppercase tracking-[0.4em]">Node_Locked_Next_Cycle</span>
-                    </div>
-                 </div>
-               )}
-
-               <div className="w-full lg:w-2/5 h-96 lg:h-auto relative overflow-hidden">
-                  <img src={item.image} className="w-full h-full object-cover transition-transform duration-[6000ms] group-hover:scale-110" alt={item.name[language]} />
-                  <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent hidden lg:block" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent lg:hidden" />
-                  
-                  {/* Node ID Decoration */}
-                  <div className="absolute top-10 left-10 p-2 bg-[#0a0a0a]/80 backdrop-blur-md rounded-2xl border border-white/10 text-white shadow-2xl">
-                     <div className="px-6 py-3 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] flex items-center gap-3">
-                        <Scan size={14} className="text-[#E1306C] animate-pulse" />
-                        Target_#0{idx + 1}
-                     </div>
-                  </div>
-               </div>
-               
-               <div className="w-full lg:w-3/5 p-12 md:p-20 flex flex-col justify-between space-y-12 bg-white relative z-10">
-                  <div className="space-y-8">
-                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-                        <div className="space-y-4">
-                           <div className="flex items-center gap-4 text-[#E1306C]">
-                              <MapPin size={20} className="animate-pulse" />
-                              <span className="text-[11px] font-black uppercase tracking-[0.6em]">{item.location}</span>
-                           </div>
-                           <h4 className="text-4xl md:text-6xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter leading-none group-hover:insta-text-gradient transition-all duration-700">{item.name[language]}</h4>
-                        </div>
-                        <div className="text-left md:text-right bg-gray-50 px-10 py-6 rounded-[3rem] border border-gray-100 shadow-inner group-hover:bg-white transition-colors duration-700">
-                           <p className="text-[10px] font-black text-gray-300 uppercase tracking-[0.4em] mb-1">Archival Rate</p>
-                           <p className="text-4xl md:text-5xl font-heritage font-bold text-[#0a0a0a] tracking-tighter">${item.price}</p>
-                        </div>
-                     </div>
-                     <p className="text-xl md:text-2xl text-gray-400 font-light italic leading-relaxed max-w-2xl border-l-4 border-gray-50 pl-10">
-                        "{item.shortStory[language]}"
-                     </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 pt-12 border-t border-gray-50">
-                     <div className="space-y-3">
-                        <div className="flex items-center gap-3 text-gray-400">
-                           <Clock size={16} />
-                           <span className="text-[10px] font-black uppercase tracking-widest leading-none">Temporal Scope</span>
-                        </div>
-                        <p className="text-lg font-bold text-[#0a0a0a] uppercase tracking-widest">{item.duration}</p>
-                     </div>
-                     <div className="space-y-3">
-                        <div className="flex items-center gap-3 text-gray-400">
-                           <Zap size={16} />
-                           <span className="text-[10px] font-black uppercase tracking-widest leading-none">Sync Status</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                           <div className={`w-2 h-2 rounded-full animate-ping shadow-[0_0_10px_currentColor] ${item.isLocked ? 'text-blue-500 bg-blue-500' : 'text-green-500 bg-green-500'}`} />
-                           <p className={`text-[11px] font-black uppercase tracking-[0.3em] ${item.isLocked ? 'text-blue-600' : 'text-green-600'}`}>
-                             {item.isLocked ? 'CALIBRATING' : 'LINK_ESTABLISHED'}
-                           </p>
-                        </div>
-                     </div>
-                     <div className="flex items-center justify-end">
-                        <button 
-                          disabled={item.isLocked}
-                          onClick={() => setView('marketplace')}
-                          className="w-full sm:w-auto flex items-center gap-8 px-12 py-7 bg-[#0a0a0a] text-white rounded-[2.5rem] font-black text-[11px] uppercase tracking-[0.5em] hover:bg-[#E1306C] transition-all shadow-[0_20px_50px_rgba(0,0,0,0.2)] group/btn active:scale-95 disabled:opacity-20 overflow-hidden relative"
-                        >
-                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000" />
-                           <span className="relative z-10">Initialize Sync</span>
-                           <ArrowRight size={20} className="relative z-10 group-hover/btn:translate-x-2 transition-transform" />
-                        </button>
-                     </div>
-                  </div>
-               </div>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-32 space-y-24 md:space-y-40">
+        {/* THE ESSAY SECTION */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-20 items-start">
+          <div className="md:col-span-2 space-y-8 md:space-y-12">
+            <div className="space-y-3 md:space-y-4">
+              <p className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] text-[#E1306C]">01_The_Concept</p>
+              <h2 className="text-3xl md:text-6xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">Beyond the <span className="italic">Surface.</span></h2>
             </div>
-          ))}
+            <div className="columns-1 md:columns-2 gap-8 md:gap-12 text-gray-500 font-light leading-relaxed text-base md:text-lg space-y-6 md:space-y-8">
+              <p>
+                The modern traveler often seeks only the image, the fleeting shard of a place captured in a lens. But true traversal requires a deeper synchronization. It is the act of listening to the echoes of the stones, the whispers of the wind through the tea bushes, and the rhythmic pulse of the ocean.
+              </p>
+              <p>
+                Our mission is to provide you with the tools to not just visit, but to integrate. Each node in our manifest has been selected for its historical resonance and atmospheric density. Whether you are scaling the lion's fortress at Sigiriya or drifting through the colonial shadows of Galle, you are participating in a grand archival project.
+              </p>
+              <p>
+                This is your briefing. Your trajectory is yours to define. The prices listed are not mere costs, but investments in the preservation of these experiences within your own neural archive.
+              </p>
+            </div>
+          </div>
+          <div className="bg-[#0a0a0a] rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-12 text-white space-y-8 md:space-y-10 shadow-2xl relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#E1306C]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+            <div className="relative z-10 space-y-4 md:space-y-6">
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-white/10 flex items-center justify-center text-[#E1306C]">
+                <Sparkles size={24} className="md:w-8 md:h-8" />
+              </div>
+              <h4 className="text-2xl md:text-3xl font-heritage font-bold uppercase tracking-tight">Voyager <br/>Statistics</h4>
+              <div className="space-y-4 md:space-y-6 pt-4 md:pt-6 border-t border-white/10">
+                <div className="flex justify-between items-center">
+                  <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest opacity-40">Active Nodes</span>
+                  <span className="text-xl md:text-2xl font-heritage font-bold">42</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest opacity-40">Sync Fidelity</span>
+                  <span className="text-xl md:text-2xl font-heritage font-bold text-[#E1306C]">98.4%</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest opacity-40">Archival Load</span>
+                  <span className="text-xl md:text-2xl font-heritage font-bold">1.2 TB</span>
+                </div>
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 opacity-[0.05] text-white">
+              <Layers size={120} className="md:w-[200px] md:h-[200px]" />
+            </div>
+          </div>
+        </div>
+
+        {/* THE MANIFEST LIST */}
+        <div className="space-y-16 md:space-y-24">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 md:gap-8 border-b border-gray-100 pb-8 md:pb-12">
+            <div className="space-y-3 md:space-y-4">
+              <p className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] text-gray-400">02_The_Manifest</p>
+              <h3 className="text-3xl md:text-7xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">Available <span className="insta-text-gradient italic">Nodes.</span></h3>
+            </div>
+            <div className="flex items-center gap-4 md:gap-6 text-gray-400 text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">
+              <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500" /> Online</span>
+              <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-blue-500" /> Syncing</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20">
+            {bookingRegistry.map((item, idx) => (
+              <div 
+                key={item.id} 
+                className={`group relative bg-white rounded-[2.5rem] md:rounded-[4rem] overflow-hidden border border-gray-100 shadow-xl transition-all duration-1000 ${item.isLocked ? 'grayscale opacity-60' : 'hover:shadow-[0_60px_120px_rgba(0,0,0,0.08)] hover:-translate-y-2 md:hover:-translate-y-4'}`}
+              >
+                <div className="relative h-[300px] md:h-[450px] overflow-hidden">
+                  <img src={item.image} className="w-full h-full object-cover transition-transform duration-[8000ms] group-hover:scale-110" alt={item.name[language]} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  <div className="absolute top-6 left-6 md:top-8 md:left-8 flex items-center gap-4">
+                    <div className="px-4 py-2 md:px-6 md:py-3 bg-white/10 backdrop-blur-3xl rounded-full border border-white/20 text-white text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">
+                       Node_#0{idx + 1}
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10 flex justify-between items-end">
+                    <div className="space-y-1 md:space-y-2">
+                      <div className="flex items-center gap-2 md:gap-3 text-white/60">
+                        <MapPin size={12} className="md:w-3.5 md:h-3.5 text-[#E1306C]" />
+                        <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">{item.location}</span>
+                      </div>
+                      <h4 className="text-2xl md:text-4xl font-heritage font-bold text-white uppercase tracking-tighter leading-none">{item.name[language]}</h4>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[7px] md:text-[9px] font-black text-white/40 uppercase tracking-[0.3em] md:tracking-[0.4em] mb-1">Archival Rate</p>
+                      <p className="text-xl md:text-3xl font-heritage font-bold text-white tracking-tighter">${item.price}</p>
+                    </div>
+                  </div>
+
+                  {item.isLocked && (
+                    <div className="absolute inset-0 z-20 bg-black/40 backdrop-blur-md flex flex-col items-center justify-center gap-4 md:gap-6">
+                       <Lock size={32} className="md:w-10 md:h-10 text-white/40 animate-pulse" />
+                       <span className="text-[8px] md:text-[10px] font-black text-white uppercase tracking-[0.4em] md:tracking-[0.6em]">Access_Restricted</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-8 md:p-12 space-y-8 md:space-y-10">
+                  <div className="space-y-4 md:space-y-6">
+                    <p className="text-base md:text-xl text-gray-500 font-light italic leading-relaxed border-l-2 border-gray-100 pl-4 md:pl-8">
+                       "{item.shortStory[language]}"
+                    </p>
+                    <div className="flex flex-wrap gap-3 md:gap-4">
+                      <div className="flex items-center gap-2 md:gap-3 px-4 py-1.5 md:px-5 md:py-2 rounded-full bg-gray-50 border border-gray-100 text-gray-400 text-[8px] md:text-[10px] font-black uppercase tracking-widest">
+                        <Clock size={10} className="md:w-3 md:h-3" />
+                        {item.duration}
+                      </div>
+                      <div className="flex items-center gap-2 md:gap-3 px-4 py-1.5 md:px-5 md:py-2 rounded-full bg-gray-50 border border-gray-100 text-gray-400 text-[8px] md:text-[10px] font-black uppercase tracking-widest">
+                        <Zap size={10} className="md:w-3 md:h-3 text-[#E1306C]" />
+                        Sync_Stable
+                      </div>
+                    </div>
+                  </div>
+
+                  <button 
+                    disabled={item.isLocked}
+                    onClick={() => setView('marketplace')}
+                    className="w-full flex items-center justify-between px-6 py-5 md:px-10 md:py-7 bg-[#0a0a0a] text-white rounded-full font-black text-[9px] md:text-[11px] uppercase tracking-[0.4em] md:tracking-[0.6em] hover:bg-[#E1306C] transition-all shadow-2xl active:scale-95 disabled:opacity-20 group/btn"
+                  >
+                    <span>Initialize Traversal Sync</span>
+                    <ArrowRight size={16} className="md:w-5 md:h-5 group-hover/btn:translate-x-2 transition-transform" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* REGISTRY FOOTER HUD */}
@@ -193,9 +256,6 @@ const BookingDestinations: React.FC<BookingDestinationsProps> = ({ language, set
         }
         .animate-slow-zoom {
           animation: slow-zoom 30s linear infinite;
-        }
-        .shadow-3xl {
-           box-shadow: 0 20px 60px rgba(0,0,0,0.1);
         }
       `}} />
     </div>

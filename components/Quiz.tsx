@@ -73,7 +73,7 @@ const EXPLORER_PROFILES: Record<string, ExplorerProfile> = {
       SI: "ඔබ ඉතිහාසයේ හඬට ඇදී යයි. රජවරුන් ඇවිද ගිය පැරණි ගල් පර්වත සහ පූජනීය නටබුන් අතර ඔබේ ආත්මයට සාමය ලැබේ." 
     },
     image: 'https://i.pinimg.com/736x/0c/d6/36/0cd6364b766c233d0d9f25252fb16d4d.jpg',
-    recommendations: ['sigiriya', 'ruwanwelisaya', 'polonnaruwa']
+    recommendations: ['sigiriya', 'ruwanwelisaya', 'vatadageya']
   },
   mountains: {
     id: 'mountains',
@@ -103,7 +103,7 @@ const EXPLORER_PROFILES: Record<string, ExplorerProfile> = {
       SI: "ඔබ සොබාදහම සමඟ බැඳී සිටින්ෙකි. වන අලි සැරිසරන සහ දිවියන්ගේ දෑස් දිලිසෙන ඝන වනාන්තරය ඔබේ වික්‍රමයයි." 
     },
     image: 'https://images.unsplash.com/photo-1590766940554-634a7ed41450?auto=format&fit=crop&w=1200&q=80',
-    recommendations: ['yala-safari', 'minneriya-park', 'kumana-camping']
+    recommendations: ['yala-safari', 'minneriya-park']
   }
 };
 

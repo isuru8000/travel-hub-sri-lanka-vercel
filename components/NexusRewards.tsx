@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Language, User, Memory, Comment } from '../types.ts';
 import { 
@@ -254,7 +255,6 @@ const NexusRewards: React.FC<NexusRewardsProps> = ({ language, user, onLogin, se
     setIsRefining(false);
   };
 
-  // Fix: Added missing processFile function to handle image uploads and convert them to base64
   const processFile = (file: File) => {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -294,8 +294,10 @@ const NexusRewards: React.FC<NexusRewardsProps> = ({ language, user, onLogin, se
     }, 1800);
   };
 
+  const memoriesHeroImage = "https://i.pinimg.com/736x/0a/51/50/0a51506962464dcfabe4ec6baa8efc84.jpg";
+
   return (
-    <div className="min-h-screen bg-white text-[#0a0a0a] pt-32 pb-40 relative overflow-hidden flex flex-col items-center">
+    <div className="min-h-screen bg-white text-[#0a0a0a] relative overflow-hidden flex flex-col items-center">
       {/* BACKGROUND DECORATION */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-[0.02]" style={{ backgroundImage: `url("https://www.transparenttextures.com/patterns/carbon-fibre.png")` }} />
       <div className="fixed inset-0 z-0 pointer-events-none opacity-10 bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.15)_0%,transparent_80%)]" />
@@ -307,48 +309,66 @@ const NexusRewards: React.FC<NexusRewardsProps> = ({ language, user, onLogin, se
         </div>
       )}
 
-      <div className="max-w-[1600px] w-full mx-auto px-6 md:px-12 relative z-10 space-y-32">
+      {/* CINEMATIC HERO HEADER */}
+      <div className="relative w-full h-[65vh] flex items-center justify-center overflow-hidden bg-black mb-20">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-fixed opacity-60" 
+          style={{ backgroundImage: `url('${memoriesHeroImage}')` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-black/30 to-transparent" />
         
-        {/* HERO HEADER */}
-        <div className="flex flex-col items-center text-center space-y-12 animate-in fade-in duration-1000">
+        <div className="relative z-10 text-center space-y-12 px-6 max-w-7xl">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-black/5 border border-black/10 text-gray-400 text-[10px] font-black uppercase tracking-[0.5em] mx-auto animate-pulse">
+            <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.5em] mx-auto animate-pulse">
                <Layers size={14} className="text-[#0EA5E9]" />
                {language === 'EN' ? 'VOYAGER_NETWORK_v5.2' : 'සංචාරක_ජාලය_v5.2'}
             </div>
-            <h1 className="text-6xl md:text-[11rem] font-heritage font-bold tracking-tighter leading-[0.8] uppercase text-[#0a0a0a]">
+            <h1 className="text-6xl md:text-[11rem] font-heritage font-bold tracking-tighter leading-[0.8] uppercase text-white drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
               LIVED <br/><span className="italic insta-text-gradient">{language === 'EN' ? 'STORIES.' : 'මතකයන්.'}</span>
             </h1>
-            <p className="text-gray-400 max-w-3xl mx-auto text-xl md:text-3xl font-light italic leading-relaxed">
+            <p className="text-white/80 max-w-3xl mx-auto text-xl md:text-3xl font-light italic leading-relaxed drop-shadow-xl">
               {language === 'EN' 
                 ? "\"The collective consciousness of the pearl. Interact, engage, and sync with fellow voyagers.\""
                 : "\"අපගේ දිවයින පුරා විහිදුනු මතකයන් සමූහය. අනෙකුත් සංචාරකයින් සමඟ අත්දැකීම් බෙදාගන්න.\""}
             </p>
           </div>
+        </div>
+      </div>
 
-          <div className="flex flex-col md:flex-row items-center gap-8 pt-4">
-             <button 
-               onClick={() => user ? setShowForm(true) : onLogin()}
-               className="group relative px-14 py-7 bg-[#0a0a0a] text-white rounded-[2.5rem] font-black text-xs uppercase tracking-[0.4em] shadow-[0_30px_70px_rgba(0,0,0,0.15)] hover:scale-105 active:scale-95 transition-all overflow-hidden flex items-center gap-6"
-             >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/5 flex items-center justify-center group-hover:rotate-12 transition-transform">
-                   <Plus size={24} />
-                </div>
-                <span>{language === 'EN' ? 'NEW TRANSMISSION' : 'අලුත් මතකයක්'}</span>
-             </button>
-
-             <div className="relative group w-80">
+      <div className="max-w-[1600px] w-full mx-auto px-6 md:px-12 relative z-10 space-y-32">
+        
+        {/* INTERACTION TOOLS */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8 bg-white p-10 rounded-[3rem] shadow-xl border border-gray-100 -mt-32">
+           <div className="space-y-2 text-center md:text-left">
+              <h3 className="text-3xl font-heritage font-bold text-[#262626]">
+                {language === 'EN' ? 'Share Your Journey' : 'ඔබේ සංචාරය බෙදාගන්න'}
+              </h3>
+              <p className="text-gray-400 text-sm font-medium italic">
+                {language === 'EN' ? 'Join our archival registry of Sri Lankan adventures.' : 'ශ්‍රී ලංකාවේ සංචාරක අත්දැකීම් එකතුවට එක් වන්න.'}
+              </p>
+           </div>
+           <div className="flex flex-col sm:flex-row items-center gap-6">
+              <div className="relative group w-64 sm:w-80">
                 <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[#0EA5E9] transition-colors" size={18} />
                 <input 
                   type="text" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={language === 'EN' ? "Search voyager nodes..." : "දත්ත පිරික්සන්න..."}
-                  className="w-full pl-14 pr-6 py-6 bg-white border border-gray-100 rounded-full focus:outline-none focus:ring-4 focus:ring-[#0EA5E9]/5 focus:border-[#0EA5E9]/20 transition-all font-bold text-xs uppercase tracking-widest shadow-sm"
+                  placeholder={language === 'EN' ? "Search nodes..." : "දත්ත පිරික්සන්න..."}
+                  className="w-full pl-14 pr-6 py-5 bg-gray-50 border border-gray-100 rounded-full focus:outline-none focus:ring-4 focus:ring-[#0EA5E9]/5 focus:border-[#0EA5E9]/20 transition-all font-bold text-xs uppercase tracking-widest shadow-sm"
                 />
-             </div>
-          </div>
+              </div>
+              <button 
+                onClick={() => user ? setShowForm(true) : onLogin()}
+                className="group relative px-10 py-5 bg-[#0a0a0a] text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.4em] shadow-[0_30px_70px_rgba(0,0,0,0.15)] hover:scale-105 active:scale-95 transition-all overflow-hidden flex items-center gap-6"
+              >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  <div className="w-8 h-8 rounded-xl bg-white/10 border border-white/5 flex items-center justify-center group-hover:rotate-12 transition-transform">
+                    <Plus size={20} />
+                  </div>
+                  <span>{language === 'EN' ? 'NEW TRANSMISSION' : 'අලුත් මතකයක්'}</span>
+              </button>
+           </div>
         </div>
 
         {/* UPLOAD FORM (MODAL) */}
@@ -511,21 +531,11 @@ const NexusRewards: React.FC<NexusRewardsProps> = ({ language, user, onLogin, se
               <div className="bg-[#0a0a0a] rounded-[4rem] p-10 border border-white/10 shadow-[0_60px_150px_rgba(0,0,0,0.4)] relative overflow-hidden flex flex-col h-[600px] group">
                  <div className="absolute inset-0 pattern-overlay opacity-5 group-hover:opacity-10 transition-opacity" />
                  
-                 <div className="relative z-10 space-y-6 mb-8 border-b border-white/5 pb-8">
-                    <div className="flex justify-between items-center">
-                       <div className="flex items-center gap-4 text-[#0EA5E9]">
-                          <Terminal size={24} className="animate-pulse" />
-                          <span className="text-[11px] font-black uppercase tracking-[0.5em]">Comm_Link</span>
-                       </div>
-                       <div className="flex items-center gap-3 px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-full">
-                          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-                          <span className="text-[8px] font-black text-green-400 uppercase tracking-widest">Active</span>
-                    </div>
-                    </div>
-                    <h4 className="text-3xl font-heritage font-bold text-white uppercase tracking-tighter text-left">Public Feed.</h4>
-                 </div>
-
-                 <div ref={chatScrollRef} className="relative z-10 flex-grow overflow-y-auto no-scrollbar space-y-6 pr-2 mb-8 text-left">
+                 <div 
+                   ref={chatScrollRef} 
+                   data-lenis-prevent
+                   className="relative z-10 flex-grow overflow-y-auto no-scrollbar space-y-6 pr-2 mb-8 text-left pt-6"
+                 >
                     {chatMessages.map((msg) => (
                       <div key={msg.id} className={`flex flex-col gap-2 ${msg.isSystem ? 'items-center py-4' : 'items-start'}`}>
                          {msg.isSystem ? (

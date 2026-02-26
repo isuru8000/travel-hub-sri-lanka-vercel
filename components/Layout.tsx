@@ -1,7 +1,8 @@
+
 import React from 'react';
 import Navbar from './Navbar.tsx';
 import { Language, User } from '../types.ts';
-import { Facebook, Instagram, Youtube, Music2, ShieldCheck, Sparkles } from 'lucide-react';
+import { Facebook, Instagram, Youtube, Music2, ShieldCheck, Sparkles, Radio } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,20 +17,40 @@ interface LayoutProps {
 
 const HeritageBadge = () => (
   <div className="relative group/badge">
-    <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="48" fill="#0a0a0a" stroke="url(#badge_grad)" strokeWidth="2" />
-      <path d="M50 20C40 20 30 30 30 50C30 70 40 80 50 80C60 80 70 70 70 50C70 30 60 20 50 20Z" stroke="#E1306C" strokeWidth="1" strokeDasharray="4 2" />
-      <text x="50" y="55" textAnchor="middle" fill="white" fontSize="40" fontWeight="bold" fontFamily="serif">S</text>
-      <path d="M40 85L50 75L60 85" stroke="#f09433" strokeWidth="2" strokeLinecap="round" />
-      <defs>
-        <linearGradient id="badge_grad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#E1306C" />
-          <stop offset="1" stopColor="#f09433" />
-        </linearGradient>
-      </defs>
-    </svg>
+    <div className="w-[60px] h-[60px] rounded-full bg-[#0a0a0a] border-2 border-[#E1306C] flex items-center justify-center overflow-hidden relative z-10 shadow-2xl">
+      <img 
+        src="https://i.ibb.co/9m8G0fP/travel-hub-logo.png" 
+        alt="Heritage Badge" 
+        className="w-full h-full object-contain p-1 transition-transform duration-500 group-hover/badge:scale-110"
+      />
+    </div>
     <div className="absolute -inset-1 border border-white/10 rounded-full animate-ping opacity-20" />
   </div>
+);
+
+const SocialLink = ({ icon: Icon, href, color, label }: { icon: any, href: string, color: string, label: string }) => (
+  <a 
+    href={href} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="group relative w-14 h-14 flex items-center justify-center"
+    title={label}
+  >
+    {/* Animated background aura */}
+    <div className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500 ${color}`} />
+    
+    {/* Main Icon Container */}
+    <div className="relative z-10 w-full h-full bg-white border border-gray-100 rounded-2xl flex items-center justify-center shadow-sm transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)] group-hover:border-transparent overflow-hidden">
+      {/* Brand-colored fill on hover */}
+      <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${color}`} />
+      
+      {/* Icon */}
+      <Icon size={22} className="relative z-20 text-gray-400 group-hover:text-white group-hover:scale-110 transition-all duration-500" />
+      
+      {/* Gloss Effect */}
+      <div className="absolute top-0 left-0 w-full h-[200%] bg-gradient-to-b from-white/30 via-transparent to-transparent -translate-y-full group-hover:translate-y-full transition-transform duration-1000 pointer-events-none" />
+    </div>
+  </a>
 );
 
 const Layout: React.FC<LayoutProps> = ({ 
@@ -78,62 +99,57 @@ const Layout: React.FC<LayoutProps> = ({
           </div>
 
           <div className="md:col-span-3 space-y-8">
-            <h3 className="text-[10px] font-black text-[#0a0a0a] uppercase tracking-[0.4em] border-b border-gray-50 pb-4">Archives</h3>
+            <h3 className="text-[10px] font-black text-[#0a0a0a] uppercase tracking-[0.4em] border-b border-gray-50 pb-4">Quick Links</h3>
             <ul className="space-y-4 text-sm text-gray-400 font-bold uppercase tracking-widest">
-              <li><button onClick={() => setView('home')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> Home Archive</button></li>
-              <li><button onClick={() => setView('destinations')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> Reality Portals</button></li>
-              <li><button onClick={() => setView('vr-trip')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> VR Virtual Horizon</button></li>
-              <li><button onClick={() => setView('memories')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> Public Journal</button></li>
+              <li><button onClick={() => setView('home')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> Home</button></li>
+              <li><button onClick={() => setView('destinations')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> Destinations</button></li>
+              <li><button onClick={() => setView('vr-trip')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> VR Experience</button></li>
+              <li><button onClick={() => setView('memories')} className="hover:text-[#E1306C] transition-colors text-left w-full flex items-center gap-2"><Sparkles size={12} /> Travel Memories</button></li>
             </ul>
           </div>
 
           <div className="md:col-span-4 space-y-8">
-            <h3 className="text-[10px] font-black text-[#0a0a0a] uppercase tracking-[0.4em] border-b border-gray-50 pb-4">Transmission</h3>
-            <div className="flex gap-4">
-              <a 
+            <h3 className="text-[10px] font-black text-[#0a0a0a] uppercase tracking-[0.4em] border-b border-gray-50 pb-4">Social Media</h3>
+            <div className="flex flex-wrap gap-4">
+              <SocialLink 
+                icon={Instagram} 
                 href="#" 
-                className="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center transition-all shadow-sm hover:scale-110 hover:shadow-xl group/soc" 
-                title="Instagram"
-              >
-                <Instagram size={20} className="text-[#E1306C] group-hover/soc:scale-110 transition-transform" />
-              </a>
-              <a 
+                color="bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]" 
+                label="Instagram"
+              />
+              <SocialLink 
+                icon={Facebook} 
                 href="https://www.facebook.com/share/1DJJ35Hq4k/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center transition-all shadow-sm hover:scale-110 hover:shadow-xl group/soc" 
-                title="Facebook"
-              >
-                <Facebook size={20} className="text-[#1877F2] group-hover/soc:scale-110 transition-transform" />
-              </a>
-              <a 
+                color="bg-[#1877F2]" 
+                label="Facebook"
+              />
+              <SocialLink 
+                icon={Youtube} 
                 href="https://www.youtube.com/@TravelHublk-123" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center transition-all shadow-sm hover:scale-110 hover:shadow-xl group/soc" 
-                title="YouTube"
-              >
-                <Youtube size={20} className="text-[#FF0000] group-hover/soc:scale-110 transition-transform" />
-              </a>
-              <a 
+                color="bg-[#FF0000]" 
+                label="YouTube"
+              />
+              <SocialLink 
+                icon={Music2} 
                 href="https://vm.tiktok.com/ZS91cdnNLXNp3-gURJB/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-12 h-12 border border-gray-100 rounded-xl flex items-center justify-center transition-all shadow-sm hover:scale-110 hover:shadow-xl group/soc" 
-                title="TikTok"
-              >
-                <Music2 size={20} className="text-[#000000] group-hover/soc:scale-110 transition-transform" />
-              </a>
+                color="bg-[#000000]" 
+                label="TikTok"
+              />
             </div>
-            <p className="text-[9px] font-black text-gray-300 uppercase tracking-[0.2em] leading-relaxed">
-              SIGNAL STRENGTH: OPTIMAL <br/>
-              LOCATION: COLOMBO NODE
-            </p>
+            <div className="pt-4 flex flex-col gap-2">
+              <p className="text-[9px] font-black text-gray-300 uppercase tracking-[0.3em] leading-relaxed flex items-center gap-2">
+                <Radio size={12} className="text-[#E1306C] animate-pulse" />
+                SIGNAL STRENGTH: OPTIMAL
+              </p>
+              <p className="text-[9px] font-black text-gray-300 uppercase tracking-[0.3em] leading-relaxed pl-5">
+                LOCATION: COLOMBO_NODE_4.5
+              </p>
+            </div>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto mt-24 pt-10 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[9px] font-black text-gray-200 uppercase tracking-[0.6em]">Travel Hub Sri Lanka • Heritage Archive Protocol v2.4 • 2026</p>
+          <p className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">&copy; {new Date().getFullYear()} Travel Hub Sri Lanka. All rights reserved.</p>
           <div className="flex gap-8 opacity-20">
              <div className="w-1 h-1 rounded-full bg-black"></div>
              <div className="w-1 h-1 rounded-full bg-black"></div>

@@ -1,6 +1,4 @@
 
-
-
 export type Language = 'EN' | 'SI';
 
 export interface User {
@@ -26,8 +24,8 @@ export interface Destination {
   history: { EN: string; SI: string };
   shortStory: { EN: string; SI: string };
   detailedAbout?: { EN: string; SI: string };
+  logistics?: { EN: string; SI: string }; // New field for road and weather info
   masterRecord?: { EN: string; SI: string };
-  bestTime: { EN: string; SI: string };
   tips: { EN: string; SI: string }[];
   hiddenEchoes: { EN: string; SI: string };
   location: string;
@@ -35,7 +33,6 @@ export interface Destination {
   nearbyAttractions?: NearbyAttraction[];
 }
 
-// Fix: Added missing Food interface to resolve export error in constants.tsx and Foods.tsx
 export interface Food {
   id: string;
   name: { EN: string; SI: string };
@@ -47,7 +44,6 @@ export interface Food {
   tasteProfile: { EN: string; SI: string };
 }
 
-// Fix: Added missing Transport interface to resolve export error in constants.tsx
 export interface Transport {
   id: string;
   name: { EN: string; SI: string };
@@ -99,26 +95,6 @@ export interface TraditionalMedicine {
   image: string;
   benefits: { EN: string; SI: string };
   usage: { EN: string; SI: string };
-}
-
-export interface TeaExperience {
-  id: string;
-  name: { EN: string; SI: string };
-  description: { EN: string; SI: string };
-  image: string;
-  type: 'variety' | 'process' | 'location';
-  fact: { EN: string; SI: string };
-}
-
-export interface HikingSpot {
-  id: string;
-  name: { EN: string; SI: string };
-  location: { EN: string; SI: string };
-  difficulty: 'Easy' | 'Moderate' | 'Challenging' | 'Hard';
-  duration: { EN: string; SI: string };
-  description: { EN: string; SI: string };
-  image: string;
-  elevation: string;
 }
 
 export interface Phrase {

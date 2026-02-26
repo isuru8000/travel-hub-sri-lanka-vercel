@@ -29,7 +29,7 @@ const HIDDEN_GEMS = [
     id: 'meemure-gem',
     name: { EN: 'Meemure Deep Node', SI: 'මීමුරේ රහස් මග' },
     tag: { EN: 'Primal Isolation', SI: 'හුදකලා අසිරිය' },
-    image: 'https://i.pinimg.com/1200x/9d/21/2e/9d212e3794b123394712f2065098d5c.jpg',
+    image: 'https://i.pinimg.com/1200x/e6/c4/67/e6c467b97e6ff3c8344d25e2b107b50e.jpg',
     rating: '5.0'
   }
 ];

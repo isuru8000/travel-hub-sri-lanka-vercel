@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Language, User } from '../types.ts';
 import { Box, Orbit, Layers, ShieldCheck, Activity, ChevronRight, Sparkles } from 'lucide-react';
+import { UI_STRINGS } from '../constants.tsx';
 
 interface HeroProps {
   language: Language;
@@ -14,15 +15,26 @@ const Hero: React.FC<HeroProps> = ({ language, setView, user }) => {
   const [scrollPos, setScrollPos] = useState(0);
 
   useEffect(() => {
+    // Disable heavy event listeners on mobile for performance
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
+
+    let rafId: number;
     const handleMove = (e: MouseEvent) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth - 0.5),
-        y: (e.clientY / window.innerHeight - 0.5)
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setMousePos({
+          x: (e.clientX / window.innerWidth - 0.5),
+          y: (e.clientY / window.innerHeight - 0.5)
+        });
       });
     };
     
     const handleScroll = () => {
-      setScrollPos(window.scrollY);
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setScrollPos(window.scrollY);
+      });
     };
 
     window.addEventListener('mousemove', handleMove);
@@ -30,6 +42,7 @@ const Hero: React.FC<HeroProps> = ({ language, setView, user }) => {
     return () => {
       window.removeEventListener('mousemove', handleMove);
       window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(rafId);
     };
   }, []);
 
@@ -72,13 +85,13 @@ const Hero: React.FC<HeroProps> = ({ language, setView, user }) => {
         
         <div className="space-y-8 mb-12 animate-in fade-in zoom-in-95 duration-1000 delay-200">
           <h1 className="flex flex-col items-center select-none">
-            <span className="block text-xl md:text-5xl font-light tracking-[0.4em] text-white/90 mb-12 uppercase font-heritage">
-              {language === 'EN' ? 'WELCOME TO' : 'අයුබෝවන්'}
+            <span className="block text-sm md:text-5xl font-light tracking-[0.2em] md:tracking-[0.4em] text-white/90 mb-6 md:mb-12 uppercase font-heritage">
+              {language === 'EN' ? 'WELCOME TO' : 'ආයුබෝවන්'}
             </span>
             
             <div className="relative">
               <div 
-                className="text-7xl sm:text-9xl md:text-[14rem] font-heritage font-bold leading-none tracking-tighter uppercase water-text-container"
+                className="text-5xl sm:text-7xl md:text-9xl lg:text-[14rem] font-heritage font-bold leading-none tracking-tighter uppercase water-text-container"
               >
                 {language === 'EN' ? (
                   <>
@@ -95,35 +108,35 @@ const Hero: React.FC<HeroProps> = ({ language, setView, user }) => {
             </div>
           </h1>
           
-          <div className="flex flex-col items-center mt-12">
-             <div className="w-48 h-1 bg-gradient-to-r from-transparent via-[#F59E0B] to-transparent rounded-full shadow-[0_0_30px_#F59E0B] mb-12 opacity-60" />
-             <p className="font-sans text-sm md:text-2xl font-bold text-white/50 max-w-3xl leading-relaxed tracking-[0.45em] uppercase px-4 text-center italic">
+          <div className="flex flex-col items-center mt-8 md:mt-12">
+             <div className="w-24 md:w-48 h-1 bg-gradient-to-r from-transparent via-[#F59E0B] to-transparent rounded-full shadow-[0_0_30px_#F59E0B] mb-8 md:mb-12 opacity-60" />
+             <p className="font-narrative text-xs md:text-xl font-light text-white/40 max-w-3xl leading-relaxed tracking-[0.1em] md:tracking-[0.2em] px-4 text-center italic">
                {language === 'EN' 
-                 ? "A high-fidelity reconstruction of the world's most mysterious island."
+                 ? "a high-fidelity reconstruction of the world's most mysterious island."
                  : "ලොව අබිරහස් දූපතක බහු-මාන ප්‍රතිනිර්මාණයට පිවිසෙන්න."}
              </p>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-10 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-10 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500 w-full">
           <button 
             onClick={() => setView('destinations')}
-            className="group relative px-16 py-8 bg-white text-[#050508] rounded-[2.5rem] font-black text-[14px] uppercase tracking-[0.5em] transition-all duration-500 hover:scale-110 active:scale-95 shadow-[0_40px_100px_rgba(245,158,11,0.2)] overflow-hidden"
+            className="w-full sm:w-auto group relative px-8 py-6 md:px-16 md:py-8 bg-white text-[#050508] rounded-[2.5rem] font-black text-[12px] md:text-[14px] uppercase tracking-[0.3em] md:tracking-[0.5em] transition-all duration-500 hover:scale-105 active:scale-95 shadow-[0_40px_100px_rgba(245,158,11,0.2)] overflow-hidden flex justify-center"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#F59E0B]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms]" />
-            <span className="relative z-10 flex items-center gap-6">
-              Explore
-              <ChevronRight size={22} className="group-hover:translate-x-2 transition-transform" />
+            <span className="relative z-10 flex items-center gap-4 md:gap-6">
+              {UI_STRINGS.explore[language]}
+              <ChevronRight size={20} className="group-hover:translate-x-2 transition-transform" />
             </span>
           </button>
 
           <button 
             onClick={() => setView('vr-trip')}
-            className="group relative px-16 py-8 bg-white/5 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] font-black text-[14px] text-white uppercase tracking-[0.5em] transition-all duration-700 hover:bg-white/10 hover:border-[#F59E0B]/50 active:scale-95 shadow-2xl"
+            className="w-full sm:w-auto group relative px-8 py-6 md:px-16 md:py-8 bg-white/5 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] font-black text-[12px] md:text-[14px] text-white uppercase tracking-[0.3em] md:tracking-[0.5em] transition-all duration-700 hover:bg-white/10 hover:border-[#F59E0B]/50 active:scale-95 shadow-2xl flex justify-center"
           >
-            <span className="relative z-10 flex items-center gap-6">
-              VR Horizon
-              <Orbit size={24} className="text-[#F59E0B] animate-spin-slow" />
+            <span className="relative z-10 flex items-center gap-4 md:gap-6">
+              {UI_STRINGS.vrHorizon[language]}
+              <Orbit size={20} className="text-[#F59E0B] animate-spin-slow" />
             </span>
           </button>
         </div>

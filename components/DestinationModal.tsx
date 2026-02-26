@@ -234,28 +234,6 @@ const DestinationModal: React.FC<DestinationModalProps> = ({ destination, onClos
     (d.category === destination.category || d.location === destination.location)
   ).slice(0, 3);
 
-  const getWeatherTip = (timeRange: string, lang: Language) => {
-    const range = timeRange.toLowerCase();
-    if (range.includes('december') || range.includes('april') || range.includes('january')) {
-      return lang === 'EN' 
-        ? "Expect bright sunny days, dry weather, and calm turquoise seas. Ideal for sightseeing and vibrant photography." 
-        : "දීප්තිමත් හිරු රශ්මිය, වියළි කාලගුණය සහ සන්සුන් නිල් පැහැති මුහුදක් අපේක්ෂා කරන්න. සංචාරයට සහ ඡායාරූපකරණයට ඉතා සුදුසුයි.";
-    }
-    if (range.includes('may') || range.includes('september') || range.includes('october')) {
-      return lang === 'EN' 
-        ? "A warm tropical climate with occasional refreshing monsoon showers. Perfect for witnessing lush, emerald green landscapes." 
-        : "උණුසුම් නිවර්තන කාලගුණය සමඟ විටින් විට මෝසම් වැසි ඇති විය හැක. හරිත පැහැයෙන් පිරි පරිසරය නැරඹීමට හොඳම කාලයයි.";
-    }
-    if (range.includes('pilgrimage') || range.includes('mountain')) {
-      return lang === 'EN' 
-        ? "Refreshing cooler temperatures at night with crisp, clear morning skies. Be prepared for occasional mist in the highlands." 
-        : "රාත්‍රියේදී ප්‍රබෝධමත් සිසිල් කාලගුණය සහ උදෑසන පැහැදිලි අහසක් පවතී. කඳුකරයේ මීදුම සහිත තත්ත්වයන්ට සූදානම් වන්න.";
-    }
-    return lang === 'EN' 
-      ? "Stable tropical weather with moderate humidity. Generally pleasant for long outdoor explorations and coastal walks." 
-      : "ස්ථාවර නිවර්තන කාලගුණයක් සහ මධ්‍යස්ථ ආර්ද්‍රතාවයක් පවතී. එළිමහන් සංචාර සහ වෙරළ තීරයේ ඇවිදීමට සුදුසුයි.";
-  };
-
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
       <div 
@@ -265,6 +243,7 @@ const DestinationModal: React.FC<DestinationModalProps> = ({ destination, onClos
       
       <div 
         ref={scrollContainerRef}
+        data-lenis-prevent
         className="relative bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl flex flex-col animate-in zoom-in-95 duration-400 no-scrollbar"
       >
         {/* Header/Close */}
@@ -337,31 +316,6 @@ const DestinationModal: React.FC<DestinationModalProps> = ({ destination, onClos
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                <div className="relative group bg-white p-10 rounded-[3rem] border border-gray-100 flex items-center gap-6 cursor-help transition-all hover:shadow-2xl hover:-translate-y-2">
-                  <div className="w-14 h-14 bg-[#E1306C]/5 rounded-2xl flex items-center justify-center text-[#E1306C] group-hover:bg-[#E1306C] group-hover:text-white transition-colors duration-500">
-                    <Clock size={32} />
-                  </div>
-                  <div>
-                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-widest mb-1">{UI_STRINGS.bestTimeLabel[language]}</p>
-                    <p className="font-bold text-[#262626] text-xl">{destination.bestTime[language]}</p>
-                  </div>
-                  
-                  {/* Tooltip */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-8 w-80 p-1 bg-gradient-to-br from-[#f09433] to-[#bc1888] rounded-[2.5rem] shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none z-20 translate-y-4 group-hover:translate-y-0">
-                    <div className="bg-white rounded-[2.3rem] p-8 text-left">
-                      <div className="flex items-center gap-2 mb-4 border-b border-gray-50 pb-3">
-                        <Sparkles size={18} className="text-[#E1306C]" />
-                        <p className="text-[11px] font-bold insta-text-gradient uppercase tracking-widest">
-                          {language === 'EN' ? 'Climatic Insights' : 'දේශගුණික අවබෝධය'}
-                        </p>
-                      </div>
-                      <p className="text-base text-gray-600 leading-relaxed italic font-medium">
-                        {getWeatherTip(destination.bestTime.EN, language)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="bg-white p-10 rounded-[3rem] border border-gray-100 flex items-center gap-6 transition-all hover:shadow-2xl hover:-translate-y-2 group">
                   <div className="w-14 h-14 bg-[#E1306C]/5 rounded-2xl flex items-center justify-center text-[#E1306C] group-hover:bg-[#E1306C] group-hover:text-white transition-colors duration-500">
                     <MapPin size={32} />

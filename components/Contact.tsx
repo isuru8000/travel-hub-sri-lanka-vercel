@@ -19,7 +19,9 @@ import {
   Users,
   Cpu,
   Zap,
-  Activity
+  Activity,
+  Radio,
+  Signal
 } from 'lucide-react';
 
 interface ContactProps {
@@ -115,35 +117,43 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
   const socialChannels = [
     { 
       name: 'Instagram', 
-      icon: <Instagram size={48} />, 
+      icon: <Instagram size={40} />, 
       color: 'hover:bg-gradient-to-tr hover:from-[#fdf497] hover:via-[#d6249f] hover:to-[#285AEB]',
-      text: 'text-[#E1306C]',
+      shadow: 'group-hover:shadow-[0_40px_100px_rgba(214,36,159,0.4)]',
+      accent: 'text-[#E1306C]',
       handle: '@travelhubsl',
-      url: '#'
+      url: '#',
+      strength: '98.2%'
     },
     { 
       name: 'Facebook', 
-      icon: <Facebook size={48} />, 
+      icon: <Facebook size={40} />, 
       color: 'hover:bg-[#1877F2]',
-      text: 'text-[#1877F2]',
+      shadow: 'group-hover:shadow-[0_40px_100px_rgba(24,119,242,0.4)]',
+      accent: 'text-[#1877F2]',
       handle: 'Travel Hub SL',
-      url: 'https://www.facebook.com/share/1DJJ35Hq4k/'
+      url: 'https://www.facebook.com/share/1DJJ35Hq4k/',
+      strength: '94.5%'
     },
     { 
       name: 'YouTube', 
-      icon: <Youtube size={48} />, 
+      icon: <Youtube size={40} />, 
       color: 'hover:bg-[#FF0000]',
-      text: 'text-[#FF0000]',
+      shadow: 'group-hover:shadow-[0_40px_100px_rgba(255,0,0,0.4)]',
+      accent: 'text-[#FF0000]',
       handle: '@TravelHublk-123',
-      url: 'https://www.youtube.com/@TravelHublk-123'
+      url: 'https://www.youtube.com/@TravelHublk-123',
+      strength: '99.1%'
     },
     { 
       name: 'TikTok', 
-      icon: <Music2 size={48} />, 
+      icon: <Music2 size={40} />, 
       color: 'hover:bg-black',
-      text: 'text-white',
+      shadow: 'group-hover:shadow-[0_40px_100px_rgba(255,255,255,0.1)]',
+      accent: 'text-white',
       handle: '@travelhubsl',
-      url: 'https://vm.tiktok.com/ZS91cdnNLXNp3-gURJB/'
+      url: 'https://vm.tiktok.com/ZS91cdnNLXNp3-gURJB/',
+      strength: '92.8%'
     }
   ];
 
@@ -231,56 +241,75 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
           
           {/* FOLLOW US Section (Transmissions) */}
-          <div className="lg:col-span-4 space-y-8 order-2 lg:order-1">
-            <div className="relative overflow-hidden p-12 rounded-[4rem] shadow-2xl border border-white/10 space-y-12 group">
+          <div className="lg:col-span-5 space-y-8 order-2 lg:order-1">
+            <div className="relative overflow-hidden p-10 md:p-14 rounded-[4rem] shadow-2xl border border-white/10 space-y-12 group">
                {/* Animated Transmission Background Colors */}
                <div className="absolute inset-0 bg-[#0a0a0a] z-0" />
                <div className="absolute inset-0 z-0 opacity-20 bg-gradient-to-tr from-[#E1306C] via-[#3B82F6] to-[#0EA5E9] animate-gradient-shift-fast" style={{ backgroundSize: '200% 200%' }} />
                <div className="absolute inset-0 z-0 backdrop-blur-3xl" />
 
-               <div className="relative z-10 space-y-3 text-center md:text-left">
-                  <div className="flex items-center justify-center md:justify-start gap-4">
-                    <Users size={24} className="text-[#E1306C] animate-pulse" />
-                    <h3 className="text-3xl font-heritage font-bold text-white uppercase tracking-tighter">Island Network</h3>
+               <div className="relative z-10 space-y-4 text-center md:text-left">
+                  <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-center md:justify-start gap-4">
+                        <Users size={28} className="text-[#E1306C] animate-pulse" />
+                        <h3 className="text-3xl md:text-4xl font-heritage font-bold text-white uppercase tracking-tighter">Island Network</h3>
+                      </div>
+                      <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.4em] ml-1">Live Social Transmissions</p>
+                    </div>
+                    <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-2xl flex items-center gap-3">
+                       <Activity size={14} className="text-green-500 animate-pulse" />
+                       <span className="text-[8px] font-black text-white/40 uppercase tracking-widest leading-none">UPTIME: 99.9%</span>
+                    </div>
                   </div>
-                  <p className="text-gray-400 text-[10px] font-black uppercase tracking-[0.4em] ml-1">Live Social Transmissions</p>
                </div>
 
-               <div className="relative z-10 grid grid-cols-1 gap-6">
+               <div className="relative z-10 grid grid-cols-1 gap-8">
                  {socialChannels.map((social, idx) => (
                    <a 
                      key={idx} 
                      href={social.url}
                      target={social.url !== '#' ? "_blank" : undefined}
                      rel={social.url !== '#' ? "noopener noreferrer" : undefined}
-                     className={`group relative flex items-center gap-8 p-8 bg-white/[0.03] border border-white/5 rounded-[2.5rem] transition-all duration-700 hover:shadow-[0_40px_100px_rgba(225,48,108,0.2)] hover:-translate-y-2 hover:text-white overflow-hidden ${social.color}`}
+                     className={`group/card relative flex items-center gap-8 p-10 bg-white/[0.03] border border-white/5 rounded-[3rem] transition-all duration-700 hover:-translate-y-2 hover:text-white overflow-hidden ${social.color} ${social.shadow}`}
                    >
-                     <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                     <div className="absolute inset-0 bg-white/5 opacity-0 group-hover/card:opacity-100 transition-opacity pointer-events-none" />
                      
-                     <div className="relative z-10 w-20 h-20 bg-white/5 backdrop-blur-xl rounded-3xl flex items-center justify-center text-gray-400 border border-white/10 transition-all duration-700 group-hover:rotate-12 group-hover:bg-white/20 group-hover:text-inherit shadow-2xl">
-                        {social.icon}
+                     {/* Icon Portal */}
+                     <div className="relative z-10 w-24 h-24 bg-black/40 backdrop-blur-3xl rounded-3xl flex items-center justify-center text-gray-400 border border-white/10 transition-all duration-700 group-hover/card:rotate-12 group-hover/card:bg-white group-hover/card:text-inherit shadow-2xl overflow-hidden">
+                        <div className="absolute inset-0 opacity-0 group-hover/card:opacity-20 bg-[radial-gradient(circle_at_center,currentColor_0%,transparent_70%)]" />
+                        <div className="relative z-10">
+                          {social.icon}
+                        </div>
                      </div>
                      
-                     <div className="relative z-10 space-y-1">
-                        <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 group-hover:opacity-100 transition-opacity">{social.name}</p>
-                        <p className="text-xl font-bold tracking-tight text-white/90">{social.handle}</p>
-                        <div className="pt-2 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                           <span className="text-[9px] font-black uppercase tracking-widest">Connect</span>
-                           <ArrowRight size={14} />
+                     <div className="relative z-10 flex-grow space-y-2">
+                        <div className="flex justify-between items-center">
+                          <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 group-hover/card:opacity-100 transition-opacity">{social.name}</p>
+                          <div className="flex items-center gap-2 opacity-30 group-hover/card:opacity-60">
+                             <Signal size={12} />
+                             <span className="text-[8px] font-bold">{social.strength}</span>
+                          </div>
+                        </div>
+                        <p className="text-2xl font-bold tracking-tight text-white/90 font-heritage">{social.handle}</p>
+                        <div className="pt-4 flex items-center gap-4 opacity-0 group-hover/card:opacity-100 transition-all transform translate-x-4 group-hover/card:translate-x-0">
+                           <div className="h-px w-8 bg-white/40" />
+                           <span className="text-[10px] font-black uppercase tracking-widest">Connect Node</span>
+                           <ArrowRight size={16} className="animate-pulse" />
                         </div>
                      </div>
                    </a>
                  ))}
                </div>
 
-               <div className="relative z-10 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-ping shadow-[0_0_10px_#22c55e]" />
-                    <span className="text-[9px] font-black text-white/30 uppercase tracking-widest">Registry_Stable</span>
+               <div className="relative z-10 pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 opacity-40">
+                  <div className="flex items-center gap-4">
+                    <div className="w-2.5 h-2.5 bg-green-500 rounded-full animate-ping shadow-[0_0_15px_#22c55e]" />
+                    <span className="text-[10px] font-black text-white uppercase tracking-[0.5em]">Registry_Stable</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                     <Activity size={12} className="text-blue-500" />
-                     <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.4em]">Node_v4.1</span>
+                  <div className="flex items-center gap-3">
+                     <Activity size={16} className="text-[#0EA5E9]" />
+                     <span className="text-[9px] font-black text-white uppercase tracking-[0.6em]">Core_Sync_v4.5</span>
                   </div>
                </div>
             </div>
@@ -292,13 +321,12 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
                     <ShieldCheck size={32} className="text-[#E1306C]" />
                   </div>
                   <div className="space-y-4">
-                    <h4 className="text-4xl font-heritage font-bold tracking-tighter uppercase">Encrypted <br/>Archives.</h4>
+                    <h4 className="text-4xl font-heritage font-bold tracking-tighter uppercase leading-tight">Encrypted <br/>Archives.</h4>
                     <p className="text-sm font-light italic leading-relaxed text-gray-400">
                       Your inquiry is prioritized by our senior architectural bureau. Direct synchronization ensures 100% packet integrity for all correspondence.
                     </p>
                   </div>
                </div>
-               {/* 3D Wireframe decoration */}
                <div className="absolute -bottom-10 -right-10 opacity-[0.05] group-hover:opacity-10 transition-opacity">
                   <Cpu size={200} className="animate-spin-slow" />
                </div>
@@ -306,7 +334,7 @@ const Contact: React.FC<ContactProps> = ({ language }) => {
           </div>
 
           {/* Form Panel */}
-          <div className="lg:col-span-8 order-1 lg:order-2">
+          <div className="lg:col-span-7 order-1 lg:order-2">
             <div className="bg-white/95 backdrop-blur-3xl p-10 md:p-16 rounded-[5rem] shadow-[0_100px_200px_rgba(0,0,0,0.4)] border border-white/20 relative overflow-hidden">
                
                {isSuccess && (

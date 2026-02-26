@@ -13,7 +13,7 @@ const REGISTRY_01 = [
     id: 'sigiriya',
     name: { EN: 'Sigiriya Lion Rock', SI: 'සීගිරිය සිංහගිරිය' },
     status: '92% SCANNED',
-    image: 'https://i.pinimg.com/736x/87/b1/7f/87b17fb4f6d602cf2606fdf482e41c2b.jpg',
+    image: 'https://i.pinimg.com/1200x/3a/e7/48/3ae7487f4e95b92ce2d3c10c5b1038e0.jpg',
     type: 'FORTRESS',
     progress: 92
   },
@@ -45,18 +45,18 @@ const REGISTRY_01 = [
 
 const PHASE_02_SPACES = [
   {
-    id: 'anuradhapura',
+    id: 'ruwanwelisaya',
     name: { EN: 'Sacred Ruwanwelisaya', SI: 'රුවන්වැලිසෑය' },
     status: 'COMING SOON',
-    image: 'https://images.unsplash.com/photo-1621393614326-2f9ed389ce02?auto=format&fit=crop&w=800&q=80',
+    image: 'https://i.pinimg.com/1200x/e6/c4/67/e6c467b97e6ff3c8344d25e2b107b50e.jpg',
     type: 'ANCIENT',
     progress: 5
   },
   {
-    id: 'polonnaruwa',
+    id: 'gal-vihara',
     name: { EN: 'Gal Vihara Sculptures', SI: 'ගල් විහාරය' },
     status: 'COMING SOON',
-    image: 'https://images.unsplash.com/photo-1656339952847-a360aee9273b?auto=format&fit=crop&w=800&q=80',
+    image: 'https://i.pinimg.com/1200x/bd/35/c6/bd35c69b7b3ed5e31da0edc4e374b028.jpg',
     type: 'KINGDOM',
     progress: 5
   },
@@ -99,7 +99,7 @@ const PHASE_05_SPACES = [
     id: 'dunhinda-liquid',
     name: { EN: 'Dunhinda Liquid Reality', SI: 'දුන්හිඳ දිය දහම' },
     status: 'FLOW CALIBRATION',
-    image: 'https://images.unsplash.com/photo-1514483127413-f72f273478c3?auto=format&fit=crop&w=800&q=80',
+    image: 'https://i.pinimg.com/1200x/6d/7e/56/6d7e563f1c2023515b337ca7b266cd77.jpg',
     type: 'CASCADE',
     progress: 0
   },
@@ -107,13 +107,13 @@ const PHASE_05_SPACES = [
     id: 'nilaveli-abyss',
     name: { EN: 'Nilaveli Blue Node', SI: 'නිලාවේලි නිල් මැණික' },
     status: 'DEPTH HANDSHAKE',
-    image: 'https://images.unsplash.com/photo-1544921603-91185f0962b1?auto=format&fit=crop&w=800&q=80',
+    image: 'https://i.pinimg.com/1200x/c8/c2/40/c8c240b6df4dfb3bccbaa0995b8266b4.jpg',
     type: 'ABYSS',
     progress: 0
   }
 ];
 
-const VRCard: React.FC<{ space: any, language: Language, idx: number, isLocked?: boolean, themeColor?: string }> = ({ space, language, idx, isLocked, themeColor = '#E1306C' }) => {
+const VRCard: React.FC<{ space: any, language: Language, idx: number, isLocked?: boolean, themeColor?: string, onClick?: () => void }> = ({ space, language, idx, isLocked, themeColor = '#E1306C', onClick }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -123,7 +123,7 @@ const VRCard: React.FC<{ space: any, language: Language, idx: number, isLocked?:
     const rect = cardRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: x * 20, y: y * -20 });
+    setTilt({ x: x * 25, y: y * -25 });
   };
 
   const handleMouseLeave = () => {
@@ -137,50 +137,57 @@ const VRCard: React.FC<{ space: any, language: Language, idx: number, isLocked?:
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      className={`group relative h-[560px] rounded-[4rem] bg-black/60 backdrop-blur-2xl border border-white/10 transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) cursor-pointer overflow-hidden ${isLocked ? 'opacity-80 hover:opacity-100' : ''}`}
+      onClick={!isLocked ? onClick : undefined}
+      className={`group relative h-[600px] rounded-[4.5rem] bg-black/80 backdrop-blur-3xl border border-white/10 transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) cursor-pointer overflow-hidden ${isLocked ? 'opacity-70 grayscale-[0.5] hover:grayscale-0 hover:opacity-100' : 'hover:border-white/30'}`}
       style={{ 
-        perspective: '1500px',
+        perspective: '2000px',
         transformStyle: 'preserve-3d',
-        transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg) ${isHovered ? 'scale(1.04)' : 'scale(1)'}`,
-        boxShadow: isHovered ? `0 60px 140px -20px ${themeColor}66` : 'none'
+        transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg) ${isHovered ? 'scale(1.05) translateY(-10px)' : 'scale(1)'}`,
+        boxShadow: isHovered ? `0 80px 160px -30px ${themeColor}88` : '0 20px 50px rgba(0,0,0,0.5)'
       }}
     >
       <img 
         src={space.image} 
-        className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-all duration-1000" 
+        className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-70 transition-all duration-[1500ms] group-hover:scale-110" 
         alt={space.name[language]} 
       />
       
       <div className="absolute inset-0 bg-gradient-to-t from-[#010101] via-black/40 to-transparent" />
       
-      <div className="absolute inset-0 p-12 flex flex-col justify-between" style={{ transformStyle: 'preserve-3d' }}>
-        <div className="flex justify-between items-start" style={{ transform: 'translateZ(50px)' }}>
-           <div className={`px-6 py-3 rounded-2xl border text-[10px] font-black uppercase tracking-widest backdrop-blur-md ${isLocked ? 'bg-white/5 border-white/10 text-white/60' : 'bg-black/80 border-white/10 text-white'}`}>
+      <div className="absolute inset-0 p-14 flex flex-col justify-between" style={{ transformStyle: 'preserve-3d' }}>
+        <div className="flex justify-between items-start" style={{ transform: 'translateZ(60px)' }}>
+           <div className={`px-8 py-4 rounded-2xl border text-[11px] font-black uppercase tracking-[0.4em] backdrop-blur-2xl ${isLocked ? 'bg-white/5 border-white/10 text-white/40' : 'bg-black/90 border-white/20 text-white shadow-2xl'}`}>
               {space.type}
            </div>
-           <div className={`w-16 h-16 rounded-2xl border flex items-center justify-center shadow-2xl backdrop-blur-md transition-all duration-500 ${isLocked ? 'bg-white/5 border-white/10 group-hover:border-white/30' : `bg-[#E1306C]/20 border-[#E1306C]/40`}`}>
-              {isLocked ? <Lock size={24} className="text-white/40 group-hover:text-white transition-colors animate-pulse" /> : <Scan size={24} className={`text-[#E1306C] animate-pulse`} />}
+           <div className={`w-20 h-20 rounded-3xl border flex items-center justify-center shadow-3xl backdrop-blur-2xl transition-all duration-700 ${isLocked ? 'bg-white/5 border-white/10 group-hover:border-white/40' : `bg-[#E1306C]/20 border-[#E1306C]/50 group-hover:bg-[#E1306C] group-hover:border-white`}`}>
+              {isLocked ? <Lock size={28} className="text-white/30 group-hover:text-white transition-colors animate-pulse" /> : <Scan size={28} className={`text-[#E1306C] group-hover:text-white transition-colors animate-pulse`} />}
            </div>
         </div>
 
-        <div className="space-y-10" style={{ transform: 'translateZ(90px)' }}>
-           <div className="space-y-4">
-              <p className={`text-[11px] font-black uppercase tracking-[0.5em] drop-shadow-md ${isLocked ? 'text-white/30' : `text-[#E1306C]`}`}>
-                {isLocked ? 'FUTURE_MANIFOLD_LOCKED' : 'NEURAL_MESH_ACTIVE'}
-              </p>
-              <h4 className="text-4xl md:text-5xl font-heritage font-bold text-white leading-tight uppercase tracking-tight group-hover:insta-text-gradient transition-all duration-500">
+        <div className="space-y-12" style={{ transform: 'translateZ(120px)' }}>
+           <div className="space-y-5">
+              <div className="flex items-center gap-4">
+                 <div className={`w-2 h-2 rounded-full animate-ping ${isLocked ? 'bg-white/20' : 'bg-[#E1306C]'}`} />
+                 <p className={`text-[12px] font-black uppercase tracking-[0.6em] drop-shadow-2xl ${isLocked ? 'text-white/30' : `text-[#E1306C]`}`}>
+                   {isLocked ? 'ARCHIVE_LOCKED' : 'NEURAL_SYNC_ACTIVE'}
+                 </p>
+              </div>
+              <h4 className="text-5xl md:text-6xl font-heritage font-bold text-white leading-tight uppercase tracking-tighter group-hover:insta-text-gradient transition-all duration-700">
                 {space.name[language]}
               </h4>
            </div>
 
-           <div className="space-y-5 pt-10 border-t border-white/10">
-              <div className="flex justify-between items-center text-[10px] font-black text-white/40 uppercase tracking-widest">
-                 <span>{isLocked ? 'UPLINK_STATUS' : 'SYNERGY_SYNC'}</span>
+           <div className="space-y-6 pt-12 border-t border-white/10">
+              <div className="flex justify-between items-center text-[11px] font-black text-white/40 uppercase tracking-[0.4em]">
+                 <div className="flex items-center gap-3">
+                    <Activity size={14} className={isLocked ? 'text-white/20' : 'text-[#E1306C]'} />
+                    <span>{isLocked ? 'UPLINK_PENDING' : 'SYNERGY_FLOW'}</span>
+                 </div>
                  <span className={isLocked ? 'text-white/60' : `text-[#E1306C]`}>{space.status}</span>
               </div>
-              <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden p-[1.5px]">
+              <div className="h-3.5 w-full bg-white/5 rounded-full overflow-hidden p-[2px] border border-white/5 shadow-inner">
                  <div 
-                   className={`h-full rounded-full transition-all duration-[2000ms] ${isLocked ? 'bg-white/10 group-hover:bg-white/30' : `bg-gradient-to-r from-[#E1306C] via-[#fd5949] to-[#f09433]`}`} 
+                   className={`h-full rounded-full transition-all duration-[2500ms] ease-out ${isLocked ? 'bg-white/10 group-hover:bg-white/40' : `bg-gradient-to-r from-[#E1306C] via-[#fd5949] to-[#f09433] shadow-[0_0_30px_rgba(225,48,108,0.6)]`}`} 
                    style={{ width: `${space.progress || 5}%` }}
                  ></div>
               </div>
@@ -188,13 +195,15 @@ const VRCard: React.FC<{ space: any, language: Language, idx: number, isLocked?:
         </div>
       </div>
 
+      {/* Scanning Line Effect */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div 
-          className={`absolute top-0 left-0 w-full h-[3px] shadow-[0_0_20px_currentColor] animate-scan-slow opacity-60 ${isLocked ? 'text-white/10' : `text-[#E1306C]`}`} 
-          style={{ animationDelay: `${idx * 2}s` }}
+          className={`absolute top-0 left-0 w-full h-[4px] shadow-[0_0_30px_currentColor] animate-scan-slow opacity-80 ${isLocked ? 'text-white/10' : `text-[#E1306C]`}`} 
+          style={{ animationDelay: `${idx * 1.5}s` }}
         ></div>
       </div>
       
+      {/* Glossy Overlay */}
       <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
     </div>
   );
@@ -359,7 +368,7 @@ const VRShowcase: React.FC<VRShowcaseProps> = ({ language, setView }) => {
                  System_Nominal
               </div>
               <p className="text-sm text-gray-500 font-medium italic leading-relaxed">
-                "Registry synchronization active. Use the controller to explore the ancient manifold archives."
+                "The system is ready. Use the controller to see the old places."
               </p>
            </div>
 
@@ -385,41 +394,41 @@ const VRShowcase: React.FC<VRShowcaseProps> = ({ language, setView }) => {
             willChange: 'transform'
           }}
         >
-          <div className="relative p-[1px] bg-gradient-to-br from-[#E1306C] via-purple-500/40 to-blue-600 rounded-[3rem] md:rounded-[5rem] shadow-[0_0_150px_rgba(225,48,108,0.2)] w-full max-w-5xl">
-            <div className="bg-black/90 backdrop-blur-[120px] rounded-[2.9rem] md:rounded-[4.9rem] p-12 md:p-32 space-y-12 text-center border border-white/5 relative overflow-hidden">
-               <div className="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-transparent via-[#E1306C] to-transparent shadow-[0_0_40px_#E1306C] animate-scan-fast z-20 opacity-80"></div>
+          <div className="relative p-[1px] bg-gradient-to-br from-[#E1306C] via-purple-500/40 to-blue-600 rounded-[5rem] md:rounded-[7rem] shadow-[0_0_150px_rgba(225,48,108,0.25)] w-full max-w-6xl">
+            <div className="bg-black/95 backdrop-blur-[150px] rounded-[4.9rem] md:rounded-[6.9rem] p-16 md:p-40 space-y-16 text-center border border-white/10 relative overflow-hidden">
+               <div className="absolute top-0 left-0 right-0 h-[6px] bg-gradient-to-r from-transparent via-[#E1306C] to-transparent shadow-[0_0_50px_#E1306C] animate-scan-fast z-20 opacity-90"></div>
                
-               <div className="relative z-10 flex flex-col items-center gap-10" style={{ transform: 'translateZ(120px)' }}>
-                  <div className="inline-flex items-center gap-5 px-8 py-4 rounded-full bg-[#E1306C]/15 border border-[#E1306C]/40 text-[#E1306C] shadow-[0_0_60px_rgba(225,48,108,0.3)] animate-pulse">
-                     <Target size={20} className="text-[#E1306C]" />
-                     <span className="text-[11px] md:text-[13px] font-black uppercase tracking-[0.6em]">Protocol_A8_Active</span>
+               <div className="relative z-10 flex flex-col items-center gap-12" style={{ transform: 'translateZ(150px)' }}>
+                  <div className="inline-flex items-center gap-6 px-10 py-5 rounded-full bg-[#E1306C]/20 border border-[#E1306C]/50 text-[#E1306C] shadow-[0_0_80px_rgba(225,48,108,0.4)] animate-pulse">
+                     <Target size={24} className="text-[#E1306C]" />
+                     <span className="text-[12px] md:text-[14px] font-black uppercase tracking-[0.7em]">Neural_Sync_Protocol_Active</span>
                   </div>
                   
-                  <h2 className="text-6xl sm:text-7xl md:text-[9rem] font-heritage font-bold text-white tracking-tighter uppercase leading-[0.85] drop-shadow-[0_30px_60px_rgba(0,0,0,0.9)] uppercase">
+                  <h2 className="text-7xl sm:text-8xl md:text-[11rem] font-heritage font-bold text-white tracking-tighter uppercase leading-[0.8] drop-shadow-[0_40px_80px_rgba(0,0,0,1)]">
                     REWRITE <br/>
-                    <span className="insta-text-gradient italic">3D SPACE.</span>
+                    <span className="insta-text-gradient italic">3D REALITY.</span>
                   </h2>
-
-                  <div className="w-full max-w-lg space-y-6">
-                     <div className="flex justify-between items-end text-[10px] md:text-[12px] font-black text-white/60 uppercase tracking-[0.3em] px-2">
-                        <div className="flex items-center gap-4">
-                          <Activity size={14} className="text-[#E1306C] animate-pulse" />
-                          <span>SYNTHESIS_STAGE_04</span>
+ 
+                  <div className="w-full max-w-2xl space-y-8">
+                     <div className="flex justify-between items-end text-[11px] md:text-[13px] font-black text-white/60 uppercase tracking-[0.4em] px-4">
+                        <div className="flex items-center gap-5">
+                          <Activity size={18} className="text-[#E1306C] animate-pulse" />
+                          <span>GLOBAL_SYNTHESIS_STAGE_08</span>
                         </div>
-                        <span className="text-white">92.4%</span>
+                        <span className="text-white text-lg">94.8%</span>
                      </div>
-                     <div className="h-3 w-full bg-white/5 rounded-full overflow-hidden p-[2px] border border-white/5 shadow-inner">
-                        <div className="h-full rounded-full bg-gradient-to-r from-[#fdf497] via-[#fd5949] to-[#E1306C] shadow-[0_0_40px_rgba(225,48,108,1)]" style={{ width: '92.4%' }}></div>
+                     <div className="h-5 w-full bg-white/5 rounded-full overflow-hidden p-[3px] border border-white/10 shadow-inner">
+                        <div className="h-full rounded-full bg-gradient-to-r from-[#fdf497] via-[#fd5949] to-[#E1306C] shadow-[0_0_50px_rgba(225,48,108,1)] transition-all duration-1000" style={{ width: '94.8%' }}></div>
                      </div>
                   </div>
-
-                  <p className="max-w-2xl mx-auto text-gray-400 text-base md:text-xl font-medium uppercase tracking-[0.2em] leading-loose opacity-70 italic">
-                    Finalizing volumetric reconstruction for the sacred highlands node. Calibration complete.
+ 
+                  <p className="max-w-3xl mx-auto text-gray-400 text-lg md:text-2xl font-medium uppercase tracking-[0.3em] leading-loose opacity-80 italic">
+                    Making 3D models of the island's holy places. The system is working well.
                   </p>
                </div>
             </div>
             
-            <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[85%] h-12 bg-[#E1306C]/15 blur-[100px] -z-10" />
+            <div className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[90%] h-20 bg-[#E1306C]/20 blur-[120px] -z-10" />
           </div>
         </div>
 
@@ -478,7 +487,7 @@ const VRShowcase: React.FC<VRShowcaseProps> = ({ language, setView }) => {
                  THE <span className="text-amber-500 italic">FRONTIER.</span>
               </h3>
               <p className="text-gray-500 text-sm md:text-base font-black uppercase tracking-[0.4em] max-w-2xl leading-relaxed opacity-60 italic">
-                Scanning the peak of eternity and the depths of the blue abyss. Final registry nodes pending neural sync.
+                Looking at the high mountains and deep seas. New places will be ready soon.
               </p>
            </div>
 

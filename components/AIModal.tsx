@@ -254,6 +254,7 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
 
           <div 
             ref={scrollRef} 
+            data-lenis-prevent
             className="flex-grow p-10 overflow-y-auto space-y-10 bg-white scroll-smooth no-scrollbar relative"
           >
             {needsApiKey && (

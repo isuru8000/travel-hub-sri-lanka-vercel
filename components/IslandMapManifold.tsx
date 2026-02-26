@@ -204,6 +204,32 @@ const IslandMapManifold: React.FC<IslandMapManifoldProps> = ({ language, onSelec
            
            {/* MAP ENGINE */}
            <div className="absolute inset-0 flex items-center justify-center p-10 md:p-20">
+              {categoryFilter === 'camping' && (
+                <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/80 backdrop-blur-md animate-in fade-in duration-700">
+                   <div className="text-center space-y-8 max-w-md px-6">
+                      <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto border border-emerald-500/30 shadow-[0_0_50px_rgba(16,185,129,0.2)]">
+                         <Tent size={48} className="text-emerald-500 animate-pulse" />
+                      </div>
+                      <div className="space-y-4">
+                         <h3 className="text-4xl font-heritage font-bold text-white uppercase tracking-tighter">Camping Registry</h3>
+                         <p className="text-xl text-emerald-500 font-black uppercase tracking-[0.4em] animate-pulse">
+                            {language === 'EN' ? 'Coming Soon' : 'ළඟදීම'}
+                         </p>
+                      </div>
+                      <p className="text-gray-400 italic text-sm leading-relaxed">
+                         {language === 'EN' 
+                           ? "The geospatial nodes for wild forest camping are currently being synchronized. Access will be granted in the next system update."
+                           : "වනාන්තර කලාප දත්ත පද්ධතියට එක් කරමින් පවතී. මීළඟ යාවත්කාලීනයෙන් පිවිසිය හැක."}
+                      </p>
+                      <button 
+                        onClick={() => setCategoryFilter('all')}
+                        className="px-10 py-4 bg-white text-black rounded-full font-black text-[10px] uppercase tracking-[0.4em] hover:scale-105 transition-transform"
+                      >
+                        Return to Core
+                      </button>
+                   </div>
+                </div>
+              )}
               <div 
                 className="relative h-full aspect-[3/4] transition-all duration-[1200ms] ease-[cubic-bezier(0.23,1,0.32,1)]"
                 style={{ transform: mapTransform }}
