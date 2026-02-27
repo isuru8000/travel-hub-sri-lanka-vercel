@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // Fix: Added implementation to Navbar.tsx to resolve module error for named export TravelHubLogo
-import { TravelHubLogo } from './Navbar.tsx';
+import AnimatedLogo from '../src/components/AnimatedLogo';
 import { ShieldCheck, Activity, Zap, Loader2, CheckCircle2 } from 'lucide-react';
 
 interface LoadingScreenProps {
@@ -56,7 +56,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onEnter, language }) => {
       <div className="relative mb-16">
         <div className="absolute inset-0 story-ring rounded-full animate-ping opacity-10 scale-[2.5]"></div>
         <div className="relative">
-          <TravelHubLogo size={120} className="animate-float" />
+          <AnimatedLogo />
         </div>
       </div>
       

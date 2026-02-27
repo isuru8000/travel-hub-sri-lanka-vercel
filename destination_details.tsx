@@ -29,8 +29,8 @@ const BASE_DESTINATIONS: Destination[] = [
     location: "Matale", 
     coordinates: { x: 52, y: 38 },
     nearbyAttractions: [
-      { id: "pidurangala", name: { EN: "Pidurangala Rock", SI: "පිදුරංගල පර්වතය" }, image: "https://i.pinimg.com/1200x/3a/e7/48/3ae7487f4e95b92ce2d3c10c5b1038e0.jpg" },
-      { id: "dambulla", name: { EN: "Dambulla Cave Temple", SI: "දඹුලු ලෙන් විහාරය" }, image: "https://i.pinimg.com/1200x/9d/21/2e/9d212e3794b123394712f2065098d5c.jpg" },
+      { id: "pidurangala", name: { EN: "Pidurangala Rock", SI: "පිදුරංගල පර්වතය" }, image: "https://i.pinimg.com/736x/b5/d0/f7/b5d0f760425e71a84e69d7c9b45f3821.jpg" },
+      { id: "dambulla", name: { EN: "Dambulla Cave Temple", SI: "දඹුලු ලෙන් විහාරය" }, image: "https://i.pinimg.com/1200x/ca/96/d8/ca96d8e009f8ad50128891ce45b59c9d.jpg" },
       { id: "minneriya", name: { EN: "Minneriya National Park", SI: "මින්නේරිය ජාතික වනෝද්‍යානය" }, image: "https://i.pinimg.com/1200x/38/12/a2/3812a200c26bee48e77332bc76ad368e.jpg" },
       { id: "kaudulla", name: { EN: "Kaudulla National Park", SI: "කවුඩුල්ල ජාතික වනෝද්‍යානය" }, image: "https://picsum.photos/seed/kaudulla/800/600" },
       { id: "vatadageya", name: { EN: "Vatadageya", SI: "වටදාගෙය" }, image: "https://i.pinimg.com/1200x/3e/16/a6/3e16a69f5a7a1aa1aa918ad765964902.jpg" },
@@ -113,7 +113,7 @@ const BASE_DESTINATIONS: Destination[] = [
     coordinates: { x: 58, y: 34 },
     nearbyAttractions: [
       { id: "gal-vihara", name: { EN: "Gal Vihara", SI: "ගල් විහාරය" }, image: "https://i.pinimg.com/1200x/bd/35/c6/bd35c69b7b3ed5e31da0edc4e374b028.jpg" },
-      { id: "lankatilaka-vihara", name: { EN: "Lankatilaka Vihara", SI: "ලංකාතිලක විහාරය" }, image: "https://i.pinimg.com/1200x/93/07/66/93076630d999bdecdb46b99f342db55d.jpg" }
+      { id: "lankatilaka-vihara", name: { EN: "Lankatilaka Vihara", SI: "ලංකාතිලක විහාරය" }, image: "https://i.pinimg.com/1200x/0d/a7/ef/0da7ef3f52a249fe6d3119d886a0eb6f.jpg" }
     ]
   },
   {
@@ -286,8 +286,8 @@ const BASE_DESTINATIONS: Destination[] = [
     coordinates: { x: 50, y: 42 },
     nearbyAttractions: [
       { id: "sigiriya", name: { EN: "Sigiriya", SI: "සීගිරිය" }, image: "https://i.pinimg.com/1200x/3a/e7/48/3ae7487f4e95b92ce2d3c10c5b1038e0.jpg" },
-      { id: "pidurangala", name: { EN: "Pidurangala Rock", SI: "පිදුරංගල පර්වතය" }, image: "https://i.pinimg.com/1200x/3a/e7/48/3ae7487f4e95b92ce2d3c10c5b1038e0.jpg" },
-      { id: "ritigala", name: { EN: "Ritigala", SI: "රිටිගල" }, image: "https://i.pinimg.com/1200x/5c/e2/f3/5ce2f34e60d60c138b49f766aacab214.jpg" }
+      { id: "pidurangala", name: { EN: "Pidurangala Rock", SI: "පිදුරංගල පර්වතය" }, image: "https://i.pinimg.com/736x/b5/d0/f7/b5d0f760425e71a84e69d7c9b45f3821.jpg" },
+      { id: "ritigala", name: { EN: "Ritigala", SI: "රිටිගල" }, image: "https://i.pinimg.com/1200x/6f/b0/c0/6fb0c00a86082ccbdf8e6ac17b083319.jpg" }
     ]
   },
   { 
@@ -339,7 +339,7 @@ const BASE_DESTINATIONS: Destination[] = [
     coordinates: { x: 50, y: 20 },
     nearbyAttractions: [
       { id: "ruwanwelisaya", name: { EN: "Ruwanwelisaya", SI: "රුවන්වැලිසෑය" }, image: "https://i.pinimg.com/1200x/e6/c4/67/e6c467b97e6ff3c8344d25e2b107b50e.jpg" },
-      { id: "ritigala", name: { EN: "Ritigala", SI: "රිටිගල" }, image: "https://i.pinimg.com/1200x/5c/e2/f3/5ce2f34e60d60c138b49f766aacab214.jpg" },
+      { id: "ritigala", name: { EN: "Ritigala", SI: "රිටිගල" }, image: "https://i.pinimg.com/1200x/6f/b0/c0/6fb0c00a86082ccbdf8e6ac17b083319.jpg" },
       { id: "wilpattu", name: { EN: "Wilpattu National Park", SI: "විල්පත්තුව ජාතික වනෝද්‍යානය" }, image: "https://i.pinimg.com/736x/f6/51/77/f65177d61ea209acea5c455e00246b7b.jpg" }
     ]
   },
@@ -365,9 +365,9 @@ const BASE_DESTINATIONS: Destination[] = [
     location: "Kurunegala", 
     coordinates: { x: 44, y: 46 },
     nearbyAttractions: [
-      { id: "ritigala", name: { EN: "Ritigala", SI: "රිටිගල" }, image: "https://i.pinimg.com/1200x/5c/e2/f3/5ce2f34e60d60c138b49f766aacab214.jpg" },
+      { id: "ritigala", name: { EN: "Ritigala", SI: "රිටිගල" }, image: "https://i.pinimg.com/1200x/6f/b0/c0/6fb0c00a86082ccbdf8e6ac17b083319.jpg" },
       { id: "ruwanwelisaya", name: { EN: "Ruwanwelisaya", SI: "රුවන්වැලිසෑය" }, image: "https://i.pinimg.com/1200x/e6/c4/67/e6c467b97e6ff3c8344d25e2b107b50e.jpg" },
-      { id: "dambulla", name: { EN: "Dambulla Cave Temple", SI: "දඹුලු ලෙන් විහාරය" }, image: "https://i.pinimg.com/1200x/9d/21/2e/9d212e3794b123394712f2065098d5c.jpg" }
+      { id: "dambulla", name: { EN: "Dambulla Cave Temple", SI: "දඹුලු ලෙන් විහාරය" }, image: "https://i.pinimg.com/1200x/ca/96/d8/ca96d8e009f8ad50128891ce45b59c9d.jpg" }
     ]
   },
   { 
@@ -393,7 +393,7 @@ const BASE_DESTINATIONS: Destination[] = [
     coordinates: { x: 54, y: 26 },
     nearbyAttractions: [
       { id: "ruwanwelisaya", name: { EN: "Ruwanwelisaya", SI: "රුවන්වැලිසෑය" }, image: "https://i.pinimg.com/1200x/e6/c4/67/e6c467b97e6ff3c8344d25e2b107b50e.jpg" },
-      { id: "mihintale", name: { EN: "Mihintale", SI: "මිහින්තලේ" }, image: "https://i.pinimg.com/736x/87/b1/7f/87b17fb4f6d602cf2606fdf482e41c2b.jpg" },
+      { id: "mihintale", name: { EN: "Mihintale", SI: "මිහින්තලේ" }, image: "https://i.pinimg.com/1200x/4b/ce/e7/4bcee74e0567cf2c845621fa93db5905.jpg" },
       { id: "sigiriya", name: { EN: "Sigiriya", SI: "සීගිරිය" }, image: "https://i.pinimg.com/1200x/3a/e7/48/3ae7487f4e95b92ce2d3c10c5b1038e0.jpg" }
     ]
   },
@@ -484,7 +484,7 @@ const BASE_DESTINATIONS: Destination[] = [
     nearbyAttractions: [
       { id: "kumana", name: { EN: "Kumana National Park", SI: "කුමන ජාතික වනෝද්‍යානය" }, image: "https://i.pinimg.com/736x/71/50/16/71501668218b3602ac732a426f397666.jpg" },
       { id: "bundala", name: { EN: "Bundala National Park", SI: "බූන්දල ජාතික වනෝද්‍යානය" }, image: "https://i.pinimg.com/1200x/8c/68/d3/8c68d38fe1b594fda91bcc42f6c43b97.jpg" },
-      { id: "buduruwagala", name: { EN: "Buduruwagala Temple", SI: "බුදුරුවගල විහාරය" }, image: "https://i.pinimg.com/1200x/ce/b7/d6/ceb7d6e0eba3935d85da2d37f1ee8875.jpg" }
+      { id: "buduruwagala", name: { EN: "Buduruwagala Temple", SI: "බුදුරුවගල විහාරය" }, image: "https://i.pinimg.com/1200x/7d/ce/23/7dce235eedb24bdcbd5ece2ef2836fd8.jpg" }
     ]
   },
   { id: "udawalawe", name: { EN: "Udawalawe", SI: "උඩවලව" }, category: "wildlife", image: "https://i.pinimg.com/1200x/28/95/94/28959415856159f64b3a6f98073698b8.jpg", gallery: ["https://i.pinimg.com/1200x/28/95/94/28959415856159f64b3a6f98073698b8.jpg"], history: { EN: "Udawalawe National Park is renowned for its large population of wild Asian elephants, which can be seen in herds of up to 50 or more. Created to provide a sanctuary for wild animals displaced by the construction of the Udawalawe Reservoir, the park's landscape of open plains and grasslands resembles an African savanna. It is one of the best places in the world to see wild elephants throughout the year. The nearby Elephant Transit Home cares for orphaned elephant calves.", SI: "අලි අභයභූමිය." }, shortStory: { EN: "Big gentle elephants.", SI: "අහිංසක යෝධයෝ." }, tips: [{ EN: "See the baby elephants.", SI: "අලි අනාථාගාරයට යන්න." }], hiddenEchoes: { EN: "A beautiful river.", SI: "වලවේ ගංගා මෝය." }, location: "Ratnapura", coordinates: { x: 64, y: 84 },
@@ -498,14 +498,14 @@ const BASE_DESTINATIONS: Destination[] = [
     nearbyAttractions: [
       { id: "vatadageya", name: { EN: "Vatadageya", SI: "වටදාගෙය" }, image: "https://i.pinimg.com/1200x/3e/16/a6/3e16a69f5a7a1aa1aa918ad765964902.jpg" },
       { id: "sigiriya", name: { EN: "Sigiriya", SI: "සීගිරිය" }, image: "https://i.pinimg.com/1200x/3a/e7/48/3ae7487f4e95b92ce2d3c10c5b1038e0.jpg" },
-      { id: "dambulla", name: { EN: "Dambulla Cave Temple", SI: "දඹුලු ලෙන් විහාරය" }, image: "https://i.pinimg.com/1200x/9d/21/2e/9d212e3794b123394712f2065098d5c.jpg" }
+      { id: "dambulla", name: { EN: "Dambulla Cave Temple", SI: "දඹුලු ලෙන් විහාරය" }, image: "https://i.pinimg.com/1200x/ca/96/d8/ca96d8e009f8ad50128891ce45b59c9d.jpg" }
     ]
   },
   { id: "wilpattu", name: { EN: "Wilpattu", SI: "විල්පත්තුව" }, category: "wildlife", image: "https://i.pinimg.com/736x/f6/51/77/f65177d61ea209acea5c455e00246b7b.jpg", gallery: ["https://i.pinimg.com/736x/f6/51/77/f65177d61ea209acea5c455e00246b7b.jpg"], history: { EN: "Wilpattu National Park is the largest and one of the oldest national parks in Sri Lanka. It is unique for its 'Willus'—natural, sand-rimmed water basins or depressions that fill with rainwater. The park is world-renowned for its leopard population and sloth bears. Its dense dry zone forest and open grassy plains provide a habitat for a wide variety of wildlife. The park also has historical significance, with ruins of ancient palaces and legends linking it to the arrival of Prince Vijaya.", SI: "විල් පිරි වනෝද්‍යානය." }, shortStory: { EN: "Natural lakes.", SI: "ස්වභාවික විල්." }, tips: [{ EN: "Go for a full day trip.", SI: "දවස පුරා සෆාරි." }], hiddenEchoes: { EN: "Copper colored sand.", SI: "තඹ වන් වැලි." }, location: "Anuradhapura", coordinates: { x: 34, y: 22 },
     nearbyAttractions: [
       { id: "ruwanwelisaya", name: { EN: "Ruwanwelisaya", SI: "රුවන්වැලිසෑය" }, image: "https://i.pinimg.com/1200x/e6/c4/67/e6c467b97e6ff3c8344d25e2b107b50e.jpg" },
 
-      { id: "mihintale", name: { EN: "Mihintale", SI: "මිහින්තලේ" }, image: "https://i.pinimg.com/736x/87/b1/7f/87b17fb4f6d602cf2606fdf482e41c2b.jpg" }
+      { id: "mihintale", name: { EN: "Mihintale", SI: "මිහින්තලේ" }, image: "https://i.pinimg.com/1200x/4b/ce/e7/4bcee74e0567cf2c845621fa93db5905.jpg" }
     ]
   },
   { id: "kumana", name: { EN: "Kumana", SI: "කුමන" }, category: "wildlife", image: "https://i.pinimg.com/736x/71/50/16/71501668218b3602ac732a426f397666.jpg", gallery: ["https://i.pinimg.com/736x/71/50/16/71501668218b3602ac732a426f397666.jpg"], history: { EN: "Kumana National Park, formerly known as Yala East, is renowned for its avifauna, particularly its large flocks of migratory waterfowl and wading birds. The park's 200-hectare Kumana Villu mangrove swamp is a critical nesting ground for painted storks, pelicans, spoonbills, and ibises. Apart from birds, the park is home to leopards, elephants, and turtles. It is also a significant route for the annual 'Pada Yatra' pilgrimage to Kataragama.", SI: "කුරුලු පාරාදීසය." }, shortStory: { EN: "Wetland wildlife.", SI: "තෙත් බිම් වනජීවී." }, tips: [{ EN: "Bring your binoculars.", SI: "දුරදක්නයක් රැගෙන එන්න." }], hiddenEchoes: { EN: "Mangrove forests.", SI: "කඩොලාන වනාන්තර." }, location: "Ampara", coordinates: { x: 84, y: 82 },
@@ -562,7 +562,7 @@ const BASE_DESTINATIONS: Destination[] = [
   { id: "knuckles", name: { EN: "Knuckles", SI: "නකල්ස්" }, category: "mountains", image: "https://i.pinimg.com/1200x/59/90/2a/59902a787d6a8c484b8d014234ef36d4.jpg", gallery: ["https://i.pinimg.com/1200x/59/90/2a/59902a787d6a8c484b8d014234ef36d4.jpg"], history: { EN: "The Knuckles Mountain Range lies in central Sri Lanka, in the Districts of Matale and Kandy. The range takes its name from a series of recumbent folds and peaks in the west of the massif which resemble the knuckles of clenched fist when viewed from certain locations in the Kandy District. Whilst this name was assigned by early British surveyors, the Sinhalese residents have traditionally referred to the area as Dumbara Kanduvetiya meaning Mist-laden Mountain Range.", SI: "දුෂ්කර කඳු පන්තිය." }, shortStory: { EN: "Old wild hills.", SI: "පුරාණ කඳුකරය." }, tips: [{ EN: "You must have a guide.", SI: "මඟපෙන්වන්නෙකු අවශ්‍යයි." }], hiddenEchoes: { EN: "A very old village.", SI: "මීමුරේ ගම්මානය." }, location: "Kandy", coordinates: { x: 62, y: 44 },
     nearbyAttractions: [
       { id: "meemure", name: { EN: "Meemure", SI: "මීමුරේ" }, image: "https://i.pinimg.com/1200x/ba/07/ee/ba07ee618d2e4a8f1146754ae8ae8710.jpg" },
-      { id: "riverston", name: { EN: "Riverston", SI: "රිවර්ස්ටන්" }, image: "https://i.pinimg.com/1200x/d2/e3/f4/d2e3f4g5h6i7j8k9l0m1.jpg" },
+      { id: "riverston", name: { EN: "Riverston", SI: "රිවර්ස්ටන්" }, image: "https://i.pinimg.com/736x/a8/72/64/a872646bb1a038b1580e1096651bb288.jpg" },
       { id: "kandy-temple", name: { EN: "Temple of the Tooth", SI: "දළදා මාළිගාව" }, image: "https://i.pinimg.com/1200x/b6/4b/ca/b64bcaaf16fc3356cee1b56c84ebfd8f.jpg" }
     ]
   },
@@ -575,7 +575,7 @@ const BASE_DESTINATIONS: Destination[] = [
   { id: "pidurangala", name: { EN: "Pidurangala", SI: "පිදුරංගල" }, category: "mountains", image: "https://i.pinimg.com/736x/b5/d0/f7/b5d0f760425e71a84e69d7c9b45f3821.jpg", gallery: ["https://i.pinimg.com/1200x/3a/e7/48/3ae7487f4e95b92ce2d3c10c5b1038e0.jpg", "https://i.pinimg.com/736x/b5/d0/f7/b5d0f760425e71a84e69d7c9b45f3821.jpg"], history: { EN: "Pidurangala is a massive rock formation located a few kilometers north of Sigiriya. It has an interesting history closely related to the Sigiriya Rock Fortress. Being less difficult to climb than Sigiriya, Pidurangala is often overlooked by tourists, but offers a arguably better view of Sigiriya itself. Pidurangala Vihara is an ancient Buddhist temple situated in Pidurangala village of Matale District, Sri Lanka. The temple was constructed on a massive rock called Pidurangala, which is located a few kilometers north of the historical fort Sigiriya.", SI: "භික්ෂූන්ගේ වාසස්ථානය." }, shortStory: { EN: "The best view around.", SI: "හොඳම දර්ශනපථය." }, tips: [{ EN: "Bring a light for your head.", SI: "විදුලි පන්දමක් ගන්න." }], hiddenEchoes: { EN: "A big sleeping Buddha statue.", SI: "සැතපෙන බුදු පිළිමය." }, location: "Matale", coordinates: { x: 53, y: 37 },
     nearbyAttractions: [
       { id: "sigiriya", name: { EN: "Sigiriya", SI: "සීගිරිය" }, image: "https://i.pinimg.com/1200x/3a/e7/48/3ae7487f4e95b92ce2d3c10c5b1038e0.jpg" },
-      { id: "dambulla", name: { EN: "Dambulla Cave Temple", SI: "දඹුලු ලෙන් විහාරය" }, image: "https://i.pinimg.com/1200x/9d/21/2e/9d212e3794b123394712f2065098d5c.jpg" },
+      { id: "dambulla", name: { EN: "Dambulla Cave Temple", SI: "දඹුලු ලෙන් විහාරය" }, image: "https://i.pinimg.com/1200x/ca/96/d8/ca96d8e009f8ad50128891ce45b59c9d.jpg" },
       { id: "minneriya", name: { EN: "Minneriya National Park", SI: "මින්නේරිය ජාතික වනෝද්‍යානය" }, image: "https://i.pinimg.com/1200x/38/12/a2/3812a200c26bee48e77332bc76ad368e.jpg" }
     ]
   },
@@ -592,7 +592,7 @@ const BASE_DESTINATIONS: Destination[] = [
     nearbyAttractions: [
       { id: "ella", name: { EN: "Ella", SI: "ඇල්ල" }, image: "https://i.pinimg.com/736x/19/c4/ca/19c4ca9cac03989b7a94bbe48beb166d.jpg" },
       { id: "haputale", name: { EN: "Haputale", SI: "හපුතලේ" }, image: "https://i.pinimg.com/1200x/c3/bc/5e/c3bc5e159f35130bcad02b0ee7b0f91f.jpg" },
-      { id: "buduruwagala", name: { EN: "Buduruwagala", SI: "බුදුරුවගල" }, image: "https://i.pinimg.com/1200x/ce/b7/d6/ceb7d6e0eba3935d85da2d37f1ee8875.jpg" }
+      { id: "buduruwagala", name: { EN: "Buduruwagala", SI: "බුදුරුවගල" }, image: "https://i.pinimg.com/1200x/7d/ce/23/7dce235eedb24bdcbd5ece2ef2836fd8.jpg" }
     ]
   },
   { id: "bambarakanda", name: { EN: "Bambarakanda", SI: "බඹරකන්ද" }, category: "waterfalls", image: "https://i.pinimg.com/736x/2c/90/80/2c908064d4b0d03c0051128438b872dd.jpg", gallery: ["https://i.pinimg.com/736x/2c/90/80/2c908064d4b0d03c0051128438b872dd.jpg"], history: { EN: "Bambarakanda Falls is the tallest waterfall in Sri Lanka. With a height of 263 m (863 ft), it ranks as the 299th highest waterfall in the world. Situated in Kalupahana in the Badulla District, this waterfall is directly visible from the A4 Highway. The waterfall was formed by Kuda Oya, which is a branch of the Walawe River. The Bambarakanda Falls can be found in a forest of pine trees.", SI: "ලංකාවේ උසම දිය ඇල්ල." }, shortStory: { EN: "A very high waterfall.", SI: "මුදුනේ දිය දහර." }, tips: [{ EN: "It looks best after it rains.", SI: "වැස්සෙන් පසු අලංකාරයි." }], hiddenEchoes: { EN: "A path through pine trees.", SI: "පයින් වනාන්තර මග." }, location: "Badulla", coordinates: { x: 62, y: 76 },

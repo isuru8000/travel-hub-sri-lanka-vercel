@@ -36,36 +36,7 @@ import {
   Atom
 } from 'lucide-react';
 import { UI_STRINGS } from '../constants.tsx';
-
-/**
- * TravelHubLogo Component - Animated Archival Logo
- */
-export const TravelHubLogo: React.FC<{ size?: number; className?: string }> = ({ size = 40, className = "" }) => (
-  <div className={`relative group ${className}`}>
-    {/* Dynamic Background Glow */}
-    <div className="absolute inset-0 bg-[#0EA5E9] rounded-full blur-xl opacity-20 group-hover:opacity-60 transition-opacity duration-1000 animate-pulse"></div>
-    
-    <div className="relative z-10 overflow-visible flex items-center justify-center">
-      <img 
-        src="https://cdn-icons-png.flaticon.com/512/201/201623.png" 
-        alt="Travel Hub Logo" 
-        width={size} 
-        height={size} 
-        className="object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-110"
-        onError={(e) => {
-          // Fallback if the image fails to load
-          e.currentTarget.src = "https://ui-avatars.com/api/?name=TH&background=0EA5E9&color=fff";
-        }}
-      />
-    </div>
-
-    {/* Floating Particles Around Logo */}
-    <div className="absolute inset-0 pointer-events-none">
-       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0EA5E9] rounded-full animate-ping opacity-40"></div>
-       <div className="absolute bottom-1/2 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0EA5E9] rounded-full animate-ping opacity-40 delay-700"></div>
-    </div>
-  </div>
-);
+import AnimatedLogo from '../src/components/AnimatedLogo';
 
 interface NavItem {
   id: string;
@@ -148,11 +119,7 @@ const Navbar: React.FC<NavbarProps> = ({
       <div className="flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-3 md:gap-4 cursor-pointer group shrink-0" onClick={() => handleNav('home')}>
-          <TravelHubLogo size={isScrolled ? 28 : (window.innerWidth < 768 ? 32 : 42)} />
-          <div className="flex flex-col items-start leading-none transition-all duration-700">
-            <h1 className="text-lg md:text-xl lg:text-2xl font-heritage font-black tracking-tight uppercase text-[#0a0a0a]">Travel Hub</h1>
-            <span className="text-[6px] md:text-[7px] lg:text-[8px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] mt-0.5 text-gray-400">sri lanka</span>
-          </div>
+          <AnimatedLogo />
         </div>
 
         {/* Desktop Nav */}
@@ -236,7 +203,7 @@ const Navbar: React.FC<NavbarProps> = ({
         <div className="fixed inset-x-0 top-full mt-2 md:mt-4 bg-[#0a0a0a]/95 backdrop-blur-3xl rounded-[2rem] md:rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.6)] border border-white/10 p-4 md:p-8 flex flex-col gap-4 md:gap-8 animate-in slide-in-from-top-4 duration-500 max-h-[85vh] overflow-y-auto w-full">
           {/* Header Identity in Mobile Menu */}
           <div className="flex items-center gap-3 md:gap-5 px-4 py-3 md:px-6 md:py-4 bg-white rounded-[1.5rem] md:rounded-[2.5rem] shadow-xl shrink-0">
-             <TravelHubLogo size={24} className="md:w-8 md:h-8" />
+             <AnimatedLogo />
              <div className="flex flex-col items-start leading-none">
                 <span className="text-xs md:text-sm font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">TRAVEL HUB</span>
                 <span className="text-[6px] md:text-[7px] font-black text-gray-400 uppercase tracking-[0.2em] md:tracking-[0.3em]">sri lanka</span>
