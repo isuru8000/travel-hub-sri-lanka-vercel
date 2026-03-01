@@ -47,7 +47,7 @@ const Hero: React.FC<HeroProps> = ({ language, setView, user }) => {
   }, []);
 
   // User-provided cinematic aerial view of Sri Lanka
-  const heroBgImage = "https://i.pinimg.com/1200x/2a/63/1d/2a631d3d6664c0c84bf78db4a758a2a9.jpg";
+  const heroBgImage = "https://i.pinimg.com/736x/1b/d0/51/1bd0512b368ea04b8f8a4f6ae6c89cac.jpg";
 
   const mainTitleEN = "SRI LANKA";
   const mainTitleSI = "ශ්‍රී ලංකාව";
@@ -85,7 +85,7 @@ const Hero: React.FC<HeroProps> = ({ language, setView, user }) => {
         
         <div className="space-y-8 mb-12 animate-in fade-in zoom-in-95 duration-1000 delay-200">
           <h1 className="flex flex-col items-center select-none">
-            <span className="block text-sm md:text-5xl font-light tracking-[0.2em] md:tracking-[0.4em] text-white/90 mb-6 md:mb-12 uppercase font-heritage">
+            <span className="block text-sm md:text-5xl font-light tracking-[0.2em] md:tracking-[0.4em] text-[#FFF7ED] mb-6 md:mb-12 uppercase font-heritage drop-shadow-lg">
               {language === 'EN' ? 'WELCOME TO' : 'ආයුබෝවන්'}
             </span>
             
@@ -166,8 +166,21 @@ const Hero: React.FC<HeroProps> = ({ language, setView, user }) => {
         }
 
         .water-base {
-          color: rgba(245, 158, 11, 0.1);
-          -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+          color: rgba(255, 255, 255, 0.05);
+          -webkit-text-stroke: 2px rgba(255, 255, 255, 0.3);
+          text-shadow: 0 0 20px rgba(0,0,0,0.5);
+          animation: border-light-flow 4s ease-in-out infinite;
+        }
+
+        @keyframes border-light-flow {
+          0%, 100% {
+            -webkit-text-stroke-color: rgba(255, 255, 255, 0.3);
+            filter: drop-shadow(0 0 0px transparent);
+          }
+          50% {
+            -webkit-text-stroke-color: #fff;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+          }
         }
 
         .water-wave {
@@ -176,12 +189,13 @@ const Hero: React.FC<HeroProps> = ({ language, setView, user }) => {
           left: 0;
           width: 100%;
           height: 100%;
-          color: #F59E0B;
+          color: #FFFFFF;
           -webkit-text-stroke: 1px transparent;
           animation: liquid-sway 4s ease-in-out infinite;
-          background: linear-gradient(180deg, #FCD34D 0%, #F59E0B 100%);
+          background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
+          filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
         }
 
         @keyframes liquid-sway {

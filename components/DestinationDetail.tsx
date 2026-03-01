@@ -53,7 +53,7 @@ import {
   History,
   EyeOff
 } from 'lucide-react';
-import { getLankaGuideResponse, GroundingLink, getWeatherUpdate, WeatherData, getDestinationDeepDive, DestinationDeepDive } from '../services/gemini.ts';
+import { getLankaGuideResponse, GroundingLink, getWeatherUpdate, WeatherData } from '../services/gemini.ts';
 
 interface DestinationDetailProps {
   destination: Destination | null;
@@ -141,11 +141,6 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
   const [scrollProgress, setScrollProgress] = useState(0);
   const [nearbyResults, setNearbyResults] = useState<GroundingLink[]>([]);
   const [isSyncingNearby, setIsSyncingNearby] = useState(false);
-  
-  // AI Deep Dive States
-  const [deepDive, setDeepDive] = useState<DestinationDeepDive | null>(null);
-  const [isDeepSyncing, setIsDeepSyncing] = useState(false);
-  const [hasDeepSynced, setHasDeepSynced] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -160,8 +155,6 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
   useEffect(() => {
     if (destination) {
       window.scrollTo({ top: 0, behavior: 'instant' });
-      setDeepDive(null);
-      setHasDeepSynced(false);
 
       const fetchNearby = async () => {
         setIsSyncingNearby(true);
@@ -181,22 +174,6 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
       fetchNearby();
     }
   }, [destination, language]);
-
-  const handleDeepSync = async () => {
-    if (!destination || isDeepSyncing) return;
-    setIsDeepSyncing(true);
-    try {
-      const data = await getDestinationDeepDive(destination.name.EN, language);
-      if (data) {
-        setDeepDive(data);
-        setHasDeepSynced(true);
-      }
-    } catch (e) {
-      console.error("Deep Dive Sync Failed", e);
-    } finally {
-      setIsDeepSyncing(false);
-    }
-  };
 
   const handleNearbyClick = (id: string) => {
     const fullDest = DESTINATIONS.find(d => d.id === id);
@@ -254,16 +231,6 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
                    {destination.category.toUpperCase()}
                  </div>
                </div>
-
-               <button 
-                onClick={handleDeepSync}
-                disabled={isDeepSyncing || hasDeepSynced}
-                className={`group relative flex items-center gap-4 px-10 py-5 rounded-full font-black text-[10px] uppercase tracking-[0.4em] transition-all duration-700 shadow-3xl overflow-hidden ${hasDeepSynced ? 'bg-green-500/10 border border-green-500/30 text-green-500' : 'bg-white text-black hover:scale-110 active:scale-95'}`}
-               >
-                  <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-[#E1306C]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ${hasDeepSynced ? 'hidden' : ''}`} />
-                  {isDeepSyncing ? <Loader2 size={18} className="animate-spin text-[#E1306C]" /> : hasDeepSynced ? <CheckCircle2 size={18} /> : <Brain size={18} className="text-[#E1306C] group-hover:rotate-12 transition-transform" />}
-                  {isDeepSyncing ? (language === 'EN' ? 'Neural_Handshake...' : 'නාභිගත_සම්බන්ධය...') : hasDeepSynced ? 'ARCHIVE_ENHANCED' : (language === 'EN' ? 'INITIATE_DEEP_SYNC' : 'ගැඹුරු_සම්බන්ධය_අරඹන්න')}
-               </button>
             </div>
             
             <div className="space-y-4">
@@ -279,23 +246,7 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
       </div>
 
       {/* Sync Overlay */}
-      {isDeepSyncing && (
-        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-3xl flex flex-col items-center justify-center p-12 animate-in fade-in duration-500">
-           <div className="max-w-md w-full space-y-10 text-center">
-              <div className="relative mx-auto w-32 h-32 rounded-[2.5rem] bg-[#E1306C]/10 border border-[#E1306C]/30 flex items-center justify-center text-[#E1306C] shadow-[0_0_80px_rgba(225,48,108,0.3)]">
-                 <Binary size={56} className="animate-pulse" />
-                 <div className="absolute inset-0 border-2 border-dashed border-[#E1306C]/20 rounded-3xl animate-spin-slow" />
-              </div>
-              <div className="space-y-4">
-                 <h2 className="text-3xl font-heritage font-bold text-white uppercase tracking-tighter">Decrypting Archive.</h2>
-                 <p className="text-gray-500 text-xs font-black uppercase tracking-[0.5em] animate-pulse">Accessing gemini-3-flash-preview...</p>
-              </div>
-              <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                 <div className="h-full bg-gradient-to-r from-[#E1306C] to-[#f09433] animate-loading-bar" />
-              </div>
-           </div>
-        </div>
-      )}
+      {/* Deep sync logic removed */}
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-32">
         
@@ -403,21 +354,19 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
                  )}
 
                  {/* 2. Legacy & Legend (History) Section */}
-                 {!hasDeepSynced && (
-                    <div className="pt-20 border-t border-gray-100 space-y-12">
-                      <div className="flex items-center gap-6">
-                         <div className="w-14 h-14 rounded-3xl bg-[#F59E0B]/10 flex items-center justify-center text-[#F59E0B] border border-[#F59E0B]/20 shadow-inner">
-                           <History size={26} />
-                         </div>
-                         <h4 className="text-2xl md:text-4xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">Legacy & Legend</h4>
+                 <div className="pt-20 border-t border-gray-100 space-y-12">
+                   <div className="flex items-center gap-6">
+                      <div className="w-14 h-14 rounded-3xl bg-[#F59E0B]/10 flex items-center justify-center text-[#F59E0B] border border-[#F59E0B]/20 shadow-inner">
+                        <History size={26} />
                       </div>
-                      <div className="md:pl-20">
-                         <p className="text-xl md:text-2xl text-gray-500 font-light leading-relaxed whitespace-pre-line italic">
-                           {destination.history[language]}
-                         </p>
-                      </div>
-                    </div>
-                 )}
+                      <h4 className="text-2xl md:text-4xl font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">Legacy & Legend</h4>
+                   </div>
+                   <div className="md:pl-20">
+                      <p className="text-xl md:text-2xl text-gray-500 font-light leading-relaxed whitespace-pre-line italic">
+                        {destination.history[language]}
+                      </p>
+                   </div>
+                 </div>
 
                  {/* 3. High-Fidelity Gallery Section */}
                  <div className="pt-20 border-t border-gray-100 space-y-12">
@@ -500,49 +449,9 @@ const DestinationDetail: React.FC<DestinationDetailProps> = ({ destination, lang
                     <div className="absolute inset-0 pointer-events-none border-[12px] border-white/10" />
                  </div>
 
-                 {/* Deep Dive Addendum: Atmospheric Sync */}
-                 {deepDive?.temporalSync && (
-                    <div className="bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] p-12 rounded-[4rem] border border-white/5 shadow-2xl space-y-10 relative overflow-hidden animate-in zoom-in-95 duration-1000">
-                       <div className="absolute inset-0 pattern-overlay opacity-10" />
-                       <div className="absolute top-0 right-0 p-8 opacity-[0.05] text-[#F59E0B]">
-                          <Sun size={120} className="animate-spin-slow" />
-                       </div>
-                       
-                       <div className="relative z-10 space-y-8">
-                          <div className="flex items-center gap-4 text-[#F59E0B]">
-                            <Orbit size={24} className="animate-pulse" />
-                            <span className="text-[11px] font-black uppercase tracking-[0.5em]">Temporal_Sync_Expansion</span>
-                          </div>
-                          <div className="space-y-6">
-                            <h4 className="text-3xl font-heritage font-bold text-white uppercase tracking-tighter">Atmospheric <br/>Manifest.</h4>
-                            <p className="text-xl text-gray-400 font-light italic leading-relaxed border-l-2 border-[#F59E0B]/40 pl-6">
-                               "{deepDive.temporalSync}"
-                            </p>
-                          </div>
-                       </div>
-                    </div>
-                 )}
 
-                 {/* AI Suggested Nearby Nodes */}
-                 {hasDeepSynced && deepDive?.nearbyAttractions && deepDive.nearbyAttractions.length > 0 && (
-                    <div className="bg-white p-12 rounded-[4rem] border border-gray-100 shadow-xl space-y-10 animate-in slide-in-from-right-8 duration-1000">
-                        <div className="flex items-center gap-4 text-[#0EA5E9]">
-                           <Compass size={24} className="animate-spin-slow" />
-                           <span className="text-[11px] font-black uppercase tracking-[0.5em]">AI_Augmented_Traversal</span>
-                        </div>
-                        <div className="space-y-4">
-                           {deepDive.nearbyAttractions.map((node, nIdx) => (
-                             <div key={nIdx} className="p-6 bg-gray-50 rounded-3xl border border-gray-100 space-y-3 group hover:bg-white hover:shadow-lg transition-all duration-500">
-                                <div className="flex justify-between items-start">
-                                   <p className="text-lg font-heritage font-bold text-[#0a0a0a] uppercase tracking-tight">{node.name}</p>
-                                   <span className="text-[8px] font-black text-white bg-[#0EA5E9] px-3 py-1 rounded-full uppercase">{node.type}</span>
-                                </div>
-                                <p className="text-xs text-gray-400 font-medium italic leading-relaxed">{node.relevance}</p>
-                             </div>
-                           ))}
-                        </div>
-                    </div>
-                 )}
+
+
 
                  {/* Local Intel Links */}
                  <div className="bg-gray-50 p-12 rounded-[4rem] border border-gray-100 space-y-10 shadow-inner">

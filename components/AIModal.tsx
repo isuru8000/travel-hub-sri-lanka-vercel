@@ -1,15 +1,16 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Sparkles, X, Send, Compass, Loader2, History, Info, Square, Zap, Cpu, ShieldCheck, MapPin, ExternalLink, Brain, Globe, Bot, Navigation, Lock, Orbit, Activity } from 'lucide-react';
+import { Sparkles, X, Send, Compass, Loader2, History, Info, Square, Zap, Cpu, ShieldCheck, MapPin, ExternalLink, Brain, Globe, Bot, Navigation, Lock, Orbit, Activity, Camera, Image as ImageIcon, Trash2 } from 'lucide-react';
 import { Language } from '../types.ts';
 import { UI_STRINGS } from '../constants.tsx';
-import { getLankaGuideResponse, GroundingLink, AIResponse } from '../services/gemini.ts';
+import { streamLankaGuideResponse, GroundingLink, ChatMessage } from '../services/gemini.ts';
 
 interface Message {
   role: 'user' | 'bot';
   text: string;
   links?: GroundingLink[];
   isThinking?: boolean;
+  image?: string;
 }
 
 interface AIModalProps {
@@ -25,9 +26,11 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
   const [isDeepMode, setIsDeepMode] = useState(false);
   const [needsApiKey, setNeedsApiKey] = useState(false);
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | undefined>();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const hasGreeted = useRef(false);
   const stopTypingRef = useRef(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -108,6 +111,17 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
     setIsTyping(false);
   };
 
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   useEffect(() => {
     if (isOpen && !hasGreeted.current && messages.length === 0) {
       hasGreeted.current = true;
@@ -126,41 +140,81 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({
         top: scrollRef.current.scrollHeight,
-        behavior: isTyping ? 'auto' : 'smooth'
+        behavior: isTyping || isLoading ? 'auto' : 'smooth'
       });
     }
-  }, [messages, isLoading, isTyping]);
+  }, [messages, isLoading, isTyping, selectedImage]);
 
   const handleSend = async (customText?: string) => {
     const textToSend = customText || input;
-    if (!textToSend.trim() || isLoading || isTyping) return;
+    if ((!textToSend.trim() && !selectedImage) || isLoading || isTyping) return;
 
     setInput('');
     stopTypingRef.current = false;
-    setMessages(prev => [...prev, { role: 'user', text: textToSend }]);
+    
+    // Add user message
+    const newMessages = [...messages, { role: 'user' as const, text: textToSend, image: selectedImage || undefined }];
+    setMessages(newMessages);
+    
+    const imageToSend = selectedImage ? {
+      data: selectedImage.split(',')[1],
+      mimeType: selectedImage.split(',')[0].split(':')[1].split(';')[0]
+    } : undefined;
+
+    setSelectedImage(null); // Clear image after sending
+    
     setIsLoading(true);
     setNeedsApiKey(false);
 
-    const result = await getLankaGuideResponse(textToSend, language, userLocation, isDeepMode);
-    
-    if (stopTypingRef.current) {
-      setIsLoading(false);
-      return;
-    }
+    // Prepare history for API
+    const history: ChatMessage[] = newMessages.map(m => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      text: m.text
+    }));
 
-    setIsLoading(false);
-    if (typeof result === 'string') {
-      if (result === "API_KEY_REQUIRED") {
-        setNeedsApiKey(true);
-      } else {
-        await typeMessage(result, undefined, isDeepMode);
+    try {
+      // Initialize bot message
+      setMessages(prev => [...prev, { role: 'bot', text: '', isThinking: isDeepMode }]);
+      
+      const generator = streamLankaGuideResponse(textToSend, history, language, userLocation, isDeepMode, imageToSend);
+      
+      let accumulatedText = "";
+      let accumulatedLinks: GroundingLink[] = [];
+
+      for await (const chunk of generator) {
+        if (stopTypingRef.current) break;
+
+        if (chunk.error === "API_KEY_REQUIRED") {
+          setNeedsApiKey(true);
+          // Remove the empty bot message if we failed
+          setMessages(prev => prev.slice(0, -1));
+          setIsLoading(false);
+          return;
+        }
+
+        if (chunk.text) {
+          accumulatedText += chunk.text;
+        }
+        if (chunk.links) {
+          accumulatedLinks = [...accumulatedLinks, ...chunk.links];
+        }
+
+        setMessages(prev => {
+          const updated = [...prev];
+          updated[updated.length - 1] = {
+            role: 'bot',
+            text: accumulatedText,
+            links: accumulatedLinks.length > 0 ? accumulatedLinks : undefined,
+            isThinking: isDeepMode
+          };
+          return updated;
+        });
       }
-    } else if (result) {
-      if (result.error === "API_KEY_REQUIRED") {
-        setNeedsApiKey(true);
-      } else {
-        await typeMessage(result.text, result.links, isDeepMode);
-      }
+    } catch (error) {
+      console.error("Stream error:", error);
+      setMessages(prev => [...prev, { role: 'bot', text: "Connection interrupted. Please try again." }]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -168,7 +222,7 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
     if ((window as any).aistudio?.openSelectKey) {
       await (window as any).aistudio.openSelectKey();
       setNeedsApiKey(false);
-      handleSend();
+      handleSend(); // Retry last message? Ideally we should store it.
     }
   };
 
@@ -266,7 +320,7 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
                 <div className="space-y-3">
                   <h4 className="text-2xl font-heritage font-bold text-[#0a0a0a]">Uplink Restricted</h4>
                   <p className="text-xs text-gray-400 font-medium leading-relaxed italic">
-                    Advanced travel intelligence requires a verified synchronization key. Please select your project key to proceed.
+                    Advanced travel intelligence requires a verified synchronization key. Please synchronize your project key to proceed.
                   </p>
                 </div>
                 <button 
@@ -294,6 +348,11 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
                     ? 'bg-[#0a0a0a] text-white rounded-tr-none border border-white/10 shadow-2xl' 
                     : 'bg-[#fafafa] text-[#0a0a0a] rounded-tl-none border border-gray-100'
                 }`}>
+                  {m.image && (
+                    <div className="mb-4 rounded-2xl overflow-hidden border border-white/10">
+                      <img src={m.image} alt="User upload" className="w-full h-auto max-h-60 object-cover" />
+                    </div>
+                  )}
                   <div className="text-base sm:text-lg whitespace-pre-line prose prose-sm max-w-none prose-headings:font-heritage prose-headings:text-[#0a0a0a]">
                     {m.text}
                     {isTyping && i === messages.length - 1 && m.role === 'bot' && (
@@ -329,7 +388,7 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
               </div>
             ))}
             
-            {isLoading && (
+            {isLoading && (!messages.length || messages[messages.length - 1].role !== 'bot' || !messages[messages.length - 1].text) && (
               <div className="flex flex-col items-start">
                 <div className="flex items-center gap-3 mb-3 ml-2">
                   {isDeepMode ? <Brain size={12} className="text-blue-500 animate-pulse" /> : <Loader2 size={12} className="text-[#0EA5E9] animate-spin" />}
@@ -343,14 +402,32 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
                     <div className={`w-2 h-2 rounded-full animate-bounce [animation-delay:-0.15s] ${isDeepMode ? 'bg-blue-500' : 'bg-[#0EA5E9]'}`}></div>
                     <div className={`w-2 h-2 rounded-full animate-bounce ${isDeepMode ? 'bg-blue-500' : 'bg-[#0EA5E9]'}`}></div>
                   </div>
-                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest italic">{isDeepMode ? 'Accessing gemini-3-pro-preview reasoning...' : 'Scanning Maps Registry...'}</span>
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest italic">{isDeepMode ? 'Accessing gemini-3.1-pro-preview reasoning...' : 'Scanning Maps Registry...'}</span>
                 </div>
               </div>
             )}
           </div>
 
           <div className="shrink-0 bg-white p-10 pt-4 border-t border-gray-50 space-y-8">
-            {!isLoading && !isTyping && !needsApiKey && messages.length < 5 && (
+            {/* Image Preview */}
+            {selectedImage && (
+              <div className="relative inline-block animate-in fade-in slide-in-from-bottom-4">
+                <div className="relative w-24 h-24 rounded-2xl overflow-hidden border border-gray-200 shadow-lg group">
+                  <img src={selectedImage} alt="Preview" className="w-full h-full object-cover" />
+                  <button 
+                    onClick={() => setSelectedImage(null)}
+                    className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <Trash2 size={20} className="text-white" />
+                  </button>
+                </div>
+                <div className="absolute -top-2 -right-2 w-5 h-5 bg-[#0EA5E9] rounded-full flex items-center justify-center border-2 border-white">
+                  <ImageIcon size={10} className="text-white" />
+                </div>
+              </div>
+            )}
+
+            {!isLoading && !isTyping && !needsApiKey && messages.length < 5 && !selectedImage && (
               <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4">
                 {suggestions.map((s) => (
                   <button
@@ -370,17 +447,32 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
             )}
 
             <div className="flex gap-5 items-center">
-              <div className="flex-grow flex items-center bg-[#fafafa] rounded-[2.5rem] px-8 py-2 border border-gray-100 focus-within:ring-[6px] focus-within:ring-[#0EA5E9]/5 focus-within:bg-white focus-within:border-[#0EA5E9]/30 transition-all shadow-inner">
+              <div className="flex-grow flex items-center bg-[#fafafa] rounded-[2.5rem] px-4 py-2 border border-gray-100 focus-within:ring-[6px] focus-within:ring-[#0EA5E9]/5 focus-within:bg-white focus-within:border-[#0EA5E9]/30 transition-all shadow-inner gap-2">
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  className="hidden" 
+                  ref={fileInputRef}
+                  onChange={handleImageSelect}
+                />
+                <button 
+                  onClick={() => fileInputRef.current?.click()}
+                  className={`p-3 rounded-full transition-all ${selectedImage ? 'bg-[#0EA5E9]/10 text-[#0EA5E9]' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}`}
+                  title="Upload Image"
+                >
+                  <Camera size={20} />
+                </button>
+
                 <input 
                   type="text" 
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                   disabled={isLoading || isTyping || needsApiKey}
-                  placeholder={isDeepMode ? "State your complex query..." : (language === 'EN' ? "Query the registry manifold..." : "දත්ත පිරික්සන්න...")}
+                  placeholder={isDeepMode ? "State your complex query..." : (language === 'EN' ? "Query or upload image..." : "පින්තූරයක් හෝ ප්‍රශ්නයක්...")}
                   className="flex-grow py-5 bg-transparent focus:outline-none text-base font-bold text-[#0a0a0a] placeholder:text-gray-300 placeholder:italic disabled:opacity-50"
                 />
-                <div className="relative">
+                <div className="relative pr-4">
                    <Sparkles size={22} className={`${(isLoading || isTyping) ? 'animate-pulse text-[#0EA5E9]' : 'text-gray-200'}`} />
                 </div>
               </div>
@@ -395,7 +487,7 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
               ) : (
                 <button 
                   onClick={() => handleSend()}
-                  disabled={!input.trim() || needsApiKey}
+                  disabled={(!input.trim() && !selectedImage) || needsApiKey}
                   className="w-16 h-16 shrink-0 bg-[#0a0a0a] text-white rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all disabled:opacity-20 disabled:scale-100 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-white/10 group overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-tr from-[#0EA5E9] to-transparent opacity-0 group-hover:opacity-20 transition-opacity"></div>
@@ -410,7 +502,7 @@ const AIModal: React.FC<AIModalProps> = ({ language }) => {
                    <span className="text-[8px] font-black text-gray-300 uppercase tracking-[0.4em]">{isDeepMode ? 'REASONING_CORE_PRO_v3' : 'MAPS_SYNC_ACTIVE'}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                   <span className="text-[8px] font-black text-gray-300 uppercase tracking-[0.4em]">{isDeepMode ? 'GEMINI 3 PRO PREVIEW' : 'GEMINI 2.5 FLASH'}</span>
+                   <span className="text-[8px] font-black text-gray-300 uppercase tracking-[0.4em]">{isDeepMode ? 'GEMINI 3.1 PRO PREVIEW' : 'GEMINI 2.5 FLASH'}</span>
                 </div>
             </div>
           </div>

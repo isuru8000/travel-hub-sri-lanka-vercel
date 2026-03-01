@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { Language, User, Destination } from './types.ts';
 import Layout from './components/Layout.tsx';
 import Hero from './components/Hero.tsx';
@@ -216,9 +217,22 @@ export default function App() {
           <div className="relative">
             <Hero language={language} setView={setView} user={user} />
             <div className="relative z-10">
-              <PopularHighlights language={language} onSelectDestination={navigateToDestination} setView={setView} />
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <PopularHighlights language={language} onSelectDestination={navigateToDestination} setView={setView} />
+              </motion.div>
               
-              <div className="py-12 md:py-20 flex flex-col md:flex-row justify-center bg-white border-y border-gray-100 gap-4 md:gap-8 px-6">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="py-12 md:py-20 flex flex-col md:flex-row justify-center bg-white border-y border-gray-100 gap-4 md:gap-8 px-6"
+              >
                 <button 
                   onClick={() => setView('map')}
                   className="group relative px-8 py-5 md:px-12 md:py-6 bg-[#0a0a0a] text-white rounded-full font-black text-[10px] md:text-xs uppercase tracking-[0.3em] md:tracking-[0.4em] flex items-center justify-center gap-4 md:gap-6 shadow-2xl hover:scale-105 active:scale-95 transition-all overflow-hidden w-full md:w-auto"
@@ -238,10 +252,16 @@ export default function App() {
                   {language === 'EN' ? 'Trip Architect' : 'සංචාරක සැලසුම්කරු'}
                   <ArrowRight size={14} className="md:w-4 md:h-4" />
                 </button>
-              </div>
+              </motion.div>
 
               {/* IMPROVED DESTINY SECTION: ARCHIVAL SHARDS GRID (4 COLUMNS PER ROW) */}
-              <div className="py-20 md:py-52 px-4 md:px-6 relative overflow-hidden bg-white">
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="py-20 md:py-52 px-4 md:px-6 relative overflow-hidden bg-white"
+              >
                 <div className="max-w-7xl mx-auto">
                   <div className="relative rounded-[3rem] md:rounded-[6rem] bg-[#0a0a0a] overflow-hidden group/card shadow-[0_30px_100px_rgba(0,0,0,0.3)] md:shadow-[0_60px_150px_rgba(0,0,0,0.3)] border border-white/5">
                     
@@ -350,9 +370,16 @@ export default function App() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <StorySection language={language} setView={setView} />
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+              >
+                <StorySection language={language} setView={setView} />
+              </motion.div>
             </div>
           </div>
         );

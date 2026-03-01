@@ -3,6 +3,7 @@ import React from 'react';
 import Navbar from './Navbar.tsx';
 import { Language, User } from '../types.ts';
 import { Facebook, Instagram, Youtube, Music2, ShieldCheck, Sparkles, Radio } from 'lucide-react';
+import AnimatedLogo from '../src/components/AnimatedLogo';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,19 +15,6 @@ interface LayoutProps {
   onLogin: () => void;
   onLogout: () => void;
 }
-
-const HeritageBadge = () => (
-  <div className="relative group/badge">
-    <div className="w-[60px] h-[60px] rounded-full bg-[#0a0a0a] border-2 border-[#E1306C] flex items-center justify-center overflow-hidden relative z-10 shadow-2xl">
-      <img 
-        src="https://i.ibb.co/9m8G0fP/travel-hub-logo.png" 
-        alt="Heritage Badge" 
-        className="w-full h-full object-contain p-1 transition-transform duration-500 group-hover/badge:scale-110"
-      />
-    </div>
-    <div className="absolute -inset-1 border border-white/10 rounded-full animate-ping opacity-20" />
-  </div>
-);
 
 const SocialLink = ({ icon: Icon, href, color, label }: { icon: any, href: string, color: string, label: string }) => (
   <a 
@@ -82,12 +70,8 @@ const Layout: React.FC<LayoutProps> = ({
       <footer className="bg-white border-t border-gray-100 text-[#0a0a0a] pt-24 pb-12 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 lg:gap-24">
           <div className="md:col-span-5 space-y-8">
-            <div className="flex items-center gap-6">
-              <HeritageBadge />
-              <div className="flex flex-col items-start leading-none">
-                <h2 className="text-3xl font-heritage font-black insta-text-gradient tracking-tight">Travel Hub</h2>
-                <span className="text-[10px] font-black text-gray-300 uppercase tracking-[0.5em] mt-2 pl-0.5">official heritage registry</span>
-              </div>
+            <div className="flex items-center gap-6 scale-125 origin-left">
+              <AnimatedLogo />
             </div>
             <p className="text-lg text-gray-500 leading-relaxed font-medium italic max-w-md">
               Where ancient memories meet modern journeys. We promote the heritage and beauty of our pearl in the Indian Ocean through high-fidelity archival technology.

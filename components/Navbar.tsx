@@ -115,7 +115,7 @@ const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 w-[96%] md:w-[98%] max-w-7xl bg-white/95 backdrop-blur-2xl border border-gray-200 rounded-full shadow-[0_25px_60px_rgba(0,0,0,0.12)] ${isScrolled ? 'py-1 px-4 md:px-5' : 'py-2 px-4 md:py-2.5 md:px-8'}`}>
+    <nav className={`fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 w-[96%] md:w-[98%] max-w-7xl bg-white/80 backdrop-blur-xl border border-white/40 rounded-full shadow-[0_25px_60px_rgba(0,0,0,0.08)] ${isScrolled ? 'py-1 px-4 md:px-5' : 'py-2 px-4 md:py-2.5 md:px-8'}`}>
       <div className="flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-3 md:gap-4 cursor-pointer group shrink-0" onClick={() => handleNav('home')}>
@@ -135,8 +135,8 @@ const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => !link.hasDropdown && handleNav(link.id)}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-500 relative group/link ${
                   currentView === link.id || (link.hasDropdown && link.items?.some(i => i.id === currentView))
-                    ? 'bg-gray-100 text-[#0a0a0a]' 
-                    : 'text-gray-500 hover:text-[#0a0a0a] hover:bg-gray-50'
+                    ? 'bg-black/5 text-[#0a0a0a]' 
+                    : 'text-gray-600 hover:text-[#0a0a0a] hover:bg-black/5'
                 }`}
               >
                 <span className="opacity-70 group-hover/link:opacity-100 transition-opacity">{link.icon}</span>

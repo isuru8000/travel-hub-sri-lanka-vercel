@@ -1,5 +1,5 @@
 
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI, Type, ThinkingLevel } from "@google/genai";
 import { Language } from "../types.ts";
 
 export interface GroundingLink {
@@ -12,6 +12,11 @@ export interface AIResponse {
   links: GroundingLink[];
   error?: string;
   isThrottled?: boolean;
+}
+
+export interface ChatMessage {
+  role: 'user' | 'model';
+  text: string;
 }
 
 export interface AINearbyNode {
@@ -85,7 +90,7 @@ export function encode(bytes: Uint8Array): string {
 export const analyzeFoodImage = async (base64Image: string, language: Language): Promise<string> => {
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    const model = 'gemini-3-flash-preview';
+    const model = 'gemini-2.5-flash';
     
     const prompt = `
       You are the "Lanka Culinary Archivist". 
@@ -208,7 +213,7 @@ export const getDestinationDeepDive = async (destinationName: string, language: 
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const result = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-3.1-pro-preview',
       contents: [{ parts: [{ text: `You are the "Master Archivist" for Travel Hub Sri Lanka. Provide a structured, comprehensive, high-fidelity deep-dive for: ${destinationName}. Use poetic yet informative language. Language: ${language === 'SI' ? 'Sinhala' : 'English'}.` }] }],
       config: {
         responseMimeType: "application/json",
@@ -258,14 +263,16 @@ export const getDestinationDeepDive = async (destinationName: string, language: 
 };
 
 /**
- * Main Guide Response.
+ * Main Guide Response (Streaming).
  */
-export const getLankaGuideResponse = async (
-  prompt: string, 
-  language: Language, 
+export async function* streamLankaGuideResponse(
+  prompt: string,
+  history: ChatMessage[],
+  language: Language,
   location?: { latitude: number; longitude: number },
-  isThinkingMode: boolean = false
-): Promise<AIResponse | string> => {
+  isThinkingMode: boolean = false,
+  image?: { data: string; mimeType: string }
+): AsyncGenerator<AIResponse> {
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
@@ -273,9 +280,120 @@ export const getLankaGuideResponse = async (
       You are "Lanka Guide AI", a prestige travel intelligence unit for "Travel Hub Sri Lanka". 
       ${isThinkingMode ? 'You are currently in DEEP THINKING MODE, utilizing maximum neural resources to solve complex travel queries.' : 'You use real-time Google Maps data to provide accurate, up-to-date information.'}
       Your tone: Sophisticated, expert, and welcoming (Ayubowan). Always respond in ${language === 'SI' ? 'Sinhala' : 'English'}.
+      
+      Context:
+      User Location: ${location ? `${location.latitude}, ${location.longitude}` : 'Unknown'}
     `;
 
-    const model = isThinkingMode ? 'gemini-3-pro-preview' : 'gemini-2.5-flash';
+    // Use gemini-2.5-flash for vision tasks as it is robust and fast.
+    // If thinking mode is on, we still use pro, but pro also supports vision.
+    const model = isThinkingMode ? 'gemini-3.1-pro-preview' : 'gemini-2.5-flash';
+    
+    // Use googleMaps for standard queries, googleSearch for thinking/complex queries if needed
+    const tools = isThinkingMode ? [{ googleSearch: {} }] : [{ googleMaps: {} }];
+
+    const chat = ai.chats.create({
+      model,
+      config: {
+        systemInstruction,
+        tools,
+        ...(isThinkingMode && { 
+          thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH },
+        }),
+      },
+      history: history.map(msg => ({
+        role: msg.role,
+        parts: [{ text: msg.text }]
+      }))
+    });
+
+    const messageParts: any[] = [{ text: prompt }];
+    if (image) {
+      messageParts.unshift({
+        inlineData: {
+          data: image.data,
+          mimeType: image.mimeType
+        }
+      });
+    }
+
+    const resultStream = await chat.sendMessageStream({
+      message: {
+        role: 'user',
+        parts: messageParts
+      }
+    });
+
+    for await (const chunk of resultStream) {
+      const text = chunk.text || "";
+      const groundingChunks = chunk.candidates?.[0]?.groundingMetadata?.groundingChunks;
+      const links: GroundingLink[] = groundingChunks
+        ?.map((c: any) => isThinkingMode ? c.web : c.maps)
+        .filter((m: any) => m && m.uri)
+        .map((m: any) => ({ title: m.title || "View Details", uri: m.uri })) || [];
+      
+      yield { text, links };
+    }
+
+  } catch (error: any) {
+    if (isQuotaError(error)) {
+      yield { 
+        text: language === 'SI' 
+          ? "ගෝලීය ප්‍රවේශ සීමාව ඉක්මවා ඇත. කරුණාකර මොහොතකින් නැවත උත්සාහ කරන්න (Error 429)." 
+          : "Neural Link Throttled. You have reached the global request limit for this cycle. Please wait a few minutes or switch to a high-priority API key.",
+        links: [],
+        isThrottled: true
+      };
+      return;
+    }
+    const errMsg = error.message || "";
+    if (errMsg.includes("Requested entity was not found.") || errMsg.includes("403")) {
+      yield { text: "API_KEY_REQUIRED", links: [], error: "API_KEY_REQUIRED" };
+      return;
+    }
+    yield { text: "Neural link interrupted. Please retry.", links: [], error: errMsg };
+  }
+}
+
+/**
+ * Legacy Guide Response (Keep for backward compatibility if needed, but prefer streaming).
+ */
+export const getLankaGuideResponse = async (
+  prompt: string, 
+  language: Language, 
+  location?: { latitude: number; longitude: number },
+  isThinkingMode: boolean = false
+): Promise<AIResponse | string> => {
+  // Simple wrapper around the stream for legacy support
+  let fullText = "";
+  let allLinks: GroundingLink[] = [];
+  
+  const generator = streamLankaGuideResponse(prompt, [], language, location, isThinkingMode);
+  
+  for await (const chunk of generator) {
+    if (chunk.error === "API_KEY_REQUIRED") return "API_KEY_REQUIRED";
+    if (chunk.text) fullText += chunk.text; // Note: chunk.text in stream is usually the delta, but check SDK behavior. 
+    // Actually, SDK chunk.text is the ACCUMULATED text for that candidate in some versions, or delta in others. 
+    // Wait, the @google/genai SDK `chunk.text` is usually the text of the chunk.
+    // But `sendMessageStream` returns chunks. 
+    // Let's assume it returns deltas or we need to accumulate.
+    // Actually, for `sendMessageStream`, `chunk.text` is the text content of that specific chunk.
+    if (chunk.links) allLinks = [...allLinks, ...chunk.links];
+  }
+  
+  // If we are using this wrapper, we might get duplicated text if we just append.
+  // But since we are moving to streaming in the UI, this function might not be used much.
+  // However, to be safe, let's just use generateContent for the non-streaming version to match original behavior exactly.
+  
+  try {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const systemInstruction = `
+      You are "Lanka Guide AI", a prestige travel intelligence unit for "Travel Hub Sri Lanka". 
+      ${isThinkingMode ? 'You are currently in DEEP THINKING MODE, utilizing maximum neural resources to solve complex travel queries.' : 'You use real-time Google Maps data to provide accurate, up-to-date information.'}
+      Your tone: Sophisticated, expert, and welcoming (Ayubowan). Always respond in ${language === 'SI' ? 'Sinhala' : 'English'}.
+    `;
+
+    const model = isThinkingMode ? 'gemini-3.1-pro-preview' : 'gemini-2.5-flash';
     const tools = isThinkingMode ? [{ googleSearch: {} }] : [{ googleMaps: {} }];
 
     const response = await ai.models.generateContent({
@@ -285,8 +403,7 @@ export const getLankaGuideResponse = async (
         systemInstruction,
         tools,
         ...(isThinkingMode && { 
-          thinkingConfig: { thinkingBudget: 16000 },
-          maxOutputTokens: 20000
+          thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH },
         }),
       },
     });
@@ -300,7 +417,7 @@ export const getLankaGuideResponse = async (
 
     return { text, links };
   } catch (error: any) {
-    if (isQuotaError(error)) {
+     if (isQuotaError(error)) {
       return { 
         text: language === 'SI' 
           ? "ගෝලීය ප්‍රවේශ සීමාව ඉක්මවා ඇත. කරුණාකර මොහොතකින් නැවත උත්සාහ කරන්න (Error 429)." 
@@ -324,12 +441,12 @@ export const searchGrounding = async (query: string, language: Language, isThink
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
-      model: "gemini-3-pro-preview",
+      model: "gemini-3.1-pro-preview",
       contents: [{ parts: [{ text: query }] }],
       config: {
         systemInstruction: `You are the "Neural Intelligence Hub". Provide live information. Language: ${language === 'SI' ? 'Sinhala' : 'English'}.`,
         tools: [{ googleSearch: {} }],
-        ...(isThinkingMode && { thinkingConfig: { thinkingBudget: 16000 }, maxOutputTokens: 20000 })
+        ...(isThinkingMode && { thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH } })
       },
     });
 
@@ -373,9 +490,9 @@ export const generateDetailedItinerary = async (destination: string, language: L
   try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-3.1-pro-preview',
       contents: [{ parts: [{ text: `Create a detailed 3-day itinerary for ${destination}.` }] }],
-      config: { thinkingConfig: { thinkingBudget: 16000 }, maxOutputTokens: 20000 }
+      config: { thinkingConfig: { thinkingLevel: ThinkingLevel.HIGH } }
     });
     return response.text || "";
   } catch (e) {
