@@ -205,7 +205,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-3 md:gap-5 px-4 py-3 md:px-6 md:py-4 bg-white rounded-[1.5rem] md:rounded-[2.5rem] shadow-xl shrink-0">
              <AnimatedLogo />
              <div className="flex flex-col items-start leading-none">
-                <span className="text-xs md:text-sm font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">TRAVEL HUB</span>
+                <span className="text-xs md:text-sm font-heritage font-bold text-[#0a0a0a] uppercase tracking-tighter">TRAVEL <span className="text-[#F59E0B]">HUB</span></span>
                 <span className="text-[6px] md:text-[7px] font-black text-gray-400 uppercase tracking-[0.2em] md:tracking-[0.3em]">sri lanka</span>
              </div>
           </div>
